@@ -36,25 +36,16 @@
         }
 
         .logo {
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
         }
 
-        /* 🇳🇱 BOLD + FLAG TEXT */
+        /* 🔥 SINGLE NAME */
         .brand {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        .brand span {
-            font-weight: 900;
-            text-shadow:
-                0 0 8px red,
-                0 0 8px white,
-                0 0 8px blue;
         }
 
         /* MENU */
@@ -62,14 +53,12 @@
             display: flex;
             gap: 18px;
             font-size: 12px;
-            font-weight: 300;
             opacity: 0.8;
         }
 
         .menu a {
             color: white;
             text-decoration: none;
-            transition: 0.2s;
         }
 
         .menu a:hover {
@@ -86,28 +75,43 @@
             width: 22px;
             height: 22px;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .socials img:hover {
-            transform: scale(1.2);
-        }
-
-        /* HERO */
+        /* HERO FADE IN */
         .hero {
             text-align: center;
             margin-top: 90px;
+            animation: fadeIn 1.2s ease;
         }
 
-        .hero h1 {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TITLE COLORS */
+        .title {
             font-size: 60px;
+            font-weight: 900;
             margin: 0;
         }
 
-        .hero p {
-            max-width: 650px;
-            margin: 15px auto;
-            color: #aaa;
+        .just { color: red; }
+        .donny { color: white; }
+        .packs { color: #2f7bff; }
+
+        /* SEARCH BACK */
+        .search {
+            margin-top: 25px;
+        }
+
+        .search input {
+            width: 380px;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -119,25 +123,17 @@
 <!-- TOP -->
 <div class="topbar">
 
-    <!-- LEFT -->
     <div class="left">
         <img src="logo.png" class="logo">
-
-        <!-- 🇳🇱 TWO TITLES -->
-        <div class="brand">
-            <span>JustdonnyScenepacks</span><br>
-            <span>JustdonnyScenepacks</span>
-        </div>
+        <div class="brand">Justdonny</div>
     </div>
 
-    <!-- MENU (ONLY 3) -->
     <div class="menu">
         <a href="#">Home</a>
         <a href="#">Socials</a>
         <a href="#">About</a>
     </div>
 
-    <!-- RIGHT SOCIALS -->
     <div class="socials">
         <a href="#"><img src="discord.png"></a>
         <a href="#"><img src="tiktok.png"></a>
@@ -150,11 +146,21 @@
 
 <!-- HERO -->
 <div class="hero">
-    <h1>JustdonnyScenepacks</h1>
-    <p>A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.</p>
+
+    <!-- TITLE SPLIT COLORS -->
+    <h1 class="title">
+        <span class="just">Just</span>
+        <span class="donny">donny</span>
+        <span class="packs">Scenepacks</span>
+    </h1>
+
+    <div class="search">
+        <input type="text" placeholder="Search scenepacks...">
+    </div>
+
 </div>
 
-<!-- 🔥 BETTER GLOW LINES BACKGROUND -->
+<!-- 🔥 BACKGROUND (POP + GLOW LINES) -->
 <script>
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -168,8 +174,9 @@ for (let i = 0; i < 90; i++) {
     lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        len: 60 + Math.random() * 120,
-        speed: 0.4 + Math.random() * 0.9
+        len: 50 + Math.random() * 120,
+        speed: 0.5 + Math.random(),
+        opacity: Math.random()
     });
 }
 
@@ -177,21 +184,28 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let l of lines) {
-        ctx.beginPath();
 
-        ctx.strokeStyle = "rgba(255,0,0,0.4)";
+        // 🔥 glow red lines
+        ctx.strokeStyle = `rgba(255,0,0,${l.opacity})`;
         ctx.shadowColor = "red";
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 15;
 
+        ctx.beginPath();
         ctx.moveTo(l.x, l.y);
         ctx.lineTo(l.x, l.y + l.len);
         ctx.stroke();
 
         l.y += l.speed;
 
+        // 🔥 POP EFFECT (fade in when respawn)
         if (l.y > canvas.height) {
-            l.y = -60;
+            l.y = -50;
             l.x = Math.random() * canvas.width;
+            l.opacity = 0;
+
+            setTimeout(() => {
+                l.opacity = Math.random();
+            }, 200);
         }
     }
 
