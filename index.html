@@ -3,8 +3,7 @@
 <head>
     <title>Justdonny Scenepacks</title>
 
-    <!-- FONT -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -15,7 +14,6 @@
             overflow: hidden;
         }
 
-        /* 🔥 BACKGROUND CANVAS */
         canvas {
             position: fixed;
             top: 0;
@@ -31,7 +29,6 @@
             padding: 18px 25px;
         }
 
-        /* LEFT */
         .left {
             display: flex;
             align-items: center;
@@ -45,19 +42,28 @@
             object-fit: cover;
         }
 
+        /* 🇳🇱 BOLD + FLAG TEXT */
         .brand {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 900;
+            letter-spacing: 0.5px;
         }
 
-        /* MENU (FIXED + SMALL + DIFFERENT FONT STYLE) */
+        .brand span {
+            font-weight: 900;
+            text-shadow:
+                0 0 8px red,
+                0 0 8px white,
+                0 0 8px blue;
+        }
+
+        /* MENU */
         .menu {
             display: flex;
-            gap: 16px;
-            font-size: 11px;
+            gap: 18px;
+            font-size: 12px;
             font-weight: 300;
-            letter-spacing: 1px;
-            opacity: 0.75;
+            opacity: 0.8;
         }
 
         .menu a {
@@ -70,7 +76,7 @@
             color: red;
         }
 
-        /* RIGHT SOCIALS */
+        /* SOCIALS */
         .socials {
             display: flex;
             gap: 12px;
@@ -103,15 +109,6 @@
             margin: 15px auto;
             color: #aaa;
         }
-
-        /* SEARCH */
-        .search input {
-            width: 380px;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            outline: none;
-        }
     </style>
 </head>
 
@@ -125,21 +122,22 @@
     <!-- LEFT -->
     <div class="left">
         <img src="logo.png" class="logo">
-        <div class="brand">JustdonnyScenepacks</div>
+
+        <!-- 🇳🇱 TWO TITLES -->
+        <div class="brand">
+            <span>JustdonnyScenepacks</span><br>
+            <span>JustdonnyScenepacks</span>
+        </div>
     </div>
 
-    <!-- MENU (NOW CORRECT) -->
+    <!-- MENU (ONLY 3) -->
     <div class="menu">
         <a href="#">Home</a>
         <a href="#">Socials</a>
-        <a href="#">411+</a>
-        <a href="#">Competitions</a>
-        <a href="#">Contact</a>
-        <a href="#">DMCA</a>
         <a href="#">About</a>
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT SOCIALS -->
     <div class="socials">
         <a href="#"><img src="discord.png"></a>
         <a href="#"><img src="tiktok.png"></a>
@@ -154,13 +152,9 @@
 <div class="hero">
     <h1>JustdonnyScenepacks</h1>
     <p>A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.</p>
-
-    <div class="search">
-        <input type="text" placeholder="Search scenepacks...">
-    </div>
 </div>
 
-<!-- 🔥 BETTER RED GLOW LINE BACKGROUND -->
+<!-- 🔥 BETTER GLOW LINES BACKGROUND -->
 <script>
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -170,12 +164,12 @@ canvas.height = window.innerHeight;
 
 let lines = [];
 
-for (let i = 0; i < 80; i++) {
+for (let i = 0; i < 90; i++) {
     lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        len: 40 + Math.random() * 80,
-        speed: 0.3 + Math.random() * 0.8
+        len: 60 + Math.random() * 120,
+        speed: 0.4 + Math.random() * 0.9
     });
 }
 
@@ -185,10 +179,9 @@ function draw() {
     for (let l of lines) {
         ctx.beginPath();
 
-        // 🔥 glowing red lines
-        ctx.strokeStyle = "rgba(255,0,0,0.35)";
+        ctx.strokeStyle = "rgba(255,0,0,0.4)";
         ctx.shadowColor = "red";
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 12;
 
         ctx.moveTo(l.x, l.y);
         ctx.lineTo(l.x, l.y + l.len);
@@ -197,7 +190,7 @@ function draw() {
         l.y += l.speed;
 
         if (l.y > canvas.height) {
-            l.y = -50;
+            l.y = -60;
             l.x = Math.random() * canvas.width;
         }
     }
