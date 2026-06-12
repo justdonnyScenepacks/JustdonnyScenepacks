@@ -3,7 +3,7 @@
 <head>
     <title>Justdonny Scenepacks</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -23,53 +23,42 @@
 
         /* TOP BAR */
         .topbar {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             padding: 18px 25px;
         }
 
-        /* LEFT (ONLY LOGO) */
+        /* LEFT LOGO */
         .logo {
             width: 60px;
             height: 60px;
             border-radius: 50%;
         }
 
-        /* CENTER MENU */
+        /* MENU CENTER */
         .menu {
             display: flex;
-            gap: 18px;
-            font-size: 11px;
+            gap: 25px;
+            font-size: 12px;
+            font-weight: 400;
             letter-spacing: 2px;
-            font-weight: 300;
-            opacity: 0.75;
         }
 
         .menu a {
             color: white;
             text-decoration: none;
+            opacity: 0.8;
         }
 
         .menu a:hover {
             color: red;
         }
 
-        /* RIGHT SOCIALS */
-        .socials {
+        /* RIGHT EMPTY BALANCE */
+        .right {
             display: flex;
-            gap: 12px;
-        }
-
-        .socials img {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .socials img:hover {
-            transform: scale(1.2);
+            justify-content: flex-end;
         }
 
         /* HERO */
@@ -78,14 +67,12 @@
             margin-top: 90px;
         }
 
-        /* ONE WORD TITLE */
         .title {
             font-size: 65px;
             font-weight: 900;
             letter-spacing: 2px;
         }
 
-        /* DESCRIPTION */
         .desc {
             max-width: 650px;
             margin: 15px auto;
@@ -93,16 +80,60 @@
             font-size: 14px;
         }
 
-        /* SEARCH */
-        .search input {
-            width: 380px;
-            padding: 12px;
+        /* SEARCH WRAPPER */
+        .search-box {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 400px;
+        }
+
+        /* 🔥 SEARCH INPUT (UPDATED ONLY PART) */
+        .search-wrapper input {
+            width: 100%;
+            padding: 12px 45px;
             border-radius: 10px;
-            border: none;
+            border: 1px solid rgba(255, 0, 0, 0.4);
             outline: none;
             font-size: 14px;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
             color: white;
+            transition: 0.25s;
+        }
+
+        .search-wrapper input::placeholder {
+            color: rgba(255, 0, 0, 0.7);
+        }
+
+        .search-wrapper:hover input {
+            border: 1px solid red;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+        }
+
+        .search-wrapper input:focus {
+            border: 1px solid red;
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.8);
+        }
+
+        /* ICONS */
+        .icon-left,
+        .icon-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.6;
+        }
+
+        .icon-left {
+            left: 12px;
+        }
+
+        .icon-right {
+            right: 12px;
         }
     </style>
 </head>
@@ -114,8 +145,10 @@
 <!-- TOP -->
 <div class="topbar">
 
-    <!-- LEFT LOGO ONLY -->
-    <img src="logo.png" class="logo">
+    <!-- LEFT LOGO -->
+    <div>
+        <img src="logo.png" class="logo">
+    </div>
 
     <!-- MENU -->
     <div class="menu">
@@ -124,95 +157,34 @@
         <a href="#">About</a>
     </div>
 
-    <!-- RIGHT SOCIALS -->
-    <div class="socials">
-        <a href="#"><img src="discord.png"></a>
-        <a href="#"><img src="tiktok.png"></a>
-        <a href="#"><img src="instagram.png"></a>
-        <a href="#"><img src="youtube.png"></a>
-        <a href="#"><img src="payhip.png"></a>
-    </div>
+    <!-- RIGHT BALANCE -->
+    <div class="right"></div>
 
 </div>
 
 <!-- HERO -->
 <div class="hero">
 
-    <!-- TITLE (ONE WORD FIXED) -->
     <div class="title">JUSTDONNYSCENEPACKS</div>
 
-    <!-- DESCRIPTION BACK -->
     <div class="desc">
         A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
     </div>
 
     <!-- SEARCH -->
-    <div class="search">
-        <input type="text" placeholder="Search scenepacks...">
+    <div class="search-box">
+        <div class="search-wrapper">
+
+            <div class="icon-left">🔍</div>
+
+            <input type="text" placeholder="Search scenepacks...">
+
+            <div class="icon-right">↵</div>
+
+        </div>
     </div>
 
 </div>
-
-<!-- 🔥 SMOOTH CONNECTED RED LINES -->
-<script>
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let points = [];
-
-for (let i = 0; i < 25; i++) {
-    points.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4
-    });
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // glow
-    ctx.strokeStyle = "rgba(255,0,0,0.25)";
-    ctx.shadowColor = "red";
-    ctx.shadowBlur = 10;
-
-    for (let i = 0; i < points.length; i++) {
-        let p1 = points[i];
-
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-
-        if (p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
-
-        for (let j = i + 1; j < points.length; j++) {
-            let p2 = points[j];
-
-            let dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-
-            if (dist < 180) {
-                ctx.beginPath();
-                ctx.moveTo(p1.x, p1.y);
-                ctx.lineTo(p2.x, p2.y);
-                ctx.stroke();
-            }
-        }
-    }
-
-    requestAnimationFrame(draw);
-}
-
-draw();
-
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-</script>
 
 </body>
 </html>
