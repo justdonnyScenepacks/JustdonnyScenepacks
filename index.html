@@ -94,10 +94,11 @@
             color: #aaa;
         }
 
-        /* SEARCH (FIXED PROPER CENTER) */
+        /* SEARCH (FIXED) */
         .search-box {
             display: flex;
             justify-content: center;
+            align-items: center;
             width: 100%;
             margin-top: 25px;
         }
@@ -105,7 +106,9 @@
         .search-wrapper {
             position: relative;
             width: 400px;
-            margin: 0 auto; /* 🔥 THIS IS THE REAL FIX */
+
+            /* 🔥 FIX: remove mismatch */
+            margin: 0;
         }
 
         .search-wrapper input {
