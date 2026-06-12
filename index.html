@@ -7,8 +7,18 @@
         body {
             margin: 0;
             font-family: Arial;
-            background: #0b0b0f;
             color: white;
+
+            /* 🎨 MOVING BACKGROUND */
+            background: linear-gradient(-45deg, #0b0b0f, #141424, #0f0f1c, #1a1a2a);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
         }
 
         /* HEADER */
@@ -22,29 +32,29 @@
         .left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .logo {
-            width: 40px;
-            height: 40px;
+            width: 60px;   /* 👈 groter gemaakt */
+            height: 60px;
             border-radius: 50%;
             object-fit: cover;
         }
 
         .name {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         /* CENTER */
         .center {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 80px;
         }
 
         .center h1 {
-            font-size: 45px;
+            font-size: 55px;
             margin: 0;
         }
 
@@ -54,18 +64,18 @@
             color: #b5b5b5;
         }
 
-        /* SEARCH BAR */
+        /* SEARCH */
         .search-box {
             margin-top: 25px;
         }
 
         .search-box input {
-            width: 300px;
-            padding: 12px;
-            border-radius: 8px;
+            width: 350px;
+            padding: 14px;
+            border-radius: 10px;
             border: none;
             outline: none;
-            font-size: 14px;
+            font-size: 15px;
         }
     </style>
 </head>
@@ -83,7 +93,10 @@
 <!-- CENTER -->
 <div class="center">
     <h1>JustdonnyScenepacks</h1>
-    <p>A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.</p>
+
+    <p>
+        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
+    </p>
 
     <!-- SEARCH -->
     <div class="search-box">
