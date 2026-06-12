@@ -73,14 +73,17 @@
         }
 
         /* HERO CENTER (UNCHANGED) */
-    .hero {
+  .hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
 
-    height: calc(100vh - 80px);
     width: 100%;
 }
 
