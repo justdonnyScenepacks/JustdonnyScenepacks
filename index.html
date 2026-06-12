@@ -3,7 +3,7 @@
 <head>
     <title>Justdonny Scenepacks</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -11,6 +11,7 @@
             font-family: 'Inter', sans-serif;
             background: black;
             color: white;
+            overflow: hidden;
         }
 
         canvas {
@@ -20,7 +21,7 @@
             z-index: -1;
         }
 
-        /* HEADER */
+        /* TOP BAR */
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -28,46 +29,80 @@
             padding: 18px 25px;
         }
 
-        .left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        /* LEFT (ONLY LOGO) */
         .logo {
-            width: 70px;   /* duidelijk groter */
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
         }
 
-        .brand {
-            font-size: 18px;
-            font-weight: 900;
+        /* CENTER MENU */
+        .menu {
+            display: flex;
+            gap: 18px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 300;
+            opacity: 0.75;
         }
 
-        /* TITLE (DUIDELIJK ANDERS) */
+        .menu a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            color: red;
+        }
+
+        /* RIGHT SOCIALS */
+        .socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .socials img {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .socials img:hover {
+            transform: scale(1.2);
+        }
+
+        /* HERO */
         .hero {
             text-align: center;
             margin-top: 90px;
         }
 
+        /* ONE WORD TITLE */
         .title {
             font-size: 65px;
             font-weight: 900;
+            letter-spacing: 2px;
         }
 
-        .just { color: red; }
-        .donny { color: white; }
-        .packs { color: blue; }
+        /* DESCRIPTION */
+        .desc {
+            max-width: 650px;
+            margin: 15px auto;
+            color: #aaa;
+            font-size: 14px;
+        }
 
-        /* SEARCH (duidelijk zichtbaar) */
+        /* SEARCH */
         .search input {
-            margin-top: 20px;
-            width: 400px;
-            padding: 14px;
+            width: 380px;
+            padding: 12px;
             border-radius: 10px;
             border: none;
             outline: none;
+            font-size: 14px;
+            background: rgba(255,255,255,0.08);
+            color: white;
         }
     </style>
 </head>
@@ -76,26 +111,49 @@
 
 <canvas id="bg"></canvas>
 
+<!-- TOP -->
 <div class="topbar">
-    <div class="left">
-        <img src="logo.png" class="logo">
-        <div class="brand">Justdonny</div>
+
+    <!-- LEFT LOGO ONLY -->
+    <img src="logo.png" class="logo">
+
+    <!-- MENU -->
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href="#">Socials</a>
+        <a href="#">About</a>
     </div>
+
+    <!-- RIGHT SOCIALS -->
+    <div class="socials">
+        <a href="#"><img src="discord.png"></a>
+        <a href="#"><img src="tiktok.png"></a>
+        <a href="#"><img src="instagram.png"></a>
+        <a href="#"><img src="youtube.png"></a>
+        <a href="#"><img src="payhip.png"></a>
+    </div>
+
 </div>
 
+<!-- HERO -->
 <div class="hero">
-    <div class="title">
-        <span class="just">Just</span>
-        <span class="donny">donny</span>
-        <span class="packs">Scenepacks</span>
+
+    <!-- TITLE (ONE WORD FIXED) -->
+    <div class="title">JUSTDONNYSCENEPACKS</div>
+
+    <!-- DESCRIPTION BACK -->
+    <div class="desc">
+        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
     </div>
 
+    <!-- SEARCH -->
     <div class="search">
         <input type="text" placeholder="Search scenepacks...">
     </div>
+
 </div>
 
-<!-- SIMPLE RED GLOW LINES -->
+<!-- 🔥 SMOOTH CONNECTED RED LINES -->
 <script>
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -103,27 +161,57 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let points = [];
+
+for (let i = 0; i < 25; i++) {
+    points.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+    });
+}
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (let i = 0; i < 60; i++) {
-        let x = Math.random() * canvas.width;
-        let y = Math.random() * canvas.height;
+    // glow
+    ctx.strokeStyle = "rgba(255,0,0,0.25)";
+    ctx.shadowColor = "red";
+    ctx.shadowBlur = 10;
 
-        ctx.strokeStyle = "rgba(255,0,0,0.25)";
-        ctx.shadowColor = "red";
-        ctx.shadowBlur = 10;
+    for (let i = 0; i < points.length; i++) {
+        let p1 = points[i];
 
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x, y + 60);
-        ctx.stroke();
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        if (p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
+
+        for (let j = i + 1; j < points.length; j++) {
+            let p2 = points[j];
+
+            let dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+            if (dist < 180) {
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+        }
     }
 
     requestAnimationFrame(draw);
 }
 
 draw();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 </script>
 
 </body>
