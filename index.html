@@ -72,7 +72,7 @@
             transform: scale(1.2);
         }
 
-        /* HERO CENTER */
+        /* HERO CENTER (UNCHANGED) */
         .hero {
             display: flex;
             flex-direction: column;
@@ -94,9 +94,11 @@
             color: #aaa;
         }
 
+        /* 🔥 FIXED SEARCH CENTER */
         .search-box {
             display: flex;
             justify-content: center;
+            align-items: center;
             width: 100%;
             margin-top: 25px;
         }
@@ -135,15 +137,13 @@
             opacity: 0.7;
         }
 
-        /* FILTERS FIX */
+        /* FILTERS */
         .filters {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 12px;
             margin-top: 18px;
             flex-wrap: wrap;
-            width: 100%;
         }
 
         .filter {
@@ -168,12 +168,10 @@
             border: 1px solid red;
         }
 
-        /* REQUEST BUTTON */
         .request-wrap {
             display: flex;
             justify-content: center;
             margin-top: 12px;
-            width: 100%;
         }
 
         .request-btn {
@@ -185,7 +183,6 @@
             cursor: pointer;
             font-size: 12px;
             transition: 0.2s ease;
-            backdrop-filter: blur(6px);
         }
 
         .request-btn:hover {
@@ -238,18 +235,14 @@
         </div>
     </div>
 
-    <!-- FILTERS -->
     <div class="filters">
-
         <div class="filter active">🌍 All</div>
         <div class="filter">🎬 Films</div>
         <div class="filter">📺 Series</div>
         <div class="filter">▶ YouTube</div>
         <div class="filter">⚽ Football</div>
-
     </div>
 
-    <!-- REQUEST BUTTON -->
     <div class="request-wrap">
         <button class="request-btn">Request Scenepack</button>
     </div>
