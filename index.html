@@ -3,61 +3,82 @@
 <head>
     <title>Justdonny Scenepacks</title>
 
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
         body {
             margin: 0;
-            font-family: Arial;
+            font-family: 'Inter', sans-serif;
             color: white;
             overflow-x: hidden;
-
-            /* 🔥 SMOOTH ANIMATED BACKGROUND (FAST + CLEAN) */
-            background: linear-gradient(-45deg, #0b0b0f, #141424, #0f0f1c, #1a1a2a);
-            background-size: 300% 300%;
-            animation: gradientMove 6s ease infinite;
+            background: black;
         }
 
-        @keyframes gradientMove {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
+        /* 🔥 BACKGROUND CANVAS */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
 
-        /* HEADER */
-        .header {
+        /* TOP NAV */
+        .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 15px 25px;
+        }
+
+        /* LEFT NAME */
+        .brand {
+            font-size: 16px; /* kleiner */
+            font-weight: 600;
+            margin-left: 5px; /* meer links */
         }
 
         .left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .logo {
-            width: 80px;   /* 🔥 groter logo */
-            height: 80px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             object-fit: cover;
         }
 
-        .name {
-            font-weight: bold;
-            font-size: 22px;
+        /* MENU CENTER */
+        .menu {
+            display: flex;
+            gap: 18px;
+            font-size: 13px;
+            opacity: 0.8;
         }
 
-        /* SOCIAL ICONS */
+        .menu a {
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            color: red;
+        }
+
+        /* SOCIALS RIGHT */
         .socials {
             display: flex;
-            gap: 15px;
-            align-items: center;
+            gap: 12px;
+            margin-right: -10px; /* meer naar rechts */
         }
 
         .socials img {
-            width: 28px;
-            height: 28px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -66,89 +87,144 @@
             transform: scale(1.2);
         }
 
-        /* CENTER */
-        .center {
+        /* HERO */
+        .hero {
             text-align: center;
-            margin-top: 70px;
+            margin-top: 80px;
         }
 
-        .center h1 {
-            font-size: 55px;
+        .hero h1 {
+            font-size: 60px;
             margin: 0;
         }
 
-        .center p {
-            max-width: 650px;
+        .hero p {
+            max-width: 700px;
             margin: 15px auto;
-            color: #b5b5b5;
+            color: #aaa;
         }
 
-        /* SEARCH (sneller + cleaner) */
-        .search-box {
+        /* SEARCH (sneller, geen lag) */
+        .search {
             margin-top: 25px;
         }
 
-        .search-box input {
-            width: 360px;
+        .search input {
+            width: 380px;
             padding: 12px;
             border-radius: 10px;
             border: none;
             outline: none;
             font-size: 14px;
         }
+
+        /* PAGE FADE */
+        .fade {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
+<canvas id="bg"></canvas>
+
+<!-- TOP -->
+<div class="topbar">
 
     <!-- LEFT -->
     <div class="left">
         <img src="logo.png" class="logo">
-        <span class="name">JustdonnyScenepacks</span>
+        <div class="brand">JustdonnyScenepacks</div>
     </div>
 
-    <!-- RIGHT SOCIALS -->
+    <!-- MENU -->
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href="#">Socials</a>
+        <a href="#">411+</a>
+        <a href="#">Competitions</a>
+        <a href="#">Contact</a>
+        <a href="#">DMCA</a>
+        <a href="#">About</a>
+    </div>
+
+    <!-- SOCIALS -->
     <div class="socials">
-
-        <a href="https://discord.com" target="_blank">
-            <img src="discord.png">
-        </a>
-
-        <a href="https://tiktok.com" target="_blank">
-            <img src="tiktok.png">
-        </a>
-
-        <a href="https://instagram.com" target="_blank">
-            <img src="instagram.png">
-        </a>
-
-        <a href="https://youtube.com" target="_blank">
-            <img src="youtube.png">
-        </a>
-
-        <a href="https://payhip.com" target="_blank">
-            <img src="payhip.png">
-        </a>
-
+        <a href="#"><img src="discord.png"></a>
+        <a href="#"><img src="tiktok.png"></a>
+        <a href="#"><img src="instagram.png"></a>
+        <a href="#"><img src="youtube.png"></a>
+        <a href="#"><img src="payhip.png"></a>
     </div>
 
 </div>
 
-<!-- CENTER -->
-<div class="center">
+<!-- HERO -->
+<div class="hero fade">
     <h1>JustdonnyScenepacks</h1>
 
     <p>
         A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
     </p>
 
-    <div class="search-box">
+    <div class="search">
         <input type="text" placeholder="Search scenepacks...">
     </div>
 </div>
+
+<!-- 🔥 RED MOVING LINES BACKGROUND -->
+<script>
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let lines = [];
+
+for (let i = 0; i < 60; i++) {
+    lines.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        length: Math.random() * 80,
+        speed: 0.5 + Math.random(),
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let l of lines) {
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(255,0,0,0.25)";
+        ctx.moveTo(l.x, l.y);
+        ctx.lineTo(l.x, l.y + l.length);
+        ctx.stroke();
+
+        l.y += l.speed;
+
+        if (l.y > canvas.height) {
+            l.y = -20;
+            l.x = Math.random() * canvas.width;
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
 
 </body>
 </html>
