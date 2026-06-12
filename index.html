@@ -3,7 +3,7 @@
 <head>
     <title>Justdonny Scenepacks</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -11,7 +11,6 @@
             font-family: 'Inter', sans-serif;
             background: black;
             color: white;
-            overflow: hidden;
         }
 
         canvas {
@@ -21,7 +20,7 @@
             z-index: -1;
         }
 
-        /* TOP BAR */
+        /* HEADER */
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -36,82 +35,39 @@
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
+            width: 70px;   /* duidelijk groter */
+            height: 70px;
             border-radius: 50%;
-            object-fit: cover;
         }
 
-        /* 🔥 SINGLE NAME */
         .brand {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 900;
         }
 
-        /* MENU */
-        .menu {
-            display: flex;
-            gap: 18px;
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .menu a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .menu a:hover {
-            color: red;
-        }
-
-        /* SOCIALS */
-        .socials {
-            display: flex;
-            gap: 12px;
-        }
-
-        .socials img {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-        }
-
-        /* HERO FADE IN */
+        /* TITLE (DUIDELIJK ANDERS) */
         .hero {
             text-align: center;
             margin-top: 90px;
-            animation: fadeIn 1.2s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* TITLE COLORS */
         .title {
-            font-size: 60px;
+            font-size: 65px;
             font-weight: 900;
-            margin: 0;
         }
 
         .just { color: red; }
         .donny { color: white; }
-        .packs { color: #2f7bff; }
+        .packs { color: blue; }
 
-        /* SEARCH BACK */
-        .search {
-            margin-top: 25px;
-        }
-
+        /* SEARCH (duidelijk zichtbaar) */
         .search input {
-            width: 380px;
-            padding: 12px;
+            margin-top: 20px;
+            width: 400px;
+            padding: 14px;
             border-radius: 10px;
             border: none;
             outline: none;
-            font-size: 14px;
         }
     </style>
 </head>
@@ -120,47 +76,26 @@
 
 <canvas id="bg"></canvas>
 
-<!-- TOP -->
 <div class="topbar">
-
     <div class="left">
         <img src="logo.png" class="logo">
         <div class="brand">Justdonny</div>
     </div>
-
-    <div class="menu">
-        <a href="#">Home</a>
-        <a href="#">Socials</a>
-        <a href="#">About</a>
-    </div>
-
-    <div class="socials">
-        <a href="#"><img src="discord.png"></a>
-        <a href="#"><img src="tiktok.png"></a>
-        <a href="#"><img src="instagram.png"></a>
-        <a href="#"><img src="youtube.png"></a>
-        <a href="#"><img src="payhip.png"></a>
-    </div>
-
 </div>
 
-<!-- HERO -->
 <div class="hero">
-
-    <!-- TITLE SPLIT COLORS -->
-    <h1 class="title">
+    <div class="title">
         <span class="just">Just</span>
         <span class="donny">donny</span>
         <span class="packs">Scenepacks</span>
-    </h1>
+    </div>
 
     <div class="search">
         <input type="text" placeholder="Search scenepacks...">
     </div>
-
 </div>
 
-<!-- 🔥 BACKGROUND (POP + GLOW LINES) -->
+<!-- SIMPLE RED GLOW LINES -->
 <script>
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -168,56 +103,27 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let lines = [];
-
-for (let i = 0; i < 90; i++) {
-    lines.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        len: 50 + Math.random() * 120,
-        speed: 0.5 + Math.random(),
-        opacity: Math.random()
-    });
-}
-
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (let l of lines) {
+    for (let i = 0; i < 60; i++) {
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
 
-        // 🔥 glow red lines
-        ctx.strokeStyle = `rgba(255,0,0,${l.opacity})`;
+        ctx.strokeStyle = "rgba(255,0,0,0.25)";
         ctx.shadowColor = "red";
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 10;
 
         ctx.beginPath();
-        ctx.moveTo(l.x, l.y);
-        ctx.lineTo(l.x, l.y + l.len);
+        ctx.moveTo(x, y);
+        ctx.lineTo(x, y + 60);
         ctx.stroke();
-
-        l.y += l.speed;
-
-        // 🔥 POP EFFECT (fade in when respawn)
-        if (l.y > canvas.height) {
-            l.y = -50;
-            l.x = Math.random() * canvas.width;
-            l.opacity = 0;
-
-            setTimeout(() => {
-                l.opacity = Math.random();
-            }, 200);
-        }
     }
 
     requestAnimationFrame(draw);
 }
 
 draw();
-
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
 </script>
 
 </body>
