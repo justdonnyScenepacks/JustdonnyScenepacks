@@ -3,16 +3,16 @@
 <head>
     <title>Justdonny Scenepacks</title>
 
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
-            color: white;
-            overflow-x: hidden;
             background: black;
+            color: white;
+            overflow: hidden;
         }
 
         /* 🔥 BACKGROUND CANVAS */
@@ -23,21 +23,15 @@
             z-index: -1;
         }
 
-        /* TOP NAV */
+        /* TOP BAR */
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 25px;
+            padding: 18px 25px;
         }
 
-        /* LEFT NAME */
-        .brand {
-            font-size: 16px; /* kleiner */
-            font-weight: 600;
-            margin-left: 5px; /* meer links */
-        }
-
+        /* LEFT */
         .left {
             display: flex;
             align-items: center;
@@ -51,12 +45,19 @@
             object-fit: cover;
         }
 
-        /* MENU CENTER */
+        .brand {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* MENU (FIXED + SMALL + DIFFERENT FONT STYLE) */
         .menu {
             display: flex;
-            gap: 18px;
-            font-size: 13px;
-            opacity: 0.8;
+            gap: 16px;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0.75;
         }
 
         .menu a {
@@ -69,11 +70,10 @@
             color: red;
         }
 
-        /* SOCIALS RIGHT */
+        /* RIGHT SOCIALS */
         .socials {
             display: flex;
             gap: 12px;
-            margin-right: -10px; /* meer naar rechts */
         }
 
         .socials img {
@@ -90,7 +90,7 @@
         /* HERO */
         .hero {
             text-align: center;
-            margin-top: 80px;
+            margin-top: 90px;
         }
 
         .hero h1 {
@@ -99,33 +99,18 @@
         }
 
         .hero p {
-            max-width: 700px;
+            max-width: 650px;
             margin: 15px auto;
             color: #aaa;
         }
 
-        /* SEARCH (sneller, geen lag) */
-        .search {
-            margin-top: 25px;
-        }
-
+        /* SEARCH */
         .search input {
             width: 380px;
             padding: 12px;
             border-radius: 10px;
             border: none;
             outline: none;
-            font-size: 14px;
-        }
-
-        /* PAGE FADE */
-        .fade {
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -143,7 +128,7 @@
         <div class="brand">JustdonnyScenepacks</div>
     </div>
 
-    <!-- MENU -->
+    <!-- MENU (NOW CORRECT) -->
     <div class="menu">
         <a href="#">Home</a>
         <a href="#">Socials</a>
@@ -154,7 +139,7 @@
         <a href="#">About</a>
     </div>
 
-    <!-- SOCIALS -->
+    <!-- RIGHT -->
     <div class="socials">
         <a href="#"><img src="discord.png"></a>
         <a href="#"><img src="tiktok.png"></a>
@@ -166,19 +151,16 @@
 </div>
 
 <!-- HERO -->
-<div class="hero fade">
+<div class="hero">
     <h1>JustdonnyScenepacks</h1>
-
-    <p>
-        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
-    </p>
+    <p>A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.</p>
 
     <div class="search">
         <input type="text" placeholder="Search scenepacks...">
     </div>
 </div>
 
-<!-- 🔥 RED MOVING LINES BACKGROUND -->
+<!-- 🔥 BETTER RED GLOW LINE BACKGROUND -->
 <script>
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
@@ -188,12 +170,12 @@ canvas.height = window.innerHeight;
 
 let lines = [];
 
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 80; i++) {
     lines.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        length: Math.random() * 80,
-        speed: 0.5 + Math.random(),
+        len: 40 + Math.random() * 80,
+        speed: 0.3 + Math.random() * 0.8
     });
 }
 
@@ -202,15 +184,20 @@ function draw() {
 
     for (let l of lines) {
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(255,0,0,0.25)";
+
+        // 🔥 glowing red lines
+        ctx.strokeStyle = "rgba(255,0,0,0.35)";
+        ctx.shadowColor = "red";
+        ctx.shadowBlur = 8;
+
         ctx.moveTo(l.x, l.y);
-        ctx.lineTo(l.x, l.y + l.length);
+        ctx.lineTo(l.x, l.y + l.len);
         ctx.stroke();
 
         l.y += l.speed;
 
         if (l.y > canvas.height) {
-            l.y = -20;
+            l.y = -50;
             l.x = Math.random() * canvas.width;
         }
     }
