@@ -11,69 +11,66 @@
             color: white;
         }
 
-        header {
-            padding: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px;
         }
 
-        .card {
-            background: #1a1a22;
-            border-radius: 12px;
-            overflow: hidden;
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .card img {
-            width: 100%;
-            height: 250px;
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             object-fit: cover;
         }
 
-        .card p {
-            padding: 10px;
+        .name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* CENTER */
+        .center {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .center h1 {
+            font-size: 45px;
             margin: 0;
         }
 
-        .btn {
-            display: block;
-            padding: 10px;
-            text-align: center;
-            background: #2a2a3a;
-            color: white;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background: #3a3a55;
+        .center p {
+            max-width: 650px;
+            margin: 15px auto;
+            color: #b5b5b5;
+            font-size: 15px;
         }
     </style>
 </head>
 
 <body>
 
-<header>Justdonny Scenepacks</header>
-
-<div class="grid">
-
-    <div class="card">
-        <img src="JOUW-FOTO-1.jpg">
-        <p>Scenepack 1</p>
-        <a class="btn" href="#">Bekijk</a>
+<!-- HEADER -->
+<div class="header">
+    <div class="left">
+        <img src="logo.png" class="logo">
+        <span class="name">JouwNaam</span>
     </div>
+</div>
 
-    <div class="card">
-        <img src="JOUW-FOTO-2.jpg">
-        <p>Scenepack 2</p>
-        <a class="btn" href="#">Bekijk</a>
-    </div>
-
+<!-- CENTER -->
+<div class="center">
+    <h1>JustdonnyScenepacks</h1>
+    <p>A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.</p>
 </div>
 
 </body>
