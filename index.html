@@ -14,34 +14,30 @@
             overflow: hidden;
         }
 
-        /* 🔥 BACKGROUND */
         canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* BELANGRIJK: achter alles */
+            z-index: -1;
         }
 
-        /* TOP */
         .topbar {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
             padding: 18px 25px;
             position: relative;
-            z-index: 2; /* BELANGRIJK: boven canvas */
+            z-index: 2;
         }
 
-        /* LOGO LEFT */
         .logo {
             width: 60px;
             height: 60px;
             border-radius: 50%;
         }
 
-        /* MENU */
         .menu {
             display: flex;
             gap: 25px;
@@ -59,12 +55,10 @@
             color: red;
         }
 
-        /* SOCIALS RIGHT (FIXED VISIBILITY) */
         .socials {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
-            z-index: 2;
         }
 
         .socials img {
@@ -78,7 +72,6 @@
             transform: scale(1.2);
         }
 
-        /* HERO */
         .hero {
             text-align: center;
             margin-top: 90px;
@@ -95,7 +88,6 @@
             color: #aaa;
         }
 
-        /* SEARCH */
         .search-box {
             display: flex;
             justify-content: center;
@@ -111,10 +103,21 @@
             width: 100%;
             padding: 12px 50px;
             border-radius: 10px;
-            border: 1px solid rgba(255,0,0,0.4);
+            border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
             color: white;
             outline: none;
+            transition: 0.25s ease;
+        }
+
+        .search-wrapper:hover input {
+            border: 1px solid red;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+        }
+
+        .search-wrapper input:focus {
+            border: 1px solid red;
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.85);
         }
 
         .icon-left {
@@ -124,33 +127,6 @@
             transform: translateY(-50%);
             opacity: 0.7;
         }
-
-        /* 🔥 ENTER ICON FIX (meer naar rechts) */
-        .icon-right {
-    position: absolute;
-    right: 12px; /* helemaal tegen de rand van input */
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.7;
-}
-        /* SEARCH WRAPPER */
-.search-wrapper { ... }
-
-/* INPUT STYLE */
-.search-wrapper input { ... }
-
-/* ICON LEFT */
-.icon-left { ... }
-
-/* ICON RIGHT */
-.icon-right { ... }   ← hier blijft hij
-
-/* 🔥 GLOW EFFECT (NIEUW) */
-.search-wrapper input:focus { ... }
-.search-wrapper:hover input { ... }
-             
-        }
-        
     </style>
 </head>
 
@@ -171,20 +147,39 @@
         <a href="#">About</a>
     </div>
 
-    <div class="socials">
-        <a href="#"><img src="discord.png"></a>
-        <a href="#"><img src="tiktok.png"></a>
-        <a href="#"><img src="instagram.png"></a>
-        <a href="#"><img src="youtube.png"></a>
-        <a href="#"><img src="payhip.png"></a>
-    </div>
+    <!-- 🔥 SOCIAL LINKS FIXED -->
+   <div class="socials">
+
+    <a href="https://discord.gg/PddGAqZx" target="_blank">
+        <img src="discord.png">
+    </a>
+
+    <a href="https://www.tiktok.com/@justdonny._" target="_blank">
+        <img src="tiktok.png">
+    </a>
+
+    <a href="https://www.instagram.com/justdonny._/?next=%2F" target="_blank">
+        <img src="instagram.png">
+    </a>
+
+    <a href="https://www.youtube.com/@Donny010/videos" target="_blank">
+        <img src="youtube.png">
+    </a>
+
+    <a href="https://payhip.com/JustDonnyStore" target="_blank">
+        <img src="payhip.png">
+    </a>
 
 </div>
 
 <!-- HERO -->
 <div class="hero">
+
     <div class="title">JUSTDONNYSCENEPACKS</div>
-    <div class="desc">A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.</div>
+
+    <div class="desc">
+        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
+    </div>
 
     <div class="search-box">
         <div class="search-wrapper">
@@ -192,9 +187,10 @@
             <input type="text" placeholder="Search scenepacks...">
         </div>
     </div>
+
 </div>
 
-<!-- 🔥 BACKGROUND (OLD STABLE VERSION) -->
+<!-- BACKGROUND -->
 <script>
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
