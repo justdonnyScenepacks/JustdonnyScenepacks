@@ -8,11 +8,12 @@
             margin: 0;
             font-family: Arial;
             color: white;
+            overflow-x: hidden;
 
-            /* 🎨 MOVING BACKGROUND */
+            /* 🔥 SMOOTH ANIMATED BACKGROUND (FAST + CLEAN) */
             background: linear-gradient(-45deg, #0b0b0f, #141424, #0f0f1c, #1a1a2a);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
+            background-size: 300% 300%;
+            animation: gradientMove 6s ease infinite;
         }
 
         @keyframes gradientMove {
@@ -36,21 +37,39 @@
         }
 
         .logo {
-            width: 60px;   /* 👈 groter gemaakt */
-            height: 60px;
+            width: 80px;   /* 🔥 groter logo */
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
         }
 
         .name {
             font-weight: bold;
-            font-size: 20px;
+            font-size: 22px;
+        }
+
+        /* SOCIAL ICONS */
+        .socials {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .socials img {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .socials img:hover {
+            transform: scale(1.2);
         }
 
         /* CENTER */
         .center {
             text-align: center;
-            margin-top: 80px;
+            margin-top: 70px;
         }
 
         .center h1 {
@@ -64,18 +83,18 @@
             color: #b5b5b5;
         }
 
-        /* SEARCH */
+        /* SEARCH (sneller + cleaner) */
         .search-box {
             margin-top: 25px;
         }
 
         .search-box input {
-            width: 350px;
-            padding: 14px;
+            width: 360px;
+            padding: 12px;
             border-radius: 10px;
             border: none;
             outline: none;
-            font-size: 15px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -84,10 +103,38 @@
 
 <!-- HEADER -->
 <div class="header">
+
+    <!-- LEFT -->
     <div class="left">
         <img src="logo.png" class="logo">
-        <span class="name">JouwNaam</span>
+        <span class="name">JustdonnyScenepacks</span>
     </div>
+
+    <!-- RIGHT SOCIALS -->
+    <div class="socials">
+
+        <a href="https://discord.com" target="_blank">
+            <img src="discord.png">
+        </a>
+
+        <a href="https://tiktok.com" target="_blank">
+            <img src="tiktok.png">
+        </a>
+
+        <a href="https://instagram.com" target="_blank">
+            <img src="instagram.png">
+        </a>
+
+        <a href="https://youtube.com" target="_blank">
+            <img src="youtube.png">
+        </a>
+
+        <a href="https://payhip.com" target="_blank">
+            <img src="payhip.png">
+        </a>
+
+    </div>
+
 </div>
 
 <!-- CENTER -->
@@ -98,7 +145,6 @@
         A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
     </p>
 
-    <!-- SEARCH -->
     <div class="search-box">
         <input type="text" placeholder="Search scenepacks...">
     </div>
