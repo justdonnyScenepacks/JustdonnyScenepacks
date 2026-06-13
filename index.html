@@ -93,27 +93,14 @@
             color: #b44cff;
         }
 
-   .page {
-    position: absolute;
+ .page {
+    position: relative;
+    display: none;
     width: 100%;
-    top: 0;
-    left: 0;
-    padding-top: 120px;
-
-    opacity: 0;
-    transform: translateY(40px) scale(1.01);
-    pointer-events: none;
-
-    transition: 0.6s ease;
-
-    z-index: 2; /* 🔥 belangrijk */
 }
-
 .page.active {
+    display: block;
     opacity: 1;
-    transform: translateY(0px) scale(1);
-    pointer-events: auto;
-    z-index: 1;
 }
 
         .bg-title {
@@ -132,20 +119,10 @@
         }
         
 .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
     position: absolute;
     left: 50%;
     top: 50%;
-
-    transform: translate(-50%, -50%) scale(1);
-
-    z-index: 2;
-
-    transition: transform 0.6s ease;
+    transform: translate(-50%, -50%);
 }
         .title {
             font-size: 65px;
@@ -386,7 +363,7 @@
         
 /* HERO SHIFT */
 body.pack-open .hero {
-    transform: translate(-50%, -50%) scale(0.75) translateX(-220px);
+    transform: none;
 }
 
 /* FILTERS FADE OUT */
