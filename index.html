@@ -73,15 +73,26 @@
             transform: scale(1.2);
         }
 
+        /* PAGES */
+        .page {
+            display: none;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            padding-top: 120px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* HERO */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
-            margin-top: 90px;
-            width: 100%;
-            transition: 0.25s;
         }
 
         .title {
@@ -95,11 +106,7 @@
             color: #aaa;
         }
 
-        /* PAGES */
-        .page { display: none; }
-        .active { display: flex; }
-
-        /* SEARCH */
+        /* SEARCH (TERUG NAAR JOUW ORIGINELE GOEDE SIZE) */
         .search-box {
             display: flex;
             justify-content: center;
@@ -107,8 +114,8 @@
         }
 
         .search-wrapper {
-            width: 420px;
             position: relative;
+            width: 420px; /* oude goede versie */
         }
 
         .search-wrapper input {
@@ -118,6 +125,7 @@
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
             color: white;
+            outline: none;
         }
 
         .icon-left {
@@ -139,73 +147,75 @@
             border: 1px solid rgba(255,0,0,0.35);
             padding: 8px 14px;
             border-radius: 999px;
+            font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
         }
 
         .filter:hover {
-            box-shadow: 0 0 12px red;
+            border: 1px solid red;
+            box-shadow: 0 0 10px red;
             transform: scale(1.05);
         }
 
-        /* REQUEST */
-        .request-wrap {
-            margin-top: 12px;
-        }
-
-        .request-btn {
-            background: rgba(255,0,0,0.25);
-            border: 1px solid red;
-            padding: 10px 18px;
-            border-radius: 999px;
-            cursor: pointer;
-        }
-
         /* SOCIALS PAGE */
+        .social-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
         .social-card {
             width: 420px;
-            border: 1px solid rgba(255,0,0,0.4);
+            padding: 16px;
+            border: 1px solid rgba(255,0,0,0.3);
             border-radius: 12px;
-            padding: 15px;
-            margin: 10px;
+            transition: 0.25s;
             cursor: pointer;
-            transition: 0.2s;
         }
 
         .social-card:hover {
-            box-shadow: 0 0 15px red;
-            transform: scale(1.03);
+            box-shadow: 0 0 18px red;
+            border: 1px solid red;
+            transform: scale(1.02);
         }
 
         .social-title {
             font-weight: 900;
-            font-size: 18px;
+            font-size: 14px;
         }
 
-        .social-sub {
+        .social-text {
             font-size: 12px;
             color: #aaa;
+            margin-top: 6px;
         }
 
         /* ABOUT */
         .about-box {
             width: 500px;
+            margin: auto;
             border: 1px solid red;
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
-        /* TRANSITION EFFECT */
-        .transition {
-            animation: transitionFX 0.35s ease;
+        /* TRANSITION OVERLAY (CC WIDE WIPE) */
+        .wipe {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: red;
+            z-index: 999;
+            transition: 0.6s ease;
         }
 
-        @keyframes transitionFX {
-            0% { transform: scale(1); filter: blur(0px); }
-            50% { transform: scale(1.06); filter: blur(6px); }
-            100% { transform: scale(1); filter: blur(0px); }
+        .wipe.active {
+            left: 0;
         }
-
     </style>
 </head>
 
@@ -213,13 +223,15 @@
 
 <canvas id="bg"></canvas>
 
+<div class="wipe" id="wipe"></div>
+
 <div class="topbar">
     <div><img src="logo.png" class="logo"></div>
 
     <div class="menu">
-        <a onclick="showPage('home')">Home</a>
-        <a onclick="showPage('socials')">Socials</a>
-        <a onclick="showPage('about')">About</a>
+        <a onclick="go('home')">Home</a>
+        <a onclick="go('socials')">Socials</a>
+        <a onclick="go('about')">About</a>
     </div>
 
     <div class="socials">
@@ -232,73 +244,69 @@
 </div>
 
 <!-- HOME -->
-<div id="home" class="hero page active">
-    <div class="title">JUSTDONNYSCENEPACKS</div>
+<div class="page active" id="home">
+    <div class="hero">
+        <div class="title">JUSTDONNYSCENEPACKS</div>
 
-    <div class="desc">
-        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and YouTube creators.
-    </div>
-
-    <div class="search-box">
-        <div class="search-wrapper">
-            <div class="icon-left">🔍</div>
-            <input type="text" placeholder="Search scenepacks...">
+        <div class="desc">
+            A collection of high-quality Dutch scenepacks.
         </div>
-    </div>
 
-    <div class="filters">
-        <div class="filter">🌍 All</div>
-        <div class="filter">🎬 Films</div>
-        <div class="filter">📺 Series</div>
-        <div class="filter">▶ YouTube</div>
-        <div class="filter">⚽ Football</div>
-    </div>
+        <div class="search-box">
+            <div class="search-wrapper">
+                <div class="icon-left">🔍</div>
+                <input type="text" placeholder="Search scenepacks...">
+            </div>
+        </div>
 
-    <div class="request-wrap">
-        <button class="request-btn">Request Scenepack</button>
+        <div class="filters">
+            <div class="filter">🌍 All</div>
+            <div class="filter">🎬 Films</div>
+            <div class="filter">📺 Series</div>
+            <div class="filter">▶ YouTube</div>
+            <div class="filter">⚽ Football</div>
+        </div>
     </div>
 </div>
 
 <!-- SOCIALS -->
-<div id="socials" class="hero page">
+<div class="page" id="socials">
+    <div class="social-grid">
 
-    <div class="social-card" onclick="window.open('https://discord.gg/PddGAqZx')">
-        <div class="social-title">DISCORD</div>
-        <div class="social-sub">Join Server</div>
-    </div>
+        <div class="social-card">
+            <div class="social-title">DISCORD</div>
+            <div class="social-text">Join my server</div>
+        </div>
 
-    <div class="social-card" onclick="window.open('https://www.tiktok.com/@justdonny._')">
-        <div class="social-title">TIKTOK</div>
-        <div class="social-sub">Watch My Edits</div>
-    </div>
+        <div class="social-card">
+            <div class="social-title">TIKTOK</div>
+            <div class="social-text">Watch my edits</div>
+        </div>
 
-    <div class="social-card" onclick="window.open('https://www.instagram.com/justdonny._')">
-        <div class="social-title">INSTAGRAM</div>
-        <div class="social-sub">See My Scenepacks Too</div>
-    </div>
+        <div class="social-card">
+            <div class="social-title">INSTAGRAM</div>
+            <div class="social-text">Scenepacks & clips</div>
+        </div>
 
-    <div class="social-card" onclick="window.open('https://www.youtube.com/@Donny010')">
-        <div class="social-title">YOUTUBE</div>
-        <div class="social-sub">Subscribe</div>
-    </div>
+        <div class="social-card">
+            <div class="social-title">YOUTUBE</div>
+            <div class="social-text">Subscribe for more</div>
+        </div>
 
-    <div class="social-card" onclick="window.open('https://payhip.com/JustDonnyStore')">
-        <div class="social-title">PAYHIP</div>
-        <div class="social-sub">Buy My Presets</div>
+        <div class="social-card">
+            <div class="social-title">PAYHIP</div>
+            <div class="social-text">Buy my presets</div>
+        </div>
+
     </div>
 </div>
 
 <!-- ABOUT -->
-<div id="about" class="hero page">
-
+<div class="page" id="about">
     <div class="about-box">
-        <div class="social-title">ABOUT ME</div>
-        <br>
-        <div class="social-sub">
-            (text komt later hier)
-        </div>
+        <h2>ABOUT ME</h2>
+        <p>Text komt later.</p>
     </div>
-
 </div>
 
 <script>
@@ -337,7 +345,6 @@ function draw() {
 
         for (let j = i + 1; j < points.length; j++) {
             let p2 = points[j];
-
             let dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
 
             if (dist < 160) {
@@ -351,18 +358,22 @@ function draw() {
 
     requestAnimationFrame(draw);
 }
-
 draw();
 
-/* PAGE SWITCH + TRANSITION */
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => {
-        p.classList.remove('active');
-        p.classList.remove('transition');
-    });
+/* PAGE SWITCH + WIPE */
+function go(page) {
+    const wipe = document.getElementById("wipe");
 
-    const page = document.getElementById(pageId);
-    page.classList.add('active', 'transition');
+    wipe.classList.add("active");
+
+    setTimeout(() => {
+        document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+        document.getElementById(page).classList.add("active");
+    }, 300);
+
+    setTimeout(() => {
+        wipe.classList.remove("active");
+    }, 600);
 }
 </script>
 
