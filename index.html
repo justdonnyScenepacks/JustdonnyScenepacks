@@ -227,24 +227,24 @@
     color: red;
 }
 
-/* ALL standaard glow */
-.filter:first-child {
-    box-shadow: 0 0 12px red;
-    border: 1px solid red;
-    color: red;
-}
-
 .pack {
     width: 220px;
     height: 260px;
     border-radius: 18px;
     overflow: hidden;
     border: 1px solid rgba(255,0,0,0.35);
-    box-shadow: 0 0 10px rgba(255,0,0,0.2);
+    box-shadow: 0 0 12px rgba(255,0,0,0.35);
     cursor: pointer;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-opacity: 1;
-transform: scale(1);
+
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+        .pack.hide {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
 }
 
 .pack:hover {
@@ -263,6 +263,7 @@ transform: scale(1);
     height: 2px;
     background: red;
     margin: 6px 10px;
+    box-shadow: 0 0 8px red;
 }
 
 .pack-name {
@@ -270,6 +271,12 @@ transform: scale(1);
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 2px;
+    text-shadow: 0 0 8px red;
+}
+
+        .pack.show {
+    opacity: 1;
+    transform: scale(1);
 }
 
         /* REQUEST REMOVED */
@@ -368,12 +375,18 @@ transform: scale(1);
             <div class="filter">⚽ Football</div>
         </div>
 
-        <div class="scenepacks">
-    
+       <div class="scenepacks">
+
     <div class="pack" data-type="football">
         <img src="feyenoord.jpg">
         <div class="pack-line"></div>
         <div class="pack-name">FEYENOORD</div>
+    </div>
+
+    <div class="pack" data-type="films">
+        <img src="film.jpg">
+        <div class="pack-line"></div>
+        <div class="pack-name">MOVIE PACK</div>
     </div>
 
 </div>
@@ -508,10 +521,15 @@ function draw() {
 }
 
 draw();
-
-    // FILTER ACTIVE STATE
+    
 const filters = document.querySelectorAll(".filter");
+const packs = document.querySelectorAll(".pack");
 
+    packs.forEach(p => {
+    p.classList.add("show");
+});
+
+// active glow
 filters.forEach(f => {
     f.addEventListener("click", () => {
         filters.forEach(x => x.classList.remove("active"));
@@ -519,47 +537,38 @@ filters.forEach(f => {
     });
 });
 
-// default = ALL glow bij start
 filters[0].classList.add("active");
 
-const packs = document.querySelectorAll(".pack");
-const filterBtns = document.querySelectorAll(".filter");
-
-function showPack(pack) {
-    pack.style.display = "block";
-    requestAnimationFrame(() => {
-       pack.style.opacity = "1";
-pack.style.transform = "scale(1)";
-    });
-}
-
-function hidePack(pack) {
-  pack.style.opacity = "0";
-pack.style.transform = "scale(0.95)";
-    setTimeout(() => {
-        pack.style.display = "none";
-    }, 300);
-}
-
-filterBtns.forEach(btn => {
+// FILTER SYSTEM (SHOW/HIDE FIX)
+filters.forEach(btn => {
     btn.addEventListener("click", () => {
 
         const type = btn.textContent.toLowerCase();
+        const cleanType = type.replace(/🌍|🎬|📺|▶|⚽/g, "").trim();
 
         packs.forEach(pack => {
+
             const packType = pack.dataset.type;
 
+            // ALL
             if (type.includes("all")) {
-                showPack(pack);
+                pack.classList.add("show");
+                pack.classList.remove("hide");
                 return;
             }
 
-            if (type.includes("football") && packType === "football") {
-                showPack(pack);
-            } else {
-                hidePack(pack);
+            // MATCH
+            if (packType === cleanType) {
+                pack.classList.add("show");
+                pack.classList.remove("hide");
+            } 
+            else {
+                pack.classList.remove("show");
+                pack.classList.add("hide");
             }
+
         });
+
     });
 });
 </script>
