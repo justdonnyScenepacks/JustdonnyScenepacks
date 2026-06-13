@@ -96,29 +96,26 @@
         .search-box {
             display: flex;
             justify-content: center;
-            align-items: center;
-            width: 100%;
             margin-top: 25px;
         }
 
-        /* 🔥 SEARCH FIX (groter + rechterkant “afgekapt” gevoel) */
+        /* 🔧 ONLY SEARCH FIX */
         .search-wrapper {
             position: relative;
-            width: 500px;          /* groter */
-            transform: translateX(-15px); /* kleine correctie naar links */
-            overflow: hidden;      /* zorgt voor “eind stukje korter” gevoel */
-            border-radius: 10px;
+            width: 400px;          /* iets minder lang (fix overflow Football) */
+            transform: translateX(-8px); /* subtiele terug naar midden */
         }
 
         .search-wrapper input {
             width: 100%;
-            padding: 14px 60px 14px 50px;
+            padding: 14px 55px 14px 50px;
             border-radius: 10px;
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
             color: white;
             outline: none;
             transition: 0.25s ease;
+            box-sizing: border-box; /* 🔴 FIX outline klopt weer */
         }
 
         .search-wrapper:hover input {
@@ -139,15 +136,12 @@
             opacity: 0.7;
         }
 
-        /* 🔥 FIX: FILTERS echt gecentreerd op 1 lijn */
         .filters {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 12px;
             margin-top: 18px;
-            flex-wrap: nowrap;   /* belangrijk: niet onder elkaar */
-            width: 100%;
+            flex-wrap: wrap;
         }
 
         .filter {
@@ -158,7 +152,7 @@
             border-radius: 999px;
             cursor: pointer;
             font-size: 12px;
-            transition: 0.2s ease;
+            transition: 0.2s;
         }
 
         .filter:hover {
@@ -188,7 +182,6 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
             transform: scale(1.05);
         }
-
     </style>
 </head>
 
