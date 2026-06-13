@@ -105,4 +105,206 @@
 
         .search-wrapper {
             position: relative;
-            width: 400px
+
+            /* 🔥 ONLY CHANGES */
+            width: 460px;
+            margin-left: -35px;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 14px 55px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,0,0,0.35);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            outline: none;
+            transition: 0.25s ease;
+        }
+
+        .search-wrapper:hover input {
+            border: 1px solid red;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+        }
+
+        .search-wrapper input:focus {
+            border: 1px solid red;
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.85);
+        }
+
+        .icon-left {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+        }
+
+        /* FILTERS */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .filter {
+            background: transparent;
+            border: 1px solid rgba(255, 0, 0, 0.35);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .filter:hover {
+            border: 1px solid red;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transform: scale(1.05);
+        }
+
+        .filter.active {
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid red;
+        }
+
+        .request-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .request-btn {
+            background: rgba(255, 0, 0, 0.25);
+            border: 1px solid rgba(255, 0, 0, 0.6);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s ease;
+        }
+
+        .request-btn:hover {
+            background: rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="topbar">
+
+    <div>
+        <img src="logo.png" class="logo">
+    </div>
+
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href="#">Socials</a>
+        <a href="#">About</a>
+    </div>
+
+    <div class="socials">
+        <a href="https://discord.gg/PddGAqZx"><img src="discord.png"></a>
+        <a href="https://www.tiktok.com/@justdonny._"><img src="tiktok.png"></a>
+        <a href="https://www.instagram.com/justdonny._"><img src="instagram.png"></a>
+        <a href="https://www.youtube.com/@Donny010"><img src="youtube.png"></a>
+        <a href="https://payhip.com/JustDonnyStore"><img src="payhip.png"></a>
+    </div>
+
+</div>
+
+<div class="hero">
+
+    <div class="title">JUSTDONNYSCENEPACKS</div>
+
+    <div class="desc">
+        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
+    </div>
+
+    <div class="search-box">
+        <div class="search-wrapper">
+            <div class="icon-left">🔍</div>
+            <input type="text" placeholder="Search scenepacks...">
+        </div>
+    </div>
+
+    <div class="filters">
+        <div class="filter active">🌍 All</div>
+        <div class="filter">🎬 Films</div>
+        <div class="filter">📺 Series</div>
+        <div class="filter">▶ YouTube</div>
+        <div class="filter">⚽ Football</div>
+    </div>
+
+    <div class="request-wrap">
+        <button class="request-btn">Request Scenepack</button>
+    </div>
+
+</div>
+
+<script>
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let points = [];
+
+for (let i = 0; i < 30; i++) {
+    points.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = "rgba(255,0,0,0.25)";
+    ctx.shadowColor = "red";
+    ctx.shadowBlur = 10;
+
+    for (let i = 0; i < points.length; i++) {
+        let p1 = points[i];
+
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        if (p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
+
+        for (let j = i + 1; j < points.length; j++) {
+            let p2 = points[j];
+
+            let dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+            if (dist < 160) {
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+</body>
+</html>
