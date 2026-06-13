@@ -284,50 +284,6 @@
     transform: scale(1);
 }
 
-        .pack-panel {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 400px;
-    height: 100vh;
-    background: rgba(0,0,0,0.95);
-    border-left: 2px solid red;
-    box-shadow: 0 0 20px red;
-    transition: 0.5s ease;
-    z-index: 999;
-}
-
-.pack-panel.active {
-    right: 0;
-}
-
-        /* LINKS SHIFT EFFECT */
-body.pack-open .hero {
-    transform: translateX(-120px);
-    transition: 0.6s ease;
-}
-
-/* TITLE + SEARCH + DESC ANIMATIE */
-body.pack-open .title,
-body.pack-open .search-box,
-body.pack-open .filters {
-    transform: translateX(-120px);
-    opacity: 0.6;
-    transition: 0.6s ease;
-}
-
-/* DESCRIPTION FADE OUT */
-body.pack-open .desc {
-    opacity: 0;
-    transform: translateX(-80px);
-    transition: 0.4s ease;
-}
-
-/* PACKS AREA SHIFT LEFT LITTLE */
-body.pack-open .scenepacks {
-    transform: translateX(-120px);
-    transition: 0.6s ease;
-}
         /* REQUEST REMOVED */
 
         .social-card {
@@ -426,35 +382,13 @@ body.pack-open .scenepacks {
 
 <div class="scenepacks">
 
-   <div class="pack" data-type="football" onclick="openPack('feyenoord')">
-    <img src="feyenoord.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">FEYENOORD</div>
-</div>
+    <div class="pack" data-type="football">
+        <img src="feyenoord.jpg">
+        <div class="pack-line"></div>
+        <div class="pack-name">FEYENOORD</div>
+    </div>
 
     </div> <!-- scenepacks -->
-
-        <div id="packPanel" class="pack-panel">
-    <div class="pack-panel-title">FEYENOORD PACKS</div>
-
-    <div class="pack-panel-scroll">
-        <div class="pack-item">
-            <img src="feyenoord1.jpg">
-            <div class="pack-item-name">Clip 1</div>
-        </div>
-
-        <div class="pack-item">
-            <img src="feyenoord2.jpg">
-            <div class="pack-item-name">Clip 2</div>
-        </div>
-
-        <div class="pack-item">
-            <img src="feyenoord3.jpg">
-            <div class="pack-item-name">Clip 3</div>
-        </div>
-    </div>
-</div>
-        
 </div> <!-- hero -->
 </div> <!-- home -->
 
@@ -532,17 +466,6 @@ function go(page) {
 
     document.querySelectorAll(".menu a").forEach(a => a.classList.remove("active"));
     document.getElementById("nav-" + page).classList.add("active");
-}
-function openPack(name) {
-    if (name === "feyenoord") {
-        document.getElementById("packPanel").classList.add("active");
-        document.body.classList.add("pack-open");
-    }
-}
-
-function closePack() {
-    document.getElementById("packPanel").classList.remove("active");
-    document.body.classList.remove("pack-open");
 }
 
 const canvas = document.getElementById("bg");
