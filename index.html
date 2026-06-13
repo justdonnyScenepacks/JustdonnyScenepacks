@@ -102,11 +102,11 @@
         }
 
         /* ✅ SEARCH FIX (korter zodat hij niet over Football gaat) */
-        .search-wrapper {
-            position: relative;
-            width: 430px; /* was te groot → nu netjes */
-        }
-
+       .search-wrapper {
+    position: relative;
+    width: 400px;
+    margin: 0 auto; /* zorgt echte center */
+}
         .search-wrapper input {
             width: 100%;
             padding: 14px 55px 14px 50px;
@@ -137,18 +137,17 @@
         }
 
         /* ✅ FILTERS FIX (perfect gecentreerd incl “Series” echt in midden) */
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 18px;
+      .filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
 
-            width: 100%;
-            max-width: 520px;
-            margin-left: auto;
-            margin-right: auto;
-            flex-wrap: wrap;
-        }
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
         .filter {
             background: transparent;
