@@ -28,8 +28,6 @@
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
             padding: 18px 25px;
-            position: relative;
-            z-index: 2;
         }
 
         .logo {
@@ -79,7 +77,6 @@
             justify-content: center;
             text-align: center;
             margin-top: 90px;
-            width: 100%;
         }
 
         .title {
@@ -93,19 +90,18 @@
             color: #aaa;
         }
 
+        /* ===== SEARCH FIX ===== */
         .search-box {
             display: flex;
             justify-content: center;
-            align-items: center;
-            width: 100%;
             margin-top: 25px;
+            overflow: visible; /* FIX: glow wordt niet meer afgesneden */
         }
 
-        /* 🔥 SEARCH FIX */
         .search-wrapper {
             position: relative;
-            width: 455px;          /* iets groter */
-            transform: translateX(8px); /* alles iets naar rechts zodat “Series” perfect center voelt */
+            width: 500px; /* 🔥 iets langer gemaakt */
+            overflow: visible; /* FIX glow */
         }
 
         .search-wrapper input {
@@ -121,12 +117,12 @@
 
         .search-wrapper:hover input {
             border: 1px solid red;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 14px rgba(255, 0, 0, 0.75);
         }
 
         .search-wrapper input:focus {
             border: 1px solid red;
-            box-shadow: 0 0 18px rgba(255, 0, 0, 0.85);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
         }
 
         .icon-left {
@@ -137,14 +133,15 @@
             opacity: 0.7;
         }
 
-        /* 🔥 FILTER FIX (alles netjes naast elkaar + iets naar rechts) */
+        /* ===== FILTERS FIX ===== */
         .filters {
             display: flex;
             justify-content: center;
             gap: 12px;
             margin-top: 18px;
-            flex-wrap: nowrap;
-            transform: translateX(6px);
+            flex-wrap: wrap;
+
+            transform: translateX(10px); /* 🔥 iets naar rechts zoals je vroeg */
         }
 
         .filter {
@@ -177,7 +174,6 @@
             padding: 10px 18px;
             border-radius: 999px;
             cursor: pointer;
-            transition: 0.2s ease;
         }
 
         .request-btn:hover {
@@ -202,11 +198,11 @@
     </div>
 
     <div class="socials">
-        <a href="https://discord.gg/PddGAqZx"><img src="discord.png"></a>
-        <a href="https://www.tiktok.com/@justdonny._"><img src="tiktok.png"></a>
-        <a href="https://www.instagram.com/justdonny._"><img src="instagram.png"></a>
-        <a href="https://www.youtube.com/@Donny010"><img src="youtube.png"></a>
-        <a href="https://payhip.com/JustDonnyStore"><img src="payhip.png"></a>
+        <a href="#"><img src="discord.png"></a>
+        <a href="#"><img src="tiktok.png"></a>
+        <a href="#"><img src="instagram.png"></a>
+        <a href="#"><img src="youtube.png"></a>
+        <a href="#"><img src="payhip.png"></a>
     </div>
 </div>
 
