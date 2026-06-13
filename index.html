@@ -101,19 +101,24 @@
             margin-top: 25px;
         }
 
-        /* 🔧 FIX: same width, but visually shorter on right side */
+        /* 🔧 FIXED SEARCH */
         .search-wrapper {
             position: relative;
-            width: 420px;
 
-            /* zorgt dat rechterkant minder “uitsteekt” gevoel */
-            padding-right: 18px;
+            /* groter gemaakt */
+            width: 480px;
+
+            /* “einde korter gevoel” fix */
+            padding-right: 10px;
             box-sizing: border-box;
         }
 
         .search-wrapper input {
             width: 100%;
-            padding: 14px 60px 14px 50px;
+
+            /* iets meer padding links, minder rechts */
+            padding: 14px 55px 14px 50px;
+
             border-radius: 10px;
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
