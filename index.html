@@ -29,7 +29,7 @@
             align-items: center;
             padding: 18px 25px;
             position: relative;
-            z-index: 2;
+            z-index: 5;
         }
 
         .logo {
@@ -49,6 +49,7 @@
             color: white;
             text-decoration: none;
             opacity: 0.8;
+            cursor: pointer;
         }
 
         .menu a:hover {
@@ -80,6 +81,7 @@
             text-align: center;
             margin-top: 90px;
             width: 100%;
+            transition: 0.25s;
         }
 
         .title {
@@ -93,17 +95,20 @@
             color: #aaa;
         }
 
+        /* PAGES */
+        .page { display: none; }
+        .active { display: flex; }
+
+        /* SEARCH */
         .search-box {
             display: flex;
             justify-content: center;
             margin-top: 25px;
         }
 
-        /* 🔧 ONLY SEARCH FIX */
         .search-wrapper {
+            width: 420px;
             position: relative;
-            width: 400px;          /* iets minder lang (fix overflow Football) */
-            transform: translateX(-8px); /* subtiele terug naar midden */
         }
 
         .search-wrapper input {
@@ -113,19 +118,6 @@
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
             color: white;
-            outline: none;
-            transition: 0.25s ease;
-            box-sizing: border-box; /* 🔴 FIX outline klopt weer */
-        }
-
-        .search-wrapper:hover input {
-            border: 1px solid red;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
-        }
-
-        .search-wrapper input:focus {
-            border: 1px solid red;
-            box-shadow: 0 0 18px rgba(255, 0, 0, 0.85);
         }
 
         .icon-left {
@@ -133,55 +125,87 @@
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            opacity: 0.7;
         }
 
+        /* FILTERS */
         .filters {
             display: flex;
             justify-content: center;
             gap: 12px;
             margin-top: 18px;
-            flex-wrap: wrap;
         }
 
         .filter {
-            background: transparent;
-            border: 1px solid rgba(255, 0, 0, 0.35);
-            color: white;
+            border: 1px solid rgba(255,0,0,0.35);
             padding: 8px 14px;
             border-radius: 999px;
             cursor: pointer;
-            font-size: 12px;
             transition: 0.2s;
         }
 
         .filter:hover {
-            border: 1px solid red;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 12px red;
             transform: scale(1.05);
         }
 
+        /* REQUEST */
         .request-wrap {
-            display: flex;
-            justify-content: center;
             margin-top: 12px;
         }
 
         .request-btn {
-            background: rgba(255, 0, 0, 0.25);
-            border: 1px solid rgba(255, 0, 0, 0.6);
-            color: white;
+            background: rgba(255,0,0,0.25);
+            border: 1px solid red;
             padding: 10px 18px;
             border-radius: 999px;
             cursor: pointer;
-            transition: 0.2s ease;
         }
 
-        .request-btn:hover {
-            background: rgba(255, 0, 0, 0.4);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-            transform: scale(1.05);
+        /* SOCIALS PAGE */
+        .social-card {
+            width: 420px;
+            border: 1px solid rgba(255,0,0,0.4);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px;
+            cursor: pointer;
+            transition: 0.2s;
         }
+
+        .social-card:hover {
+            box-shadow: 0 0 15px red;
+            transform: scale(1.03);
+        }
+
+        .social-title {
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .social-sub {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* ABOUT */
+        .about-box {
+            width: 500px;
+            border: 1px solid red;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        /* TRANSITION EFFECT */
+        .transition {
+            animation: transitionFX 0.35s ease;
+        }
+
+        @keyframes transitionFX {
+            0% { transform: scale(1); filter: blur(0px); }
+            50% { transform: scale(1.06); filter: blur(6px); }
+            100% { transform: scale(1); filter: blur(0px); }
+        }
+
     </style>
 </head>
 
@@ -193,25 +217,26 @@
     <div><img src="logo.png" class="logo"></div>
 
     <div class="menu">
-        <a href="#">Home</a>
-        <a href="#">Socials</a>
-        <a href="#">About</a>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('socials')">Socials</a>
+        <a onclick="showPage('about')">About</a>
     </div>
 
     <div class="socials">
-        <a href="https://discord.gg/PddGAqZx"><img src="discord.png"></a>
-        <a href="https://www.tiktok.com/@justdonny._"><img src="tiktok.png"></a>
-        <a href="https://www.instagram.com/justdonny._"><img src="instagram.png"></a>
-        <a href="https://www.youtube.com/@Donny010"><img src="youtube.png"></a>
-        <a href="https://payhip.com/JustDonnyStore"><img src="payhip.png"></a>
+        <img src="discord.png">
+        <img src="tiktok.png">
+        <img src="instagram.png">
+        <img src="youtube.png">
+        <img src="payhip.png">
     </div>
 </div>
 
-<div class="hero">
+<!-- HOME -->
+<div id="home" class="hero page active">
     <div class="title">JUSTDONNYSCENEPACKS</div>
 
     <div class="desc">
-        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and popular YouTube creators.
+        A collection of high-quality Dutch scenepacks featuring films, TV series, football, and YouTube creators.
     </div>
 
     <div class="search-box">
@@ -232,6 +257,48 @@
     <div class="request-wrap">
         <button class="request-btn">Request Scenepack</button>
     </div>
+</div>
+
+<!-- SOCIALS -->
+<div id="socials" class="hero page">
+
+    <div class="social-card" onclick="window.open('https://discord.gg/PddGAqZx')">
+        <div class="social-title">DISCORD</div>
+        <div class="social-sub">Join Server</div>
+    </div>
+
+    <div class="social-card" onclick="window.open('https://www.tiktok.com/@justdonny._')">
+        <div class="social-title">TIKTOK</div>
+        <div class="social-sub">Watch My Edits</div>
+    </div>
+
+    <div class="social-card" onclick="window.open('https://www.instagram.com/justdonny._')">
+        <div class="social-title">INSTAGRAM</div>
+        <div class="social-sub">See My Scenepacks Too</div>
+    </div>
+
+    <div class="social-card" onclick="window.open('https://www.youtube.com/@Donny010')">
+        <div class="social-title">YOUTUBE</div>
+        <div class="social-sub">Subscribe</div>
+    </div>
+
+    <div class="social-card" onclick="window.open('https://payhip.com/JustDonnyStore')">
+        <div class="social-title">PAYHIP</div>
+        <div class="social-sub">Buy My Presets</div>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="hero page">
+
+    <div class="about-box">
+        <div class="social-title">ABOUT ME</div>
+        <br>
+        <div class="social-sub">
+            (text komt later hier)
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -286,6 +353,17 @@ function draw() {
 }
 
 draw();
+
+/* PAGE SWITCH + TRANSITION */
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+        p.classList.remove('transition');
+    });
+
+    const page = document.getElementById(pageId);
+    page.classList.add('active', 'transition');
+}
 </script>
 
 </body>
