@@ -101,15 +101,18 @@
             margin-top: 25px;
         }
 
-        /* ✅ SEARCH FIX (korter zodat hij niet over Football gaat) */
-   .search-wrapper {
-    position: relative;
-    width: 360px; /* echt korter */
-    margin: 0 auto;
-}
+        /* 🔥 SEARCH FIX (groter + rechterkant “afgekapt” gevoel) */
+        .search-wrapper {
+            position: relative;
+            width: 500px;          /* groter */
+            transform: translateX(-15px); /* kleine correctie naar links */
+            overflow: hidden;      /* zorgt voor “eind stukje korter” gevoel */
+            border-radius: 10px;
+        }
+
         .search-wrapper input {
             width: 100%;
-            padding: 14px 55px 14px 50px;
+            padding: 14px 60px 14px 50px;
             border-radius: 10px;
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
@@ -136,18 +139,16 @@
             opacity: 0.7;
         }
 
-        /* ✅ FILTERS FIX (perfect gecentreerd incl “Series” echt in midden) */
-   .filters {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 18px;
-
-    width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
+        /* 🔥 FIX: FILTERS echt gecentreerd op 1 lijn */
+        .filters {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: nowrap;   /* belangrijk: niet onder elkaar */
+            width: 100%;
+        }
 
         .filter {
             background: transparent;
@@ -160,7 +161,6 @@
             transition: 0.2s ease;
         }
 
-        /* 🔥 glow fix */
         .filter:hover {
             border: 1px solid red;
             box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
@@ -188,6 +188,7 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
             transform: scale(1.05);
         }
+
     </style>
 </head>
 
