@@ -101,18 +101,16 @@
             margin-top: 25px;
         }
 
-        /* 🔥 SEARCH FIX (groter + rechterkant “afgekapt” gevoel) */
+        /* 🔥 SEARCH FIX */
         .search-wrapper {
             position: relative;
-            width: 500px;          /* groter */
-            transform: translateX(-15px); /* kleine correctie naar links */
-            overflow: hidden;      /* zorgt voor “eind stukje korter” gevoel */
-            border-radius: 10px;
+            width: 455px;          /* iets groter */
+            transform: translateX(8px); /* alles iets naar rechts zodat “Series” perfect center voelt */
         }
 
         .search-wrapper input {
             width: 100%;
-            padding: 14px 60px 14px 50px;
+            padding: 14px 55px 14px 50px;
             border-radius: 10px;
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
@@ -139,15 +137,14 @@
             opacity: 0.7;
         }
 
-        /* 🔥 FIX: FILTERS echt gecentreerd op 1 lijn */
+        /* 🔥 FILTER FIX (alles netjes naast elkaar + iets naar rechts) */
         .filters {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 12px;
             margin-top: 18px;
-            flex-wrap: nowrap;   /* belangrijk: niet onder elkaar */
-            width: 100%;
+            flex-wrap: nowrap;
+            transform: translateX(6px);
         }
 
         .filter {
@@ -188,7 +185,6 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
             transform: scale(1.05);
         }
-
     </style>
 </head>
 
@@ -240,60 +236,6 @@
         <button class="request-btn">Request Scenepack</button>
     </div>
 </div>
-
-<script>
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let points = [];
-
-for (let i = 0; i < 30; i++) {
-    points.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4
-    });
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = "rgba(255,0,0,0.25)";
-    ctx.shadowColor = "red";
-    ctx.shadowBlur = 10;
-
-    for (let i = 0; i < points.length; i++) {
-        let p1 = points[i];
-
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-
-        if (p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
-
-        for (let j = i + 1; j < points.length; j++) {
-            let p2 = points[j];
-
-            let dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-
-            if (dist < 160) {
-                ctx.beginPath();
-                ctx.moveTo(p1.x, p1.y);
-                ctx.lineTo(p2.x, p2.y);
-                ctx.stroke();
-            }
-        }
-    }
-
-    requestAnimationFrame(draw);
-}
-
-draw();
-</script>
 
 </body>
 </html>
