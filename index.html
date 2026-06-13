@@ -38,28 +38,21 @@
             border-radius: 50%;
         }
 
-        /* 🔥 FIX: echte center alignment */
         .menu {
             display: flex;
-            justify-content: center;
             gap: 25px;
             font-size: 12px;
             letter-spacing: 2px;
-            width: 100%;
-            transform: translateX(-10px); /* kleine optische correctie */
         }
 
         .menu a {
             color: white;
             text-decoration: none;
             opacity: 0.8;
-            transition: 0.2s;
         }
 
-        /* 🔥 FIX: glow hover */
         .menu a:hover {
             color: red;
-            text-shadow: 0 0 10px red;
         }
 
         .socials {
@@ -108,15 +101,15 @@
             margin-top: 25px;
         }
 
+        /* ✅ SEARCH FIX (korter zodat hij niet over Football gaat) */
         .search-wrapper {
             position: relative;
-            width: 480px;
-            transform: translateX(-8px); /* 🔥 kleine shift zodat hij echt in lijn zit */
+            width: 430px; /* was te groot → nu netjes */
         }
 
         .search-wrapper input {
             width: 100%;
-            padding: 14px 55px;
+            padding: 14px 55px 14px 50px;
             border-radius: 10px;
             border: 1px solid rgba(255,0,0,0.35);
             background: rgba(255,255,255,0.06);
@@ -143,11 +136,17 @@
             opacity: 0.7;
         }
 
+        /* ✅ FILTERS FIX (perfect gecentreerd incl “Series” echt in midden) */
         .filters {
             display: flex;
             justify-content: center;
             gap: 12px;
             margin-top: 18px;
+
+            width: 100%;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
             flex-wrap: wrap;
         }
 
@@ -159,13 +158,13 @@
             border-radius: 999px;
             cursor: pointer;
             font-size: 12px;
-            transition: 0.2s;
+            transition: 0.2s ease;
         }
 
         /* 🔥 glow fix */
         .filter:hover {
             border: 1px solid red;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
             transform: scale(1.05);
         }
 
@@ -182,7 +181,7 @@
             padding: 10px 18px;
             border-radius: 999px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.2s ease;
         }
 
         .request-btn:hover {
