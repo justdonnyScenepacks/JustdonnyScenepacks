@@ -87,7 +87,6 @@
             display: block;
         }
 
-        /* HERO */
         .hero {
             display: flex;
             flex-direction: column;
@@ -106,7 +105,7 @@
             color: #aaa;
         }
 
-        /* SEARCH (TERUG NAAR JOUW ORIGINELE GOEDE SIZE) */
+        /* 🔥 SEARCH FIX (JOUW OUDE STABIELE VERSIE) */
         .search-box {
             display: flex;
             justify-content: center;
@@ -115,7 +114,7 @@
 
         .search-wrapper {
             position: relative;
-            width: 420px; /* oude goede versie */
+            width: 420px; /* EXACT jouw vorige goeie */
         }
 
         .search-wrapper input {
@@ -126,6 +125,7 @@
             background: rgba(255,255,255,0.06);
             color: white;
             outline: none;
+            box-sizing: border-box;
         }
 
         .icon-left {
@@ -133,6 +133,7 @@
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
+            opacity: 0.7;
         }
 
         /* FILTERS */
@@ -158,32 +159,25 @@
             transform: scale(1.05);
         }
 
-        /* SOCIALS PAGE */
-        .social-grid {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 18px;
-        }
-
+        /* SOCIAL CARDS */
         .social-card {
             width: 420px;
+            margin: 10px auto;
             padding: 16px;
             border: 1px solid rgba(255,0,0,0.3);
             border-radius: 12px;
-            transition: 0.25s;
             cursor: pointer;
+            transition: 0.25s;
         }
 
         .social-card:hover {
             box-shadow: 0 0 18px red;
-            border: 1px solid red;
             transform: scale(1.02);
+            border: 1px solid red;
         }
 
         .social-title {
             font-weight: 900;
-            font-size: 14px;
         }
 
         .social-text {
@@ -201,21 +195,27 @@
             border-radius: 10px;
         }
 
-        /* TRANSITION OVERLAY (CC WIDE WIPE) */
-        .wipe {
+        /* ✨ NEW SMOOTHER TRANSITION */
+        .transition {
             position: fixed;
             top: 0;
-            left: -100%;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: red;
+            background: rgba(255,0,0,0.35);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transform: scale(1.2);
+            pointer-events: none;
+            transition: 0.45s ease;
             z-index: 999;
-            transition: 0.6s ease;
         }
 
-        .wipe.active {
-            left: 0;
+        .transition.active {
+            opacity: 1;
+            transform: scale(1);
         }
+
     </style>
 </head>
 
@@ -223,7 +223,7 @@
 
 <canvas id="bg"></canvas>
 
-<div class="wipe" id="wipe"></div>
+<div class="transition" id="transition"></div>
 
 <div class="topbar">
     <div><img src="logo.png" class="logo"></div>
@@ -248,9 +248,7 @@
     <div class="hero">
         <div class="title">JUSTDONNYSCENEPACKS</div>
 
-        <div class="desc">
-            A collection of high-quality Dutch scenepacks.
-        </div>
+        <div class="desc">A collection of high-quality Dutch scenepacks.</div>
 
         <div class="search-box">
             <div class="search-wrapper">
@@ -270,39 +268,35 @@
 </div>
 
 <!-- SOCIALS -->
-<div class="page" id="socials">
-    <div class="social-grid">
+<div id="socials" class="page">
+    <div class="social-card">
+        <div class="social-title">DISCORD</div>
+        <div class="social-text">Join my server</div>
+    </div>
 
-        <div class="social-card">
-            <div class="social-title">DISCORD</div>
-            <div class="social-text">Join my server</div>
-        </div>
+    <div class="social-card">
+        <div class="social-title">TIKTOK</div>
+        <div class="social-text">Watch my edits</div>
+    </div>
 
-        <div class="social-card">
-            <div class="social-title">TIKTOK</div>
-            <div class="social-text">Watch my edits</div>
-        </div>
+    <div class="social-card">
+        <div class="social-title">INSTAGRAM</div>
+        <div class="social-text">Scenepacks & clips</div>
+    </div>
 
-        <div class="social-card">
-            <div class="social-title">INSTAGRAM</div>
-            <div class="social-text">Scenepacks & clips</div>
-        </div>
+    <div class="social-card">
+        <div class="social-title">YOUTUBE</div>
+        <div class="social-text">Subscribe</div>
+    </div>
 
-        <div class="social-card">
-            <div class="social-title">YOUTUBE</div>
-            <div class="social-text">Subscribe for more</div>
-        </div>
-
-        <div class="social-card">
-            <div class="social-title">PAYHIP</div>
-            <div class="social-text">Buy my presets</div>
-        </div>
-
+    <div class="social-card">
+        <div class="social-title">PAYHIP</div>
+        <div class="social-text">Buy presets</div>
     </div>
 </div>
 
 <!-- ABOUT -->
-<div class="page" id="about">
+<div id="about" class="page">
     <div class="about-box">
         <h2>ABOUT ME</h2>
         <p>Text komt later.</p>
@@ -360,19 +354,19 @@ function draw() {
 }
 draw();
 
-/* PAGE SWITCH + WIPE */
+/* smoother transition */
 function go(page) {
-    const wipe = document.getElementById("wipe");
+    const t = document.getElementById("transition");
 
-    wipe.classList.add("active");
+    t.classList.add("active");
 
     setTimeout(() => {
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
         document.getElementById(page).classList.add("active");
-    }, 300);
+    }, 250);
 
     setTimeout(() => {
-        wipe.classList.remove("active");
+        t.classList.remove("active");
     }, 600);
 }
 </script>
