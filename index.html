@@ -226,12 +226,6 @@
     margin-top: 40px;
 }
 
-        .filter.active {
-    border: 1px solid red;
-    box-shadow: 0 0 12px red;
-    color: red;
-}
-
 .pack {
     width: 220px;
     height: 260px;
@@ -284,6 +278,121 @@
     transform: scale(1);
 }
 
+        .pack-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 400px;
+    height: 100vh;
+    background: rgba(0,0,0,0.95);
+    border-left: 2px solid red;
+    box-shadow: 0 0 20px red;
+    transition: 0.5s ease;
+    z-index: 999;
+}
+.pack-panel-scroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+}
+        
+.pack-panel.active {
+    right: 0;
+}
+        .main {
+    display: flex;
+    transition: 0.6s ease;
+}
+
+.left {
+    width: 100%;
+    transition: 0.6s ease;
+}
+
+.right {
+    position: fixed;
+    right: -420px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    transition: 0.5s ease;
+}
+
+.pack-item {
+    opacity: 0;
+    transform: translateX(40px);
+
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,0,0,0.25);
+    background: rgba(255,0,0,0.05);
+
+    transition: all 0.4s ease;
+}
+
+.pack-panel.active .pack-item {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+        .pack-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px red;
+}
+
+        .pack-panel-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 10px;
+    color: red;
+    text-shadow: 0 0 10px red;
+}
+        
+/* HERO SHIFT */
+body.pack-open .hero {
+    align-items: flex-start;
+    text-align: left;
+    transform: translateX(-180px);
+    transition: 0.6s ease;
+}
+
+/* TITLE + SEARCH */
+body.pack-open .title {
+    transform: translateX(-150px);
+    transition: 0.5s ease;
+}
+
+body.pack-open .search-box {
+    transform: translateX(-150px);
+    transition: 0.55s ease;
+}
+
+/* DESCRIPTION FADE */
+body.pack-open .desc {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: 0.4s ease;
+}
+
+/* FILTERS FADE OUT */
+body.pack-open .filters {
+    opacity: 0;
+    transform: translateX(-120px);
+    transition: 0.4s ease;
+    pointer-events: none;
+}
+
+/* PACKS SHIFT */
+body.pack-open .scenepacks {
+    justify-content: flex-end;
+    padding-right: 80px;
+    width: 100%;
+}
+        
         /* REQUEST REMOVED */
 
         .social-card {
@@ -382,13 +491,40 @@
 
 <div class="scenepacks">
 
-    <div class="pack" data-type="football">
-        <img src="feyenoord.jpg">
-        <div class="pack-line"></div>
-        <div class="pack-name">FEYENOORD</div>
-    </div>
+   <div class="pack" data-type="football" onclick="openPack('feyenoord')">
+    <img src="feyenoord.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">FEYENOORD</div>
+</div>
 
     </div> <!-- scenepacks -->
+
+        <div id="packPanel" class="pack-panel">
+
+            <div onclick="closePack()" style="padding:10px; cursor:pointer; color:red;">
+    ← BACK
+</div>
+            
+    <div class="pack-panel-title">FEYENOORD PACKS</div>
+
+    <div class="pack-panel-scroll">
+        <div class="pack-item">
+            <img src="feyenoord1.jpg">
+            <div class="pack-item-name">Clip 1</div>
+        </div>
+
+        <div class="pack-item">
+            <img src="feyenoord2.jpg">
+            <div class="pack-item-name">Clip 2</div>
+        </div>
+
+        <div class="pack-item">
+            <img src="feyenoord3.jpg">
+            <div class="pack-item-name">Clip 3</div>
+        </div>
+    </div>
+</div>
+        
 </div> <!-- hero -->
 </div> <!-- home -->
 
@@ -466,6 +602,17 @@ function go(page) {
 
     document.querySelectorAll(".menu a").forEach(a => a.classList.remove("active"));
     document.getElementById("nav-" + page).classList.add("active");
+}
+function openPack(name) {
+    if (name === "feyenoord") {
+        document.getElementById("packPanel").classList.add("active");
+        document.body.classList.add("pack-open");
+    }
+}
+
+function closePack() {
+    document.getElementById("packPanel").classList.remove("active");
+    document.body.classList.remove("pack-open");
 }
 
 const canvas = document.getElementById("bg");
