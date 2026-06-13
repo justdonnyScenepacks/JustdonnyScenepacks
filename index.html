@@ -29,7 +29,7 @@
             align-items: center;
             padding: 18px 25px;
             position: relative;
-            z-index: 5;
+            z-index: 10;
         }
 
         .logo {
@@ -50,10 +50,16 @@
             text-decoration: none;
             opacity: 0.8;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .menu a:hover {
             color: red;
+        }
+
+        .menu a.active {
+            color: red;
+            opacity: 1;
         }
 
         .socials {
@@ -73,23 +79,41 @@
             transform: scale(1.2);
         }
 
-        /* pages */
+        /* PAGE SYSTEM + WIPE/FLOAT ANIMATION */
         .page {
-            display: none;
             position: absolute;
             width: 100%;
             top: 0;
             left: 0;
             padding-top: 120px;
+
             opacity: 0;
-            transform: translateY(20px);
-            transition: 0.4s ease;
+            transform: translateY(40px) scale(1.01);
+            pointer-events: none;
+
+            transition: 0.6s ease;
         }
 
         .page.active {
-            display: block;
             opacity: 1;
-            transform: translateY(0px);
+            transform: translateY(0px) scale(1);
+            pointer-events: auto;
+        }
+
+        /* BIG BACKGROUND PAGE TITLE */
+        .bg-title {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: white;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
         }
 
         .hero {
@@ -97,6 +121,8 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .title {
@@ -226,20 +252,12 @@
 
         .social-title {
             font-weight: 900;
+            color: #b44cff; /* FIX: overal paars */
         }
 
         .social-desc {
             font-size: 12px;
             color: #aaa;
-        }
-
-        .about-box {
-            width: 600px;
-            margin: auto;
-            border: 1px solid red;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.6;
         }
     </style>
 </head>
@@ -252,9 +270,9 @@
     <div><img src="logo.png" class="logo"></div>
 
     <div class="menu">
-        <a onclick="go('home')">Home</a>
-        <a onclick="go('socials')">Socials</a>
-        <a onclick="go('about')">About</a>
+        <a onclick="go('home')" id="nav-home">Home</a>
+        <a onclick="go('socials')" id="nav-socials">Socials</a>
+        <a onclick="go('about')" id="nav-about">About</a>
     </div>
 
     <div class="socials">
@@ -268,6 +286,8 @@
 
 <!-- HOME -->
 <div class="page active" id="home">
+    <div class="bg-title">HOME</div>
+
     <div class="hero">
         <div class="title">JUSTDONNYSCENEPACKS</div>
 
@@ -298,6 +318,8 @@
 
 <!-- SOCIALS -->
 <div class="page" id="socials">
+    <div class="bg-title">SOCIALS</div>
+
     <a class="social-card" href="https://discord.gg/PddGAqZx">
         <img src="discord.png">
         <div class="social-texts">
@@ -341,9 +363,11 @@
 
 <!-- ABOUT -->
 <div class="page" id="about">
+    <div class="bg-title">ABOUT</div>
+
     <div class="about-box">
         <h2>ABOUT ME</h2>
-       </p>
+        <p>I’m 18 years old, and I started editing when I was 16...</p>
 I’m 18 years old, and I started editing when I was 16. What began as a simple interest quickly turned into a real passion that helped me grow in ways I never expected.
 
 Over the past two years, I’ve developed my skills in editing and expanded my journey by creating a Discord community, making YouTube videos, and producing After Effects tutorials. I also started creating scenepacks, which eventually led me to build my own website.
@@ -363,9 +387,12 @@ And this is just the beginning.
 function go(page) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById(page).classList.add("active");
+
+    document.querySelectorAll(".menu a").forEach(a => a.classList.remove("active"));
+    document.getElementById("nav-" + page).classList.add("active");
 }
 
-/* 🔥 OLD BACKGROUND RESTORED */
+/* OLD BACKGROUND UNCHANGED */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
