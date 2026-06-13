@@ -130,16 +130,23 @@
             z-index: 0;
             user-select: none;
         }
+        
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
+    position: absolute;
+    left: 50%;
+    top: 50%;
 
+    transform: translate(-50%, -50%) scale(1);
+
+    z-index: 2;
+
+    transition: transform 0.6s ease;
+}
         .title {
             font-size: 65px;
             font-weight: 900;
@@ -351,31 +358,35 @@
     color: red;
     text-shadow: 0 0 10px red;
 }
+.pack-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+}
+
+/* titel smooth fade */
+.pack-panel-title {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.4s ease;
+}
+
+/* wanneer panel open is */
+.pack-panel.active .pack-panel-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* scroll area full width fix */
+.pack-panel-scroll {
+    width: 100%;
+    box-sizing: border-box;
+}
         
 /* HERO SHIFT */
 body.pack-open .hero {
-    align-items: flex-start;
-    text-align: left;
-    transform: translateX(-180px);
-    transition: 0.6s ease;
-}
-
-/* TITLE + SEARCH */
-body.pack-open .title {
-    transform: translateX(-150px);
-    transition: 0.5s ease;
-}
-
-body.pack-open .search-box {
-    transform: translateX(-150px);
-    transition: 0.55s ease;
-}
-
-/* DESCRIPTION FADE */
-body.pack-open .desc {
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: 0.4s ease;
+    transform: translate(-50%, -50%) scale(0.75) translateX(-220px);
 }
 
 /* FILTERS FADE OUT */
@@ -465,7 +476,7 @@ body.pack-open .scenepacks {
 
 <!-- HOME -->
 <div class="page active" id="home">
-    <div class="bg-title">HOME</div>
+ <div class="bg-title" id="bgTitle">HOME</div>
 
     <div class="hero">
         <div class="title">JUSTDONNYSCENEPACKS</div>
@@ -597,24 +608,41 @@ And this is just the beginning.
 
 <script>
 function go(page) {
+
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById(page).classList.add("active");
 
     document.querySelectorAll(".menu a").forEach(a => a.classList.remove("active"));
     document.getElementById("nav-" + page).classList.add("active");
+
+    // RESET PACK UI
+    if (page === "home") {
+        document.body.classList.remove("pack-open");
+
+        const panel = document.getElementById("packPanel");
+        if (panel) panel.classList.remove("active");
+    }
+
+    // BG TITLE CONTROL
+    const bgTitle = document.getElementById("bgTitle");
+    if (bgTitle) {
+        bgTitle.style.opacity = (page === "home") ? "0.05" : "0";
+    }
 }
+        
 function openPack(name) {
     if (name === "feyenoord") {
         document.getElementById("packPanel").classList.add("active");
         document.body.classList.add("pack-open");
+
     }
 }
 
 function closePack() {
     document.getElementById("packPanel").classList.remove("active");
     document.body.classList.remove("pack-open");
-}
 
+}
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -670,8 +698,8 @@ draw();
 const filters = document.querySelectorAll(".filter");
 const packs = document.querySelectorAll(".pack");
 
-    packs.forEach(p => {
-    p.classList.add("show");
+window.addEventListener("load", () => {
+    packs.forEach(p => p.classList.add("show"));
 });
 
 // active glow
@@ -688,15 +716,17 @@ filters[0].classList.add("active");
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
 
-        const type = btn.textContent.toLowerCase();
-        const cleanType = type.replace(/🌍|🎬|📺|▶|⚽/g, "").trim();
-
+    const cleanType = btn.textContent
+    .replace(/🌍|🎬|📺|▶|⚽/g, "")
+    .trim()
+    .toLowerCase();
+        
         packs.forEach(pack => {
 
             const packType = pack.dataset.type;
 
             // ALL
-            if (type.includes("all")) {
+          if (cleanType === "all") {
                 pack.classList.add("show");
                 pack.classList.remove("hide");
                 return;
