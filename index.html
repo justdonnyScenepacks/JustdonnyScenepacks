@@ -298,6 +298,108 @@
     filter: drop-shadow(0 0 20px rgba(255,0,0,0.5));
 }
 
+        .pack-sidebar {
+    position: absolute;
+    right: 40px;
+    top: 120px;
+    width: 520px;
+    height: 70vh;
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,0,0,0.3);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* SEASONS */
+.seasons {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.season {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,0,0,0.3);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.season:hover {
+    border: 1px solid red;
+    box-shadow: 0 0 10px red;
+}
+
+.season.active {
+    color: red;
+    border: 1px solid red;
+}
+
+/* DIVIDER */
+.divider {
+    height: 2px;
+    background: red;
+    box-shadow: 0 0 8px red;
+}
+
+/* SEARCH SMALL */
+.search-wrapper.small input {
+    padding: 10px 40px 10px 40px;
+    font-size: 12px;
+}
+
+/* SEARCH SUGGESTION */
+.search-suggestion {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 5px;
+}
+
+/* GRID 4 PER ROW */
+.pack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    flex: 1;
+}
+
+.grid-item {
+    height: 90px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,0,0,0.25);
+    background: rgba(255,255,255,0.05);
+    transition: 0.2s;
+}
+
+.grid-item:hover {
+    border: 1px solid red;
+    box-shadow: 0 0 10px red;
+}
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.pagination span {
+    padding: 4px 8px;
+    border: 1px solid rgba(255,0,0,0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.pagination span:hover {
+    border: 1px solid red;
+    color: red;
+}
+
         /* REQUEST REMOVED */
 
         .social-card {
@@ -406,15 +508,62 @@
 </div> <!-- hero -->
 </div> <!-- home -->
 
-    <!-- FEYENOORD PAGE -->
+  <!-- FEYENOORD PAGE -->
 <div class="page" id="feyenoord">
 
+    <!-- LEFT LOGO -->
     <img src="feyenoord-logo.png" class="team-logo">
 
-    <div class="team-content">
+    <!-- RIGHT PANEL -->
+    <div class="pack-sidebar">
+
+        <!-- SEASONS -->
+        <div class="seasons">
+            <div class="season active">26/27</div>
+            <div class="season">25/26</div>
+            <div class="season">24/25</div>
+            <div class="season">23/24</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- SEARCH -->
+        <div class="sidebar-search">
+            <div class="search-wrapper small">
+                <div class="icon-left">🔍</div>
+                <input type="text" placeholder="Search scenepacks...">
+            </div>
+
+            <div class="search-suggestion">
+                bedoel je "feyenoord highlights"?
+            </div>
+        </div>
+
+        <!-- GRID -->
+        <div class="pack-grid">
+
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
 
     </div>
-
 </div>
 
 <!-- SOCIALS -->
