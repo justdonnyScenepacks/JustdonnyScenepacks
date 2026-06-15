@@ -284,20 +284,18 @@
     transform: scale(1);
 }
 
-        .team-logo {
+.team-logo {
     position: absolute;
+    left: 100px;
 
-    left: 120px;
     top: 50%;
+    transform: translate(-50%, -50%);
 
-    transform: translateY(-50%);
-
-    width: 300px;
+    width: 320px;
     height: auto;
 
     filter: drop-shadow(0 0 20px rgba(255,0,0,0.5));
 }
-
         .pack-sidebar {
     position: absolute;
     right: 40px;
@@ -361,11 +359,11 @@
 /* GRID 4 PER ROW */
 .pack-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     gap: 10px;
     flex: 1;
 }
-
 .grid-item {
     height: 90px;
     border-radius: 10px;
@@ -528,17 +526,21 @@
         <div class="divider"></div>
 
         <!-- SEARCH -->
-        <div class="sidebar-search">
-            <div class="search-wrapper small">
-                <div class="icon-left">🔍</div>
-                <input type="text" placeholder="Search scenepacks...">
-            </div>
+       <div class="sidebar-search">
 
-            <div class="search-suggestion">
-                bedoel je "feyenoord highlights"?
-            </div>
-        </div>
+    <div class="search-wrapper small">
+        <div class="icon-left">🔍</div>
 
+        <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Search scenepacks..."
+        >
+    </div>
+
+    <div class="search-suggestion" id="suggestion" style="display:none;"></div>
+
+</div>
         <!-- GRID -->
         <div class="pack-grid">
 
