@@ -284,6 +284,20 @@
     transform: scale(1);
 }
 
+        .team-logo {
+    position: absolute;
+
+    left: 120px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 300px;
+    height: auto;
+
+    filter: drop-shadow(0 0 20px rgba(255,0,0,0.5));
+}
+
         /* REQUEST REMOVED */
 
         .social-card {
@@ -382,7 +396,7 @@
 
 <div class="scenepacks">
 
-    <div class="pack" data-type="football">
+  <div class="pack" data-type="football" onclick="go('feyenoord')">
         <img src="feyenoord.jpg">
         <div class="pack-line"></div>
         <div class="pack-name">FEYENOORD</div>
@@ -391,6 +405,17 @@
     </div> <!-- scenepacks -->
 </div> <!-- hero -->
 </div> <!-- home -->
+
+    <!-- FEYENOORD PAGE -->
+<div class="page" id="feyenoord">
+
+    <img src="feyenoord-logo.png" class="team-logo">
+
+    <div class="team-content">
+
+    </div>
+
+</div>
 
 <!-- SOCIALS -->
 <div class="page" id="socials">
@@ -461,13 +486,24 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+
+    document.querySelectorAll(".page").forEach(p =>
+        p.classList.remove("active")
+    );
+
     document.getElementById(page).classList.add("active");
 
-    document.querySelectorAll(".menu a").forEach(a => a.classList.remove("active"));
-    document.getElementById("nav-" + page).classList.add("active");
-}
+    document.querySelectorAll(".menu a").forEach(a =>
+        a.classList.remove("active")
+    );
 
+    const nav = document.getElementById("nav-" + page);
+
+    if(nav){
+        nav.classList.add("active");
+    }
+
+}
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
