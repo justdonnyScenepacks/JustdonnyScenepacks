@@ -226,12 +226,6 @@
     margin-top: 40px;
 }
 
-        .filter.active {
-    border: 1px solid red;
-    box-shadow: 0 0 12px red;
-    color: red;
-}
-
 .pack {
     width: 220px;
     height: 260px;
@@ -309,19 +303,42 @@
         rgba(255,255,255,0.6) 100%
     );
 }
-        .pack-sidebar {
+
+        @keyframes floatLogo {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(1deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.team-logo {
+    animation: floatLogo 4s ease-in-out infinite;
+    will-change: transform;
+}
+        
+.pack-sidebar {
     position: absolute;
     right: 40px;
-    top: 120px;
+    top: 100px;
+
     width: 520px;
-    height: 70vh;
-    background: rgba(0,0,0,0.45);
-    border: 1px solid rgba(255,0,0,0.3);
-    border-radius: 12px;
+    height: calc(100vh - 140px); /* 🔥 full screen fix */
+
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,0,0,0.25);
+    border-radius: 14px;
+
     padding: 15px;
+
     display: flex;
     flex-direction: column;
     gap: 12px;
+
+    overflow: hidden;
+}
+
+        .pack-grid {
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
 /* SEASONS */
@@ -393,6 +410,9 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     flex: 1;
+
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
 /* CARD */
@@ -561,13 +581,13 @@
             </div>
         </div>
 
-        <div class="filters">
-           <div class="filter active">🌍 All</div>
-            <div class="filter">🎬 Films</div>
-            <div class="filter">📺 Series</div>
-            <div class="filter">▶ YouTube</div>
-            <div class="filter">⚽ Football</div>
-        </div>
+    <div class="filters">
+    <div class="filter active" data-type="all">🌍 All</div>
+    <div class="filter" data-type="films">🎬 Films</div>
+    <div class="filter" data-type="series">📺 Series</div>
+    <div class="filter" data-type="youtube">▶ YouTube</div>
+    <div class="filter" data-type="football">⚽ Football</div>
+</div>
 
 <div class="scenepacks">
 
@@ -591,14 +611,14 @@
     <div class="pack-sidebar">
 
         <!-- SEASONS -->
-    <div class="seasons">
-    <div class="season all active">ALL</div>
-    <div class="season">26/27</div>
-    <div class="season">25/26</div>
-    <div class="season">24/25</div>
-    <div class="season">23/24</div>
-    <div class="season">22/23</div>
-    <div class="season">21/22</div>
+ <div class="seasons">
+    <div class="season all active" data-season="ALL">ALL</div>
+    <div class="season" data-season="26/27">26/27</div>
+    <div class="season" data-season="25/26">25/26</div>
+    <div class="season" data-season="24/25">24/25</div>
+    <div class="season" data-season="23/24">23/24</div>
+    <div class="season" data-season="22/23">22/23</div>
+    <div class="season" data-season="21/22">21/22</div>
 </div>
 
         <div class="divider"></div>
@@ -747,7 +767,6 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-
     document.querySelectorAll(".page").forEach(p =>
         p.classList.remove("active")
     );
@@ -759,18 +778,21 @@ function go(page) {
     );
 
     const nav = document.getElementById("nav-" + page);
-
-    if(nav){
-        nav.classList.add("active");
-    }
-
+    if (nav) nav.classList.add("active");
 }
+
+/* ===== CANVAS ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
 let points = [];
 
 for (let i = 0; i < 30; i++) {
@@ -815,95 +837,88 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-draw();
+    window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
     
+draw();
+
+/* ===== HOME FILTERS ===== */
 const filters = document.querySelectorAll(".filter");
-const packs = document.querySelectorAll(".pack");
+const homePacks = document.querySelectorAll(".pack");
 
-    packs.forEach(p => {
-    p.classList.add("show");
-});
-
-// active glow
-filters.forEach(f => {
-    f.addEventListener("click", () => {
-        filters.forEach(x => x.classList.remove("active"));
-        f.classList.add("active");
-    });
-});
-
-filters[0].classList.add("active");
-
-// FILTER SYSTEM (SHOW/HIDE FIX)
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
 
-        const type = btn.textContent.toLowerCase();
-        const cleanType = type.replace(/🌍|🎬|📺|▶|⚽/g, "").trim();
+        filters.forEach(f => f.classList.remove("active"));
+        btn.classList.add("active");
 
-        packs.forEach(pack => {
+        const type = btn.dataset.type;
 
+        homePacks.forEach(pack => {
             const packType = pack.dataset.type;
 
-            // ALL
-            if (type.includes("all")) {
-                pack.classList.add("show");
-                pack.classList.remove("hide");
-                return;
-            }
+            const match = type === "all" || packType === type;
 
-            // MATCH
-            if (packType === cleanType) {
-                pack.classList.add("show");
-                pack.classList.remove("hide");
-            } 
-            else {
-                pack.classList.remove("show");
-                pack.classList.add("hide");
-            }
-
+            pack.classList.toggle("show", match);
+            pack.classList.toggle("hide", !match);
         });
-
     });
 });
 
-    const seasons = document.querySelectorAll(".season");
-const items = document.querySelectorAll(".grid-item");
-function showSeason(season) {
+/* ===== FEYENOORD FILTERS ===== */
+const searchInput = document.getElementById("searchInput");
+const suggestion = document.getElementById("suggestion");
+const gridItems = document.querySelectorAll(".grid-item");
+const seasons = document.querySelectorAll(".season");
 
-    items.forEach(item => {
-
-        const itemSeason = item.dataset.season;
-
-        if (season === "ALL") {
-            item.classList.remove("hide");
-            item.classList.add("show");
-            return;
-        }
-
-        if (itemSeason === season) {
-            item.classList.remove("hide");
-            item.classList.add("show");
-        } else {
-            item.classList.add("hide");
-            item.classList.remove("show");
-        }
-    });
-}
+let currentSeason = "ALL";
 
 seasons.forEach(btn => {
     btn.addEventListener("click", () => {
-
         seasons.forEach(s => s.classList.remove("active"));
         btn.classList.add("active");
 
-       const value = btn.textContent.replace(/\s+/g, '').trim();
-        showSeason(value);
+        currentSeason = btn.dataset.season;
+        applyFilters();
     });
 });
 
-// start altijd op ALL
-showSeason("ALL");
+searchInput.addEventListener("input", applyFilters);
+
+function applyFilters() {
+    const value = searchInput.value.toLowerCase().trim();
+    let firstMatch = null;
+
+    gridItems.forEach(item => {
+        const name = item.querySelector(".name").textContent.toLowerCase();
+        const itemSeason = item.dataset.season;
+
+        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
+        const matchSearch = name.includes(value);
+
+        const match = matchSeason && matchSearch;
+
+        item.classList.toggle("show", match);
+        item.classList.toggle("hide", !match);
+
+        if (match && !firstMatch) {
+            firstMatch = item.querySelector(".name").textContent;
+        }
+    });
+
+    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+        suggestion.style.display = "block";
+        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+    } else {
+        suggestion.style.display = "none";
+    }
+}
+
+/* INIT */
+gridItems.forEach(item => item.classList.add("show"));
+homePacks.forEach(p => p.classList.add("show"));
     
 </script>
 
