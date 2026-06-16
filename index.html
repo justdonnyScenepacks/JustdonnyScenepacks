@@ -461,7 +461,10 @@
 
 /* HIDE ANIMATION */
 .grid-item.hide {
-    display: none;
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
 /* SHOW STATE (belangrijk voor JS) */
@@ -889,13 +892,15 @@ seasons.forEach(btn => {
 
     currentPage = 1;
 
-    document.querySelectorAll(".pagination span")
-        .forEach(p => p.classList.remove("active-page"));
+    applyFilters(); // eerst filteren
 
-    const firstPage = document.querySelector(".pagination span");
-    if (firstPage) firstPage.classList.add("active-page");
+    // daarna pagination resetten (BELANGRIJK)
+    const pageButtons = document.querySelectorAll(".pagination span");
+    pageButtons.forEach(p => p.classList.remove("active-page"));
 
-    applyFilters();
+    if (pageButtons.length > 0) {
+        pageButtons[0].classList.add("active-page");
+    }
   });
 });
 
@@ -906,70 +911,85 @@ let currentPage = 1;
 
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
+
     let filtered = [];
 
+    // 1. bepaal welke items matchen
     gridItems.forEach(item => {
+
         const name = item.querySelector(".name").textContent.toLowerCase();
         const itemSeason = item.dataset.season;
 
-        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
-        const matchSearch = name.includes(value);
+        const matchSeason =
+            currentSeason === "ALL" || itemSeason === currentSeason;
+
+        const matchSearch =
+            name.includes(value);
 
         if (matchSeason && matchSearch) {
             filtered.push(item);
-        } else {
-            item.classList.add("hide");
-            item.classList.remove("show");
         }
     });
 
+    // 2. pagination
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
 
-    filtered.forEach((item, i) => {
-        if (i >= start && i < end) {
-            item.classList.add("show");
-            item.classList.remove("hide");
-        } else {
-            item.classList.add("hide");
-            item.classList.remove("show");
-        }
+    gridItems.forEach(item => {
+        item.classList.add("hide");
+        item.classList.remove("show");
     });
 
-     const pageButtons = document.querySelectorAll(".pagination span");
+  gridItems.forEach(item => {
+    const index = filtered.indexOf(item);
+    const inPage = index >= start && index < end;
+    const inFiltered = index !== -1;
+
+    const shouldShow = inFiltered && inPage;
+
+    item.classList.toggle("show", shouldShow);
+    item.classList.toggle("hide", !shouldShow);
+});
+
+    // 3. pagination buttons
+    const pageButtons = document.querySelectorAll(".pagination span");
     const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
     pageButtons.forEach((btn, i) => {
         btn.style.display = i < totalPages ? "inline-block" : "none";
     });
 
-    // suggestion FIX
-    let firstMatch = filtered[0];
-    if (searchInput.value && firstMatch) {
+    // 4. suggestion
+    const firstMatch = filtered[0];
+
+    if (value && firstMatch) {
         suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch.querySelector(".name").textContent + " ?";
+        suggestion.textContent =
+            "Bedoelde je: " +
+            firstMatch.querySelector(".name").textContent +
+            " ?";
     } else {
         suggestion.style.display = "none";
     }
 }
+    
 /* INIT */
 gridItems.forEach(item => item.classList.add("show"));
 homePacks.forEach(p => p.classList.add("show"));
 
-    const pageButtons = document.querySelectorAll(".pagination span");
+  const pageButtons = document.querySelectorAll(".pagination span");
 
 pageButtons.forEach((btn, index) => {
     btn.addEventListener("click", () => {
 
+        // active state fix
         pageButtons.forEach(b => b.classList.remove("active-page"));
         btn.classList.add("active-page");
 
+        // page update
         currentPage = index + 1;
 
-        if (currentPage > Math.ceil(filtered.length / itemsPerPage)) {
-    currentPage = 1;
-}
-
+        // re-render
         applyFilters();
     });
 });
