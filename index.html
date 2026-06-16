@@ -93,7 +93,7 @@
             color: #b44cff;
         }
 
-   .page {
+ .page {
     position: absolute;
     width: 100%;
     top: 0;
@@ -106,14 +106,15 @@
 
     transition: 0.6s ease;
 
-    z-index: 2; /* 🔥 belangrijk */
+    z-index: 1;
 }
 
 .page.active {
     opacity: 1;
     transform: translateY(0px) scale(1);
     pointer-events: auto;
-    z-index: 1;
+
+    z-index: 10;
 }
 
         .bg-title {
@@ -460,10 +461,23 @@
 }
 
 /* HIDE ANIMATION */
+.grid-item {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.35s ease;
+}
+
 .grid-item.hide {
     opacity: 0;
-    transform: translateY(25px) scale(0.95);
+    transform: scale(0.9);
     pointer-events: none;
+
+    /* 🔥 BELANGRIJK: haalt hem echt uit layout zonder grid te breken */
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
 }
 
 /* SHOW STATE (belangrijk voor JS) */
@@ -491,6 +505,38 @@
 .pagination span:hover {
     border: 1px solid red;
     color: red;
+}
+
+        .pagination-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.pagination-bar button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,0,0,0.3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.pagination-bar button:hover {
+    border: 1px solid red;
+    transform: scale(1.05);
+}
+
+.pagination-bar button:active {
+    transform: scale(0.95);
+}
+
+#pageInfo {
+    opacity: 0.8;
 }
 
         /* REQUEST REMOVED */
@@ -687,13 +733,11 @@
     <div class="name">Timo Wellenreuther</div>
 </div>
         <!-- PAGINATION -->
-        <div class="pagination">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-        </div>
+    <div class="pagination-bar">
+    <button id="prevBtn">Previous</button>
+    <span id="pageInfo">Page 1</span>
+    <button id="nextBtn">Next</button>
+</div>
 
     </div>
 </div>
@@ -914,6 +958,72 @@ function applyFilters() {
 /* INIT */
 gridItems.forEach(item => item.classList.add("show"));
 homePacks.forEach(p => p.classList.add("show"));
+
+    let currentPage = 1;
+const itemsPerPage = 6;
+
+const pageInfo = document.getElementById("pageInfo");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function updatePagination(filteredItems) {
+    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+    if (currentPage > totalPages) currentPage = totalPages || 1;
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    filteredItems.forEach((item, index) => {
+        const show = index >= start && index < end;
+      item.classList.toggle("hide", !show);
+item.classList.toggle("show", show);
+    });
+
+    pageInfo.textContent = `Page ${currentPage} / ${totalPages || 1}`;
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage >= totalPages;
+}
+
+function applyFilters() {
+    const value = searchInput.value.toLowerCase().trim();
+    let filtered = [];
+
+    gridItems.forEach(item => {
+        const name = item.querySelector(".name").textContent.toLowerCase();
+        const itemSeason = item.dataset.season;
+
+        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
+        const matchSearch = name.includes(value);
+
+        const match = matchSeason && matchSearch;
+
+        if (match) filtered.push(item);
+    });
+
+    updatePagination(filtered);
+
+    let firstMatch = filtered[0]?.querySelector(".name").textContent;
+
+    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+        suggestion.style.display = "block";
+        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+    } else {
+        suggestion.style.display = "none";
+    }
+}
+
+/* BUTTON EVENTS */
+prevBtn.addEventListener("click", () => {
+    currentPage--;
+    applyFilters();
+});
+
+nextBtn.addEventListener("click", () => {
+    currentPage++;
+    applyFilters();
+});
     
 </script>
 
