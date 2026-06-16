@@ -93,31 +93,27 @@
             color: #b44cff;
         }
 
- .page {
+   .page {
     position: absolute;
     width: 100%;
-    min-height: 100vh;
     top: 0;
     left: 0;
     padding-top: 120px;
+
     opacity: 0;
     transform: translateY(40px) scale(1.01);
     pointer-events: none;
+
     transition: 0.6s ease;
-    z-index: 5;
+
+    z-index: 2; /* 🔥 belangrijk */
 }
 
 .page.active {
     opacity: 1;
+    transform: translateY(0px) scale(1);
     pointer-events: auto;
-    transform: translateY(0) scale(1);
-    z-index: 20;
-}
-
-        .pagination {
-    position: sticky;
-    bottom: 0;
-    background: transparent;
+    z-index: 1;
 }
 
         .bg-title {
@@ -343,7 +339,6 @@
         .pack-grid {
     overflow-y: auto;
     padding-right: 6px;
-    align-content: start;
 }
 
 /* SEASONS */
@@ -467,9 +462,8 @@
 /* HIDE ANIMATION */
 .grid-item.hide {
     opacity: 0;
-    transform: translateY(10px) scale(0.98);
+    transform: translateY(25px) scale(0.95);
     pointer-events: none;
-    transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
 /* SHOW STATE (belangrijk voor JS) */
@@ -499,18 +493,6 @@
     color: red;
 }
 
-        .active-page {
-    border: 1px solid red !important;
-    color: red;
-    box-shadow: 0 0 10px red;
-}
-
-        .page.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0) scale(1);
-}
-        
         /* REQUEST REMOVED */
 
         .social-card {
@@ -705,13 +687,13 @@
     <div class="name">Timo Wellenreuther</div>
 </div>
         <!-- PAGINATION -->
-       <div class="pagination">
-    <span class="active-page">1</span>
-    <span>2</span>
-    <span>3</span>
-    <span>4</span>
-    <span>5</span>
-</div>
+        <div class="pagination">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
 
     </div>
 </div>
@@ -785,20 +767,15 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-    document.querySelectorAll(".page").forEach(p => {
-        p.classList.remove("active");
-    });
+    document.querySelectorAll(".page").forEach(p =>
+        p.classList.remove("active")
+    );
 
-    const target = document.getElementById(page);
-    if (target) {
-        target.classList.add("active");
-    } else {
-        console.log("Page not found:", page);
-    }
+    document.getElementById(page).classList.add("active");
 
-    document.querySelectorAll(".menu a").forEach(a => {
-        a.classList.remove("active");
-    });
+    document.querySelectorAll(".menu a").forEach(a =>
+        a.classList.remove("active")
+    );
 
     const nav = document.getElementById("nav-" + page);
     if (nav) nav.classList.add("active");
@@ -808,14 +785,9 @@ function go(page) {
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-resizeCanvas();
-
-window.addEventListener("resize", resizeCanvas);
 let points = [];
 
 for (let i = 0; i < 30; i++) {
@@ -859,6 +831,11 @@ function draw() {
 
     requestAnimationFrame(draw);
 }
+
+    window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
     
 draw();
 
@@ -892,85 +869,51 @@ const gridItems = document.querySelectorAll(".grid-item");
 const seasons = document.querySelectorAll(".season");
 
 let currentSeason = "ALL";
-let itemsPerPage = 6;
-let currentPage = 1;
 
-/* ===== FILTER FUNCTION ===== */
-function applyFilters() {
-    const value = searchInput.value.toLowerCase().trim();
-
-    gridItems.forEach(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        const itemSeason = item.dataset.season;
-
-        const matchSeason =
-            currentSeason === "ALL" || itemSeason === currentSeason;
-
-        const matchSearch = name.includes(value);
-
-        const match = matchSeason && matchSearch;
-
-        item.style.display = match ? "block" : "none";
-    });
-
-    // suggestion
-    const firstMatch = Array.from(gridItems).find(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        return name.includes(value);
-    });
-
-    if (value && firstMatch) {
-        suggestion.style.display = "block";
-        suggestion.textContent =
-            "Bedoelde je: " +
-            firstMatch.querySelector(".name").textContent +
-            " ?";
-    } else {
-        suggestion.style.display = "none";
-    }
-}
-
-/* ===== SEASON FILTER ===== */
 seasons.forEach(btn => {
     btn.addEventListener("click", () => {
         seasons.forEach(s => s.classList.remove("active"));
         btn.classList.add("active");
 
         currentSeason = btn.dataset.season;
-        currentPage = 1;
-
-        pageButtons.forEach((b, i) => {
-            b.classList.toggle("active-page", i === 0);
-        });
-
         applyFilters();
     });
 });
 
-/* ===== SEARCH ===== */
-searchInput.addEventListener("input", () => {
-    currentPage = 1;
-    applyFilters();
-});
+searchInput.addEventListener("input", applyFilters);
 
-/* ===== PAGINATION ===== */
-pageButtons.forEach((btn, index) => {
-    btn.addEventListener("click", () => {
-        pageButtons.forEach(b => b.classList.remove("active-page"));
-        btn.classList.add("active-page");
+function applyFilters() {
+    const value = searchInput.value.toLowerCase().trim();
+    let firstMatch = null;
 
-        currentPage = index + 1;
-        applyFilters();
+    gridItems.forEach(item => {
+        const name = item.querySelector(".name").textContent.toLowerCase();
+        const itemSeason = item.dataset.season;
+
+        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
+        const matchSearch = name.includes(value);
+
+        const match = matchSeason && matchSearch;
+
+        item.classList.toggle("show", match);
+        item.classList.toggle("hide", !match);
+
+        if (match && !firstMatch) {
+            firstMatch = item.querySelector(".name").textContent;
+        }
     });
-});
 
-    if (filtered.length === 0) {
-    pageButtons.forEach(btn => btn.style.display = "none");
-    return;
+    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+        suggestion.style.display = "block";
+        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+    } else {
+        suggestion.style.display = "none";
+    }
 }
 
 /* INIT */
-applyFilters();
+gridItems.forEach(item => item.classList.add("show"));
+homePacks.forEach(p => p.classList.add("show"));
     
 </script>
 
