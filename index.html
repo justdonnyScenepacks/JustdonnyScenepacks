@@ -93,17 +93,22 @@
             color: #b44cff;
         }
 
- .page {
+.page {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
-    z-index: 1;
+
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+
+    transition: 0.4s ease;
 }
 
 .page.active {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0);
     pointer-events: auto;
     z-index: 5;
 }
@@ -685,13 +690,11 @@
     <div class="name">Timo Wellenreuther</div>
 </div>
         <!-- PAGINATION -->
-        <div class="pagination">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-        </div>
+      <div class="pagination">
+    <span id="prev">← Previous</span>
+    <span id="pageInfo">1</span>
+    <span id="next">Next →</span>
+</div>
 
     </div>
 </div>
@@ -841,8 +844,7 @@ draw();
 const filters = document.querySelectorAll(".filter");
 const homePacks = document.querySelectorAll(".pack");
 
-    let currentPage = 1;
-const pages = document.querySelectorAll(".pagination span");
+    
 
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -863,15 +865,6 @@ filters.forEach(btn => {
     });
 });
 
-    function setPage(page) {
-    currentPage = page;
-
-    pages.forEach(p => p.classList.remove("active"));
-
-    if (pages[page - 1]) {
-        pages[page - 1].classList.add("active");
-    }
-}
 
 /* ===== FEYENOORD FILTERS ===== */
 const searchInput = document.getElementById("searchInput");
@@ -879,82 +872,95 @@ const suggestion = document.getElementById("suggestion");
 const gridItems = document.querySelectorAll(".grid-item");
 const seasons = document.querySelectorAll(".season");
 
-    searchInput.addEventListener("input", applyFilters);
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const pageInfo = document.getElementById("pageInfo");
 
+const perPage = 6;
+
+let currentPage = 1;
 let currentSeason = "ALL";
 
-seasons.forEach(btn => {
-    btn.addEventListener("click", () => {
-
-        seasons.forEach(s => s.classList.remove("active"));
-        btn.classList.add("active");
-
-        currentSeason = btn.dataset.season;
-
-        setPage(1);
-        applyFilters();
-    });
-});
-
-
-        applyFilters();
-
-    
-        
-function applyFilters() {
+function getVisibleItems() {
     const value = searchInput.value.toLowerCase().trim();
-    let firstMatch = null;
 
-    const container = document.querySelector(".pack-grid");
-
-    let visibleItems = [];
-
-    gridItems.forEach(item => {
+    return Array.from(gridItems).filter(item => {
         const name = item.querySelector(".name").textContent.toLowerCase();
-        const itemSeason = item.dataset.season;
+        const season = item.dataset.season;
 
-        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
+        const matchSeason = currentSeason === "ALL" || season === currentSeason;
         const matchSearch = name.includes(value);
 
-        const match = matchSeason && matchSearch;
-
-        item.classList.toggle("show", match);
-        item.classList.toggle("hide", !match);
-
-        if (match) visibleItems.push(item);
+        return matchSeason && matchSearch;
     });
+}
 
-    // 🔥 PAGINATION LOGICA (BELANGRIJK)
-    const perPage = 6;
+function applyFilters() {
+    const visibleItems = getVisibleItems();
+
+    const maxPage = Math.max(1, Math.ceil(visibleItems.length / perPage));
+
+    if (currentPage > maxPage) currentPage = 1;
+
+    gridItems.forEach(item => item.style.display = "none");
+
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
 
     visibleItems.forEach((item, i) => {
         if (i >= start && i < end) {
             item.style.display = "flex";
-        } else {
-            item.style.display = "none";
         }
     });
 
-    // suggestion
-    if (value && firstMatch) {
+    pageInfo.textContent = `${currentPage} / ${maxPage}`;
+
+    prevBtn.style.opacity = currentPage === 1 ? "0.3" : "1";
+    nextBtn.style.opacity = currentPage === maxPage ? "0.3" : "1";
+
+    if (searchInput.value.trim() && visibleItems[0]) {
         suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+        suggestion.textContent = "Top result: " + visibleItems[0].querySelector(".name").textContent;
     } else {
         suggestion.style.display = "none";
     }
 }
 
-/* INIT */
-gridItems.forEach(item => item.classList.add("show"));
+searchInput.addEventListener("input", () => {
+    currentPage = 1;
+    applyFilters();
+});
 
-  pages.forEach((p, index) => {
-    p.addEventListener("click", () => {
-        setPage(index + 1);
+seasons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        seasons.forEach(s => s.classList.remove("active"));
+        btn.classList.add("active");
+
+        currentSeason = btn.dataset.season;
+        currentPage = 1;
+
         applyFilters();
     });
 });
+
+prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+        currentPage--;
+        applyFilters();
+    }
+});
+
+nextBtn.addEventListener("click", () => {
+    const maxPage = Math.ceil(getVisibleItems().length / perPage);
+
+    if (currentPage < maxPage) {
+        currentPage++;
+        applyFilters();
+    }
+});
+
+// init
+applyFilters();
     
 </script>
 
