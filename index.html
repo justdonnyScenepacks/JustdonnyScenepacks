@@ -288,6 +288,11 @@
     transform: scale(1);
 }
 
+   .pack-grid {
+    justify-content: start;
+    align-content: start;
+}     
+
 .team-logo {
     position: absolute;
 
@@ -475,10 +480,7 @@
 
 /* 🔥 BELANGRIJK: HIDE zonder layout breuk */
 .grid-item.hide {
-    opacity: 0;
-    transform: scale(0.9);
-    pointer-events: none;
-    visibility: hidden;
+    display: none;
 }
 
 .grid-item.show {
@@ -954,37 +956,6 @@ seasons.forEach(btn => {
     });
 });
 
-searchInput.addEventListener("input", applyFilters);
-
-function applyFilters() {
-    const value = searchInput.value.toLowerCase().trim();
-    let filtered = [];
-
-    gridItems.forEach(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        const itemSeason = item.dataset.season;
-
-        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
-        const matchSearch = name.includes(value);
-
-        const match = matchSeason && matchSearch;
-
-        if (match) filtered.push(item);
-    });
-
-    currentPage = 1; // 🔥 belangrijk: reset page bij filter
-    updatePagination(filtered);
-
-    let firstMatch = filtered[0]?.querySelector(".name").textContent;
-
-    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
-        suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
-    } else {
-        suggestion.style.display = "none";
-    }
-}
-
 /* INIT */
 gridItems.forEach(item => item.classList.add("show"));
 homePacks.forEach(p => p.classList.add("show"));
@@ -1017,18 +988,16 @@ function updatePagination(filteredItems) {
         item.classList.remove("show");
     });
 
-    filteredItems.forEach((item, index) => {
-        if (index >= start && index < end) {
-            item.classList.remove("hide");
-            item.classList.add("show");
-        }
-    });
+   filteredItems.forEach((item, index) => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
 
-    pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
-
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages;
-}
+    if (index >= start && index < end) {
+        item.style.display = "flex";
+    } else {
+        item.style.display = "none";
+    }
+});
 
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
