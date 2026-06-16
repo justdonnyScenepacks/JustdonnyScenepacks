@@ -93,24 +93,27 @@
             color: #b44cff;
         }
 
-.page {
+   .page {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
+    padding-top: 120px;
 
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(40px) scale(1.01);
     pointer-events: none;
 
-    transition: 0.4s ease;
+    transition: 0.6s ease;
+
+    z-index: 2; /* 🔥 belangrijk */
 }
 
 .page.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0px) scale(1);
     pointer-events: auto;
-    z-index: 5;
+    z-index: 1;
 }
 
         .bg-title {
@@ -490,12 +493,6 @@
     color: red;
 }
 
-        .pagination span.active {
-    color: red;
-    border: 1px solid red;
-    box-shadow: 0 0 12px red;
-}
-
         /* REQUEST REMOVED */
 
         .social-card {
@@ -690,11 +687,13 @@
     <div class="name">Timo Wellenreuther</div>
 </div>
         <!-- PAGINATION -->
-      <div class="pagination">
-    <span id="prev">← Previous</span>
-    <span id="pageInfo">1</span>
-    <span id="next">Next →</span>
-</div>
+        <div class="pagination">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
 
     </div>
 </div>
@@ -844,8 +843,6 @@ draw();
 const filters = document.querySelectorAll(".filter");
 const homePacks = document.querySelectorAll(".pack");
 
-    
-
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
 
@@ -865,71 +862,13 @@ filters.forEach(btn => {
     });
 });
 
-
 /* ===== FEYENOORD FILTERS ===== */
 const searchInput = document.getElementById("searchInput");
 const suggestion = document.getElementById("suggestion");
 const gridItems = document.querySelectorAll(".grid-item");
 const seasons = document.querySelectorAll(".season");
 
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
-const pageInfo = document.getElementById("pageInfo");
-
-const perPage = 6;
-
-let currentPage = 1;
 let currentSeason = "ALL";
-
-function getVisibleItems() {
-    const value = searchInput.value.toLowerCase().trim();
-
-    return Array.from(gridItems).filter(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        const season = item.dataset.season;
-
-        const matchSeason = currentSeason === "ALL" || season === currentSeason;
-        const matchSearch = name.includes(value);
-
-        return matchSeason && matchSearch;
-    });
-}
-
-function applyFilters() {
-    const visibleItems = getVisibleItems();
-
-    const maxPage = Math.max(1, Math.ceil(visibleItems.length / perPage));
-
-    if (currentPage > maxPage) currentPage = 1;
-
-    gridItems.forEach(item => item.style.display = "none");
-
-    const start = (currentPage - 1) * perPage;
-    const end = start + perPage;
-
-    visibleItems.forEach((item, i) => {
-        if (i >= start && i < end) {
-            item.style.display = "flex";
-        }
-    });
-
-    pageInfo.textContent = `${currentPage} / ${maxPage}`;
-
-    prevBtn.style.opacity = currentPage === 1 ? "0.3" : "1";
-    nextBtn.style.opacity = currentPage === maxPage ? "0.3" : "1";
-
-    if (searchInput.value.trim() && visibleItems[0]) {
-        suggestion.style.display = "block";
-        suggestion.textContent = "Top result: " + visibleItems[0].querySelector(".name").textContent;
-    } else {
-        suggestion.style.display = "none";
-    }
-}
-
-searchInput.addEventListener("input", () => {
-    currentPage = 1;
-    applyFilters();
-});
 
 seasons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -937,30 +876,44 @@ seasons.forEach(btn => {
         btn.classList.add("active");
 
         currentSeason = btn.dataset.season;
-        currentPage = 1;
-
         applyFilters();
     });
 });
 
-prevBtn.addEventListener("click", () => {
-    if (currentPage > 1) {
-        currentPage--;
-        applyFilters();
+searchInput.addEventListener("input", applyFilters);
+
+function applyFilters() {
+    const value = searchInput.value.toLowerCase().trim();
+    let firstMatch = null;
+
+    gridItems.forEach(item => {
+        const name = item.querySelector(".name").textContent.toLowerCase();
+        const itemSeason = item.dataset.season;
+
+        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
+        const matchSearch = name.includes(value);
+
+        const match = matchSeason && matchSearch;
+
+        item.classList.toggle("show", match);
+        item.classList.toggle("hide", !match);
+
+        if (match && !firstMatch) {
+            firstMatch = item.querySelector(".name").textContent;
+        }
+    });
+
+    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+        suggestion.style.display = "block";
+        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+    } else {
+        suggestion.style.display = "none";
     }
-});
+}
 
-nextBtn.addEventListener("click", () => {
-    const maxPage = Math.ceil(getVisibleItems().length / perPage);
-
-    if (currentPage < maxPage) {
-        currentPage++;
-        applyFilters();
-    }
-});
-
-// init
-applyFilters();
+/* INIT */
+gridItems.forEach(item => item.classList.add("show"));
+homePacks.forEach(p => p.classList.add("show"));
     
 </script>
 
