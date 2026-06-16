@@ -93,27 +93,19 @@
             color: #b44cff;
         }
 
-   .page {
+ .page {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
-    padding-top: 120px;
-
-    opacity: 0;
-    transform: translateY(40px) scale(1.01);
-    pointer-events: none;
-
-    transition: 0.6s ease;
-
-    z-index: 2; /* 🔥 belangrijk */
+    z-index: 1;
 }
 
 .page.active {
     opacity: 1;
     transform: translateY(0px) scale(1);
     pointer-events: auto;
-    z-index: 1;
+    z-index: 5;
 }
 
         .bg-title {
@@ -493,6 +485,12 @@
     color: red;
 }
 
+        .pagination span.active {
+    color: red;
+    border: 1px solid red;
+    box-shadow: 0 0 12px red;
+}
+
         /* REQUEST REMOVED */
 
         .social-card {
@@ -649,22 +647,22 @@
 
 <div class="grid-item" data-season="22/23">
     <img src="2.jpg">
-    <div class="name">Orkun Kökçü</div>
+    <div class="name">Lutsharel Geertruida</div>
 </div>
 
 <div class="grid-item" data-season="22/23">
     <img src="3.jpg">
-    <div class="name">Fredrik Aursnes</div>
-</div>
-
-<div class="grid-item" data-season="23/24">
-    <img src="4.jpg">
     <div class="name">David Hancko</div>
 </div>
 
 <div class="grid-item" data-season="23/24">
+    <img src="4.jpg">
+    <div class="name">Orkun Kökçü</div>
+</div>
+
+<div class="grid-item" data-season="23/24">
     <img src="5.jpg">
-    <div class="name">Lutsharel Geertruida</div>
+    <div class="name">Fredrik Aursnes</div>
 </div>
 
 <div class="grid-item" data-season="23/24">
@@ -862,6 +860,16 @@ filters.forEach(btn => {
     });
 });
 
+    function setPage(page) {
+    currentPage = page;
+
+    pages.forEach(p => p.classList.remove("active"));
+
+    if (pages[page - 1]) {
+        pages[page - 1].classList.add("active");
+    }
+}
+
 /* ===== FEYENOORD FILTERS ===== */
 const searchInput = document.getElementById("searchInput");
 const suggestion = document.getElementById("suggestion");
@@ -870,21 +878,45 @@ const seasons = document.querySelectorAll(".season");
 
 let currentSeason = "ALL";
 
+    let currentPage = 1;
+window.addEventListener("DOMContentLoaded", () => {
+    const pages = document.querySelectorAll(".pagination span");
+});
+
 seasons.forEach(btn => {
     btn.addEventListener("click", () => {
+
         seasons.forEach(s => s.classList.remove("active"));
         btn.classList.add("active");
 
         currentSeason = btn.dataset.season;
-        applyFilters();
-    });
-});
 
+        setPage(1); // 🔥 DIT TOEVOEGEN
+
+        applyFilters();
+
+        const itemsPerPage = 6;
+
+        visibleItems.forEach((item, index) => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    if (index >= start && index < end) {
+        item.style.display = "flex";
+    } else {
+        item.style.display = "none";
+    }
+});
+        
 searchInput.addEventListener("input", applyFilters);
 
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
     let firstMatch = null;
+
+    const container = document.querySelector(".pack-grid");
+
+    let visibleItems = [];
 
     gridItems.forEach(item => {
         const name = item.querySelector(".name").textContent.toLowerCase();
@@ -898,10 +930,15 @@ function applyFilters() {
         item.classList.toggle("show", match);
         item.classList.toggle("hide", !match);
 
+        if (match) visibleItems.push(item);
+
         if (match && !firstMatch) {
             firstMatch = item.querySelector(".name").textContent;
         }
     });
+
+    // 🔥 BELANGRIJK: opnieuw netjes sorteren
+    visibleItems.forEach(item => container.appendChild(item));
 
     if (value && firstMatch && firstMatch.toLowerCase() !== value) {
         suggestion.style.display = "block";
@@ -914,6 +951,13 @@ function applyFilters() {
 /* INIT */
 gridItems.forEach(item => item.classList.add("show"));
 homePacks.forEach(p => p.classList.add("show"));
+
+  pages.forEach((p, index) => {
+    p.addEventListener("click", () => {
+        setPage(index + 1);
+        applyFilters();
+    });
+});
     
 </script>
 
