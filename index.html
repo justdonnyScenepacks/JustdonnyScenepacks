@@ -23,14 +23,19 @@
     z-index: 0;
 }
 
-        .topbar {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            padding: 18px 25px;
-            position: relative;
-            z-index: 10;
-        }
+      .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 18px 25px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    z-index: 9999;
+}
 
         .logo {
             width: 60px;
@@ -92,8 +97,7 @@
             font-weight: 900;
             color: #b44cff;
         }
-
- .page {
+.page {
     position: absolute;
     width: 100%;
     top: 0;
@@ -101,20 +105,22 @@
     padding-top: 120px;
 
     opacity: 0;
-    transform: translateY(40px) scale(1.01);
+    transform: translateY(40px);
+
     pointer-events: none;
 
-    transition: 0.6s ease;
+    transition: 0.5s ease;
 
     z-index: 1;
 }
 
 .page.active {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: translateY(0);
+
     pointer-events: auto;
 
-    z-index: 10;
+    z-index: 20;
 }
 
         .bg-title {
@@ -429,10 +435,9 @@
     border: 1px solid rgba(255,0,0,0.25);
     background: rgba(255,255,255,0.05);
 
-    /* smooth animatie */
-    transition: all 0.45s ease;
+    transition: all 0.3s ease;
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: scale(1);
 }
 
 .grid-item:hover {
@@ -441,14 +446,12 @@
     transform: scale(1.04);
 }
 
-/* IMAGE */
 .grid-item img {
     width: 100%;
     height: 75%;
     object-fit: cover;
 }
 
-/* NAME BAR */
 .grid-item .name {
     font-size: 11px;
     text-align: center;
@@ -460,30 +463,16 @@
     color: white;
 }
 
-/* HIDE ANIMATION */
-.grid-item {
+/* 🔥 BELANGRIJK: HIDE zonder layout breuk */
+.grid-item.hide {
+    display: none !important;
+}
+
+/* SHOW */
+.grid-item.show {
+    display: flex;
     opacity: 1;
     transform: scale(1);
-    transition: all 0.35s ease;
-}
-
-.grid-item.hide {
-    opacity: 0;
-    transform: scale(0.9);
-    pointer-events: none;
-
-    /* 🔥 BELANGRIJK: haalt hem echt uit layout zonder grid te breken */
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden;
-}
-
-/* SHOW STATE (belangrijk voor JS) */
-.grid-item.show {
-    opacity: 1;
-    transform: translateY(0) scale(1);
 }
 
 /* PAGINATION */
@@ -592,7 +581,9 @@
 <canvas id="bg"></canvas>
 
 <div class="topbar">
-    <div><img src="logo.png" class="logo"></div>
+ <div>
+    <img src="logo.png" class="logo" onclick="go('homeFromLogo')">
+</div>
 
     <div class="menu">
         <a onclick="go('home')" id="nav-home">Home</a>
@@ -811,18 +802,43 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-    document.querySelectorAll(".page").forEach(p =>
-        p.classList.remove("active")
-    );
+    const pages = document.querySelectorAll(".page");
 
-    document.getElementById(page).classList.add("active");
+    // 🔥 fade out alles eerst
+    pages.forEach(p => {
+        p.style.opacity = "0";
+        p.style.transform = "translateY(40px)";
+        p.style.pointerEvents = "none";
+    });
 
-    document.querySelectorAll(".menu a").forEach(a =>
-        a.classList.remove("active")
-    );
+    setTimeout(() => {
+        pages.forEach(p => p.classList.remove("active"));
 
-    const nav = document.getElementById("nav-" + page);
-    if (nav) nav.classList.add("active");
+        let target = page;
+
+        // 🔥 speciale logo home switch
+        if (page === "homeFromLogo") {
+            target = "home";
+        }
+
+        const activePage = document.getElementById(target);
+
+        if (activePage) {
+            activePage.classList.add("active");
+            activePage.style.opacity = "1";
+            activePage.style.transform = "translateY(0)";
+            activePage.style.pointerEvents = "auto";
+        }
+
+        // menu highlight fix
+        document.querySelectorAll(".menu a").forEach(a =>
+            a.classList.remove("active")
+        );
+
+        const nav = document.getElementById("nav-" + target);
+        if (nav) nav.classList.add("active");
+
+    }, 200);
 }
 
 /* ===== CANVAS ===== */
@@ -928,66 +944,6 @@ searchInput.addEventListener("input", applyFilters);
 
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
-    let firstMatch = null;
-
-    gridItems.forEach(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        const itemSeason = item.dataset.season;
-
-        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
-        const matchSearch = name.includes(value);
-
-        const match = matchSeason && matchSearch;
-
-        item.classList.toggle("show", match);
-        item.classList.toggle("hide", !match);
-
-        if (match && !firstMatch) {
-            firstMatch = item.querySelector(".name").textContent;
-        }
-    });
-
-    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
-        suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
-    } else {
-        suggestion.style.display = "none";
-    }
-}
-
-/* INIT */
-gridItems.forEach(item => item.classList.add("show"));
-homePacks.forEach(p => p.classList.add("show"));
-
-    let currentPage = 1;
-const itemsPerPage = 6;
-
-const pageInfo = document.getElementById("pageInfo");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-function updatePagination(filteredItems) {
-    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-
-    if (currentPage > totalPages) currentPage = totalPages || 1;
-
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    filteredItems.forEach((item, index) => {
-        const show = index >= start && index < end;
-      item.classList.toggle("hide", !show);
-item.classList.toggle("show", show);
-    });
-
-    pageInfo.textContent = `Page ${currentPage} / ${totalPages || 1}`;
-
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage >= totalPages;
-}
-
-function applyFilters() {
-    const value = searchInput.value.toLowerCase().trim();
     let filtered = [];
 
     gridItems.forEach(item => {
@@ -1002,6 +958,7 @@ function applyFilters() {
         if (match) filtered.push(item);
     });
 
+    currentPage = 1; // 🔥 belangrijk: reset page bij filter
     updatePagination(filtered);
 
     let firstMatch = filtered[0]?.querySelector(".name").textContent;
@@ -1014,7 +971,83 @@ function applyFilters() {
     }
 }
 
-/* BUTTON EVENTS */
+/* INIT */
+gridItems.forEach(item => item.classList.add("show"));
+homePacks.forEach(p => p.classList.add("show"));
+
+let currentPage = 1;
+const itemsPerPage = 6;
+
+const pageInfo = document.getElementById("pageInfo");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function updatePagination(filteredItems) {
+    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+    if (totalPages === 0) {
+        pageInfo.textContent = "Page 0 / 0";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+    }
+
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    // 🔥 eerst alles verbergen
+    gridItems.forEach(item => {
+        item.style.display = "none";
+    });
+
+    // 🔥 alleen juiste items tonen
+    filteredItems.forEach((item, index) => {
+        const show = index >= start && index < end;
+
+        if (show) {
+            item.style.display = "flex";
+        }
+    });
+
+    pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+}
+
+function applyFilters() {
+    const value = searchInput.value.toLowerCase().trim();
+
+    let filtered = [];
+
+    gridItems.forEach(item => {
+        const name = item.querySelector(".name").textContent.toLowerCase();
+        const itemSeason = item.dataset.season;
+
+        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
+        const matchSearch = name.includes(value);
+
+        if (matchSeason && matchSearch) {
+            filtered.push(item);
+        }
+    });
+
+    currentPage = 1;
+    updatePagination(filtered);
+
+    let firstMatch = filtered[0]?.querySelector(".name").textContent;
+
+    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+        suggestion.style.display = "block";
+        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+    } else {
+        suggestion.style.display = "none";
+    }
+}
+
 prevBtn.addEventListener("click", () => {
     currentPage--;
     applyFilters();
