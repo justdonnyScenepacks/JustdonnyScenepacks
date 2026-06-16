@@ -461,9 +461,7 @@
 
 /* HIDE ANIMATION */
 .grid-item.hide {
-    opacity: 0;
-    transform: translateY(25px) scale(0.95);
-    pointer-events: none;
+    display: none;
 }
 
 /* SHOW STATE (belangrijk voor JS) */
@@ -491,6 +489,12 @@
 .pagination span:hover {
     border: 1px solid red;
     color: red;
+}
+
+        .active-page {
+    border: 1px solid red !important;
+    color: red;
+    box-shadow: 0 0 10px red;
 }
 
         /* REQUEST REMOVED */
@@ -687,13 +691,13 @@
     <div class="name">Timo Wellenreuther</div>
 </div>
         <!-- PAGINATION -->
-        <div class="pagination">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-        </div>
+       <div class="pagination">
+    <span class="active-page">1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+</div>
 
     </div>
 </div>
@@ -767,15 +771,20 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-    document.querySelectorAll(".page").forEach(p =>
-        p.classList.remove("active")
-    );
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("active");
+    });
 
-    document.getElementById(page).classList.add("active");
+    const target = document.getElementById(page);
+    if (target) {
+        target.classList.add("active");
+    } else {
+        console.log("Page not found:", page);
+    }
 
-    document.querySelectorAll(".menu a").forEach(a =>
-        a.classList.remove("active")
-    );
+    document.querySelectorAll(".menu a").forEach(a => {
+        a.classList.remove("active");
+    });
 
     const nav = document.getElementById("nav-" + page);
     if (nav) nav.classList.add("active");
@@ -836,11 +845,6 @@ function draw() {
 
     requestAnimationFrame(draw);
 }
-
-    window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
     
 draw();
 
@@ -876,20 +880,33 @@ const seasons = document.querySelectorAll(".season");
 let currentSeason = "ALL";
 
 seasons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        seasons.forEach(s => s.classList.remove("active"));
-        btn.classList.add("active");
+  btn.addEventListener("click", () => {
 
-        currentSeason = btn.dataset.season;
-        applyFilters();
-    });
+    seasons.forEach(s => s.classList.remove("active"));
+    btn.classList.add("active");
+
+    currentSeason = btn.dataset.season;
+
+    currentPage = 1;
+
+    document.querySelectorAll(".pagination span")
+        .forEach(p => p.classList.remove("active-page"));
+
+    const firstPage = document.querySelector(".pagination span");
+    if (firstPage) firstPage.classList.add("active-page");
+
+    applyFilters();
+  });
 });
 
 searchInput.addEventListener("input", applyFilters);
 
+    const itemsPerPage = 6;
+let currentPage = 1;
+
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
-    let firstMatch = null;
+    let filtered = [];
 
     gridItems.forEach(item => {
         const name = item.querySelector(".name").textContent.toLowerCase();
@@ -898,27 +915,64 @@ function applyFilters() {
         const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
         const matchSearch = name.includes(value);
 
-        const match = matchSeason && matchSearch;
-
-        item.classList.toggle("show", match);
-        item.classList.toggle("hide", !match);
-
-        if (match && !firstMatch) {
-            firstMatch = item.querySelector(".name").textContent;
+        if (matchSeason && matchSearch) {
+            filtered.push(item);
+        } else {
+            item.classList.add("hide");
+            item.classList.remove("show");
         }
     });
 
-    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    filtered.forEach((item, i) => {
+        if (i >= start && i < end) {
+            item.classList.add("show");
+            item.classList.remove("hide");
+        } else {
+            item.classList.add("hide");
+            item.classList.remove("show");
+        }
+    });
+
+     const pageButtons = document.querySelectorAll(".pagination span");
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+    pageButtons.forEach((btn, i) => {
+        btn.style.display = i < totalPages ? "inline-block" : "none";
+    });
+
+    // suggestion FIX
+    let firstMatch = filtered[0];
+    if (searchInput.value && firstMatch) {
         suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
+        suggestion.textContent = "Bedoelde je: " + firstMatch.querySelector(".name").textContent + " ?";
     } else {
         suggestion.style.display = "none";
     }
 }
-
 /* INIT */
 gridItems.forEach(item => item.classList.add("show"));
 homePacks.forEach(p => p.classList.add("show"));
+
+    const pageButtons = document.querySelectorAll(".pagination span");
+
+pageButtons.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+
+        pageButtons.forEach(b => b.classList.remove("active-page"));
+        btn.classList.add("active-page");
+
+        currentPage = index + 1;
+
+        if (currentPage > Math.ceil(filtered.length / itemsPerPage)) {
+    currentPage = 1;
+}
+
+        applyFilters();
+    });
+});
     
 </script>
 
