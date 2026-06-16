@@ -93,27 +93,31 @@
             color: #b44cff;
         }
 
-   .page {
+ .page {
     position: absolute;
     width: 100%;
+    min-height: 100vh;
     top: 0;
     left: 0;
     padding-top: 120px;
-
     opacity: 0;
     transform: translateY(40px) scale(1.01);
     pointer-events: none;
-
     transition: 0.6s ease;
-
-    z-index: 2; /* 🔥 belangrijk */
+    z-index: 5;
 }
 
 .page.active {
     opacity: 1;
-    transform: translateY(0px) scale(1);
     pointer-events: auto;
-    z-index: 1;
+    transform: translateY(0) scale(1);
+    z-index: 20;
+}
+
+        .pagination {
+    position: sticky;
+    bottom: 0;
+    background: transparent;
 }
 
         .bg-title {
@@ -339,6 +343,7 @@
         .pack-grid {
     overflow-y: auto;
     padding-right: 6px;
+    align-content: start;
 }
 
 /* SEASONS */
@@ -500,6 +505,12 @@
     box-shadow: 0 0 10px red;
 }
 
+        .page.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+        
         /* REQUEST REMOVED */
 
         .social-card {
@@ -881,86 +892,32 @@ const gridItems = document.querySelectorAll(".grid-item");
 const seasons = document.querySelectorAll(".season");
 
 let currentSeason = "ALL";
-
-seasons.forEach(btn => {
-  btn.addEventListener("click", () => {
-
-    seasons.forEach(s => s.classList.remove("active"));
-    btn.classList.add("active");
-
-    currentSeason = btn.dataset.season;
-
-    currentPage = 1;
-
-    applyFilters(); // eerst filteren
-
-    // daarna pagination resetten (BELANGRIJK)
-    const pageButtons = document.querySelectorAll(".pagination span");
-    pageButtons.forEach(p => p.classList.remove("active-page"));
-
-    if (pageButtons.length > 0) {
-        pageButtons[0].classList.add("active-page");
-    }
-  });
-});
-
-searchInput.addEventListener("input", applyFilters);
-
-    const itemsPerPage = 6;
+let itemsPerPage = 6;
 let currentPage = 1;
 
+/* ===== FILTER FUNCTION ===== */
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
 
-    let filtered = [];
-
-    // 1. bepaal welke items matchen
     gridItems.forEach(item => {
-
         const name = item.querySelector(".name").textContent.toLowerCase();
         const itemSeason = item.dataset.season;
 
         const matchSeason =
             currentSeason === "ALL" || itemSeason === currentSeason;
 
-        const matchSearch =
-            name.includes(value);
+        const matchSearch = name.includes(value);
 
-        if (matchSeason && matchSearch) {
-            filtered.push(item);
-        }
+        const match = matchSeason && matchSearch;
+
+        item.style.display = match ? "block" : "none";
     });
 
-    // 2. pagination
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    gridItems.forEach(item => {
-        item.classList.add("hide");
-        item.classList.remove("show");
+    // suggestion
+    const firstMatch = Array.from(gridItems).find(item => {
+        const name = item.querySelector(".name").textContent.toLowerCase();
+        return name.includes(value);
     });
-
-  gridItems.forEach(item => {
-    const index = filtered.indexOf(item);
-    const inPage = index >= start && index < end;
-    const inFiltered = index !== -1;
-
-    const shouldShow = inFiltered && inPage;
-
-    item.classList.toggle("show", shouldShow);
-    item.classList.toggle("hide", !shouldShow);
-});
-
-    // 3. pagination buttons
-    const pageButtons = document.querySelectorAll(".pagination span");
-    const totalPages = Math.ceil(filtered.length / itemsPerPage);
-
-    pageButtons.forEach((btn, i) => {
-        btn.style.display = i < totalPages ? "inline-block" : "none";
-    });
-
-    // 4. suggestion
-    const firstMatch = filtered[0];
 
     if (value && firstMatch) {
         suggestion.style.display = "block";
@@ -972,27 +929,48 @@ function applyFilters() {
         suggestion.style.display = "none";
     }
 }
-    
-/* INIT */
-gridItems.forEach(item => item.classList.add("show"));
-homePacks.forEach(p => p.classList.add("show"));
 
-  const pageButtons = document.querySelectorAll(".pagination span");
-
-pageButtons.forEach((btn, index) => {
+/* ===== SEASON FILTER ===== */
+seasons.forEach(btn => {
     btn.addEventListener("click", () => {
+        seasons.forEach(s => s.classList.remove("active"));
+        btn.classList.add("active");
 
-        // active state fix
-        pageButtons.forEach(b => b.classList.remove("active-page"));
-        btn.classList.add("active-page");
+        currentSeason = btn.dataset.season;
+        currentPage = 1;
 
-        // page update
-        currentPage = index + 1;
+        pageButtons.forEach((b, i) => {
+            b.classList.toggle("active-page", i === 0);
+        });
 
-        // re-render
         applyFilters();
     });
 });
+
+/* ===== SEARCH ===== */
+searchInput.addEventListener("input", () => {
+    currentPage = 1;
+    applyFilters();
+});
+
+/* ===== PAGINATION ===== */
+pageButtons.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+        pageButtons.forEach(b => b.classList.remove("active-page"));
+        btn.classList.add("active-page");
+
+        currentPage = index + 1;
+        applyFilters();
+    });
+});
+
+    if (filtered.length === 0) {
+    pageButtons.forEach(btn => btn.style.display = "none");
+    return;
+}
+
+/* INIT */
+applyFilters();
     
 </script>
 
