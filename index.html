@@ -841,6 +841,9 @@ draw();
 const filters = document.querySelectorAll(".filter");
 const homePacks = document.querySelectorAll(".pack");
 
+    let currentPage = 1;
+const pages = document.querySelectorAll(".pagination span");
+
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
 
@@ -876,12 +879,9 @@ const suggestion = document.getElementById("suggestion");
 const gridItems = document.querySelectorAll(".grid-item");
 const seasons = document.querySelectorAll(".season");
 
-let currentSeason = "ALL";
+    searchInput.addEventListener("input", applyFilters);
 
-    let currentPage = 1;
-window.addEventListener("DOMContentLoaded", () => {
-    const pages = document.querySelectorAll(".pagination span");
-});
+let currentSeason = "ALL";
 
 seasons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -891,25 +891,16 @@ seasons.forEach(btn => {
 
         currentSeason = btn.dataset.season;
 
-        setPage(1); // 🔥 DIT TOEVOEGEN
+        setPage(1);
+        applyFilters();
+    });
+});
+
 
         applyFilters();
 
-        const itemsPerPage = 6;
-
-        visibleItems.forEach((item, index) => {
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    if (index >= start && index < end) {
-        item.style.display = "flex";
-    } else {
-        item.style.display = "none";
-    }
-});
+    
         
-searchInput.addEventListener("input", applyFilters);
-
 function applyFilters() {
     const value = searchInput.value.toLowerCase().trim();
     let firstMatch = null;
@@ -931,16 +922,23 @@ function applyFilters() {
         item.classList.toggle("hide", !match);
 
         if (match) visibleItems.push(item);
+    });
 
-        if (match && !firstMatch) {
-            firstMatch = item.querySelector(".name").textContent;
+    // 🔥 PAGINATION LOGICA (BELANGRIJK)
+    const perPage = 6;
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+
+    visibleItems.forEach((item, i) => {
+        if (i >= start && i < end) {
+            item.style.display = "flex";
+        } else {
+            item.style.display = "none";
         }
     });
 
-    // 🔥 BELANGRIJK: opnieuw netjes sorteren
-    visibleItems.forEach(item => container.appendChild(item));
-
-    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
+    // suggestion
+    if (value && firstMatch) {
         suggestion.style.display = "block";
         suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
     } else {
@@ -950,7 +948,6 @@ function applyFilters() {
 
 /* INIT */
 gridItems.forEach(item => item.classList.add("show"));
-homePacks.forEach(p => p.classList.add("show"));
 
   pages.forEach((p, index) => {
     p.addEventListener("click", () => {
