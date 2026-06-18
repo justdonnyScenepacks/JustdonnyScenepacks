@@ -316,11 +316,6 @@
     animation: floatLogo 4s ease-in-out infinite;
     will-change: transform;
 }
-        
-        .pack-grid {
-    overflow-y: auto;
-    padding-right: 6px;
-}
 
 /* SEASONS */
 .seasons {
@@ -585,30 +580,7 @@
     align-items: center;
     gap: 8px;
 }
-
-.fey-title {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(32px, 5vw, 56px);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-
-    color: transparent;
-    background: linear-gradient(90deg, #ffffff, #ff2a2a, #ffffff);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-
-    text-align: center;
-    display: inline-block;
-
-    position: relative;
-
-    filter: drop-shadow(0 0 12px rgba(255,0,0,0.35));
-
-    animation: feyMove 5s ease-in-out infinite;
-
-    transition: transform 0.25s ease, letter-spacing 0.25s ease;
-}
-
+        
 /* underline glow bar */
 .fey-title {
     font-family: 'Anton', sans-serif;
@@ -669,15 +641,6 @@
     100% { text-shadow: 0 0 10px red; }
 }
 
-.fey-title {
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: 6px;
-    color: rgba(255,255,255,0.35);
-    text-shadow: 0 0 25px rgba(255,0,0,0.6);
-    transition: 0.25s ease;
-}
-
 .fey-title:hover {
     transform: scale(1.03);
     letter-spacing: 8px;
@@ -731,6 +694,59 @@
 
 .logo:hover {
     transform: scale(1.08);
+}
+
+        .detail-wrapper{
+    display:flex;
+    gap:40px;
+    padding:120px 60px;
+    align-items:center;
+}
+
+.detail-left img{
+    width:350px;
+    border-radius:15px;
+    box-shadow:0 0 20px red;
+}
+
+.detail-right{
+    flex:1;
+}
+
+.detail-title{
+    font-size:32px;
+    font-weight:900;
+    margin-bottom:20px;
+    letter-spacing:2px;
+}
+
+.detail-box{
+    border:1px solid red;
+    padding:20px;
+    border-radius:12px;
+    background:rgba(0,0,0,0.5);
+}
+
+.detail-box a{
+    display:block;
+    font-size:18px;
+    color:red;
+    font-weight:900;
+    margin-bottom:10px;
+}
+
+.detail-password{
+    color:#aaa;
+    font-size:14px;
+}
+
+.back-btn{
+    margin-top:20px;
+    padding:10px 18px;
+    background:black;
+    border:1px solid red;
+    color:white;
+    cursor:pointer;
 }
     </style>
 
@@ -810,75 +826,447 @@
     <div class="pack-sidebar">
 
         <!-- SEARCH -->
-       <div class="search-wrapper small">
-    <div class="icon-left">🔍</div>
-    <input type="text" id="feySearch" placeholder="Search scenepacks...">
+        <div class="search-wrapper small">
+            <div class="icon-left">🔍</div>
+            <input type="text" id="feySearch" placeholder="Search scenepacks...">
+        </div>
 
-    <!-- 👇 PRO SUGGESTIONS DROPDOWN (ONDER INPUT) -->
-</div>
         <div class="divider"></div>
 
-        <!-- TITLE SECTION -->
+        <!-- TITLE -->
         <div class="fey-header">
             <div class="fey-title">FEYENOORD</div>
             <div class="fey-desc">
-                Feyenoord Rotterdam is een Nederlandse profvoetbalclub uit Rotterdam, opgericht op 19 juli 1908, die uitkomt in de Eredivisie. 
-                De stadionclub wordt vaak betiteld als de club van het volk.
+               Feyenoord Rotterdam is een Nederlandse profvoetbalclub uit Rotterdam, opgericht op 19 juli 1908, die uitkomt in de Eredivisie. 
+                De stadionclub wordt vaak betiteld als de club van het volk. 
                 De thuisbasis is Stadion Feijenoord, dat in de volksmond De Kuip wordt genoemd.
             </div>
         </div>
 
         <div class="divider"></div>
-
-        <!-- LIST -->
+        
+              <!-- LIST -->
         <div class="pack-list">
 
-           <div class="pack-item">LUCIANO VALENTE - S25/26 (1440P HD) - JUSTDONNY</div>
-<div class="pack-item">LUCIANO VALENTE HOT-BADASS CLIPS - S25/26 (1440P HD / 1080P HD) - JUSTDONNY</div>
-<div class="pack-item">AYASE UEDA - S25/26 (1080P HD) - JUSTDONNY</div>
+<div class="pack-item"
+onclick="openPack(
+'LUCIANO VALENTE - S25/26 (1440P HD) - JUSTDONNY',
+'https://mega.nz/folder/bQlBWLba#jR08TKfD9AQbZExZnNxjoA',
+'img/luciano.jpg',
+''
+)">
+LUCIANO VALENTE - S25/26 (1440P HD) - JUSTDONNY
+</div>
 
-<div class="pack-item">HWANG IN-BEOM - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">ANIS HADJ-MOUSSA - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">IGOR PAIXÃO - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">DE KUIP - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">DAVID HANCKO - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">JAKUB MODER - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">GIVAIRO READ - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">HUGO BUENO - S24/25 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">IBRAHIM OSMAN - S24/25 (1440P HD) - JUSTDONNY</div>
-<div class="pack-item">FEYENOORD CELEBRATIONS PACK - S24/25 (1080P HD) - JUSTDONNY</div>
+<div class="pack-item"
+onclick="openPack(
+'LUCIANO VALENTE HOT-BADASS CLIPS - S25/26 (1440P HD / 1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/DAsFiAaL#NJtnTkGxpKo_HcB-zA5-Kw',
+'img/luciano_hot.jpg',
+''
+)">
+LUCIANO VALENTE HOT-BADASS CLIPS - S25/26 (1440P HD / 1080P HD) - JUSTDONNY
+</div>
 
-<div class="pack-item">QUILINDSCHY HARTMAN - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">QUINTEN TIMBER - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">GJIVAI ZECHIËL - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">TIMO WELLENREUTHER - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">LUTSHAREL GEERTRUIDA - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">DAVID HANCKO - S23/24 (1080P HD) - JUSTDONNY</div>
+<div class="pack-item"
+onclick="openPack(
+'AYASE UEDA - S24/25 + S25/26 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/GJkCmYSK#L88pBX2BhsOq1fx-gb1paA',
+'img/ueda.jpg',
+''
+)">
+AYASE UEDA - S24/25 + S25/26 (1080P HD) - JUSTDONNY
+</div>
 
-<div class="pack-item">YANKUBA MINTEH - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">THOMAS BEELEN - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">GERNOT TRAUNER - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">ANTONI MILAMBO - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">JUSTIN BIJLOW ALL SAVES - S23/24 (720P HD) - JUSTDONNY</div>
-<div class="pack-item">LUKA IVANUSEC - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">CALVIN STENGS - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">AYASE UEDA - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">SANTIAGO GIMENEZ - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">RAMIZ ZERROUKI - S23/24 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">GIVAIRO READ - S23/24 (1080P HD) - JUSTDONNY</div>
+<div class="pack-item"
+onclick="openPack(
+'HWANG IN-BEOM - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/NUpSCBpI#zdc7y9s0K8Z3C3vXLHFRmQ',
+'img/hwang.jpg',
+''
+)">
+HWANG IN-BEOM - S24/25 (1080P HD) - JUSTDONNY
+</div>
 
-<div class="pack-item">ORKUN KÖKÇÜ - S22/23 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">ORKUN KÖKÇÜ (REMAKE) - S22/23 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">FREDRIK AURSNES - S22/23 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">FEYENOORD CELEBRATIONS PACK - S22/23 (1080P HD) - JUSTDONNY</div>
+<div class="pack-item"
+onclick="openPack(
+'ANIS HADJ-MOUSSA - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/IFwkzbJA#N5uCkO4TwnKhpNxTwLtg5Q',
+'img/anis.jpg',
+'N5uCkO4TwnKhpNxTwLtg5Q'
+)">
+ANIS HADJ-MOUSSA - S24/25 (1080P HD) - JUSTDONNY
+</div>
 
-<div class="pack-item">LUIS SINISTERRA - S21/22 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">CYRIEL DESSERS - S21/22 (1080P HD) - JUSTDONNY</div>
-<div class="pack-item">FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY</div>
+<div class="pack-item"
+onclick="openPack(
+'IGOR PAIXÃO - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/lUAHBAxR#oczDXIzmKsViKtOHAsS5Cw',
+'img/igor.jpg',
+'oczDXIzmKsViKtOHAsS5Cw'
+)">
+IGOR PAIXÃO - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'DE KUIP - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/oVB2iDQZ#2dlwckltvSJagDzeDZmh_w',
+'img/de-kuip.jpg',
+'2dlwckltvSJagDzeDZmh_w'
+)">
+DE KUIP - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'DAVID HANCKO - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/hQR02LoC#S3emyFsYMbC3Rjl0hvdEPA',
+'img/david.jpg',
+'S3emyFsYMbC3Rjl0hvdEPA'
+)">
+DAVID HANCKO - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'JAKUB MODER - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/cMAyWQQI#nfdVDJfGRRYUAiOLaskMQw',
+'img/jakub.jpg',
+''
+)">
+JAKUB MODER - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'GIVAIRO READ - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/iRNwkZDS#M_tx9w5GeGQe0HRuhAhG_Q',
+'img/givairo.jpg',
+'M_tx9w5GeGQe0HRuhAhG_Q'
+)">
+GIVAIRO READ - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'HUGO BUENO - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/KZlQyK5C#cK06tc_vOuhOso5FNMwvAA',
+'img/hugo.jpg',
+''
+)">
+HUGO BUENO - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'IBRAHIM OSMAN - S24/25 (1440P HD) - JUSTDONNY',
+'https://mega.nz/folder/GJMVyAZB#tyxxrUKeYsiheik0sEoEHA',
+'img/ibrahim.jpg',
+'tyxxrUKeYsiheik0sEoEHA'
+)">
+IBRAHIM OSMAN - S24/25 (1440P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FEYENOORD CELEBRATIONS PACK - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/BUoWTJ4Z#lSiMG_KJHQj8EBsYDb3PjQ',
+'img/feyenoord.jpg',
+'lSiMG_KJHQj8EBsYDb3PjQ'
+)">
+FEYENOORD CELEBRATIONS PACK - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'QUINTEN TIMBER - S24/25 (1440P HD) - JUSTDONNY',
+'https://mega.nz/folder/3Q8yXazA#XeqOX3QNfe8TwSCp8uF4dw',
+'img/quinten.jpg',
+'XeqOX3QNfe8TwSCp8uF4dw'
+)">
+QUINTEN TIMBER - S24/25 (1440P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'QUILINDSCHY HARTMAN - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/EABn1LZa#vcGjtgBB49odIey-FEEl1Q',
+'img/quilindschy.jpg',
+'vcGjtgBB49odIey-FEEl1Q'
+)">
+QUILINDSCHY HARTMAN - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'QUINTEN TIMBER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/3Q8yXazA#XeqOX3QNfe8TwSCp8uF4dw',
+'img/quinten.jpg',
+'XeqOX3QNfe8TwSCp8uF4dw'
+)">
+QUINTEN TIMBER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'GJIVAI ZECHIËL - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/ScV2iIRD#UljI5WAViueiSN0VQFcKhg',
+'img/gjivai.jpg',
+'UljI5WAViueiSN0VQFcKhg'
+)">
+GJIVAI ZECHIËL - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'TIMO WELLENREUTHER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/2RVzRS7Y#rC_EBXPd3fWoBO1IG-_38g',
+'img/timo.jpg',
+'rC_EBXPd3fWoBO1IG-_38g'
+)">
+TIMO WELLENREUTHER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUTSHAREL GEERTRUIDA - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/4NYElY4b#y-gvyMN6paEOZtrn6gUW8Q',
+'img/lutsharel.jpg',
+'y-gvyMN6paEOZtrn6gUW8Q'
+)">
+LUTSHAREL GEERTRUIDA - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'YANKUBA MINTEH - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/gIJQgBYC#W9KNKKXn91lzefVoUPJVWA',
+'img/yankuba.jpg',
+'W9KNKKXn91lzefVoUPJVWA'
+)">
+YANKUBA MINTEH - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'THOMAS BEELEN - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/NFAy2SAT#4vlZKdxYCI-cRtshygOrwg',
+'img/thomas.jpg',
+'4vlZKdxYCI-cRtshygOrwg'
+)">
+THOMAS BEELEN - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'GERNOT TRAUNER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/0FATDLgK',
+'img/gernot.jpg',
+' 3LDGTBJ7HC75KkRqY9LDvA'
+)">
+GERNOT TRAUNER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'ANTONI MILAMBO - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/kUp2XITR#ndKQ35vK97mbfwEWbrIGoA',
+'img/antoni.jpg',
+'ndKQ35vK97mbfwEWbrIGoA'
+)">
+ANTONI MILAMBO - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'JUSTIN BIJLOW ALL SAVES - S23/24 (720P HD) - JUSTDONNY',
+'https://mega.nz/folder/AMZziSxQ#F7q8IQvXu_gPRMpFWzqYrg',
+'img/justin.jpg',
+'F7q8IQvXu_gPRMpFWzqYrg'
+)">
+JUSTIN BIJLOW ALL SAVES - S23/24 (720P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUKA IVANUSEC - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/xMZSjJoI#ZFoCTKwXZx7VhlivUGv5Zg',
+'img/luka.jpg',
+'ZFoCTKwXZx7VhlivUGv5Zg'
+)">
+LUKA IVANUSEC - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'CALVIN STENGS - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/NRBUgI5L#1m6SG1pHof5unJHNl5Lbdw',
+'img/calvin.jpg',
+'1m6SG1pHof5unJHNl5Lbdw'
+)">
+CALVIN STENGS - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'AYASE UEDA - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/AVxSHB4Y#e5rYIdJDKn9Q4YWT96iZag',
+'img/ayase.jpg',
+''
+)">
+AYASE UEDA - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'SANTIAGO GIMENEZ - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/1IRlQRyA#l3LWh_vAlENJmozsicHC3A',
+'img/santiago.jpg',
+'l3LWh_vAlENJmozsicHC3A'
+)">
+SANTIAGO GIMENEZ - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'RAMIZ ZERROUKI - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/xU4CVIjK#lXfx4lU8iz24tWL2hK3WaA',
+'img/ramiz.jpg',
+'lXfx4lU8iz24tWL2hK3WaA'
+)">
+RAMIZ ZERROUKI - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'MATS WIEFFER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/qZEQARZY#5vs1NHd6mb73yrpuQ3vYKw',
+'img/mats.jpg',
+'5vs1NHd6mb73yrpuQ3vYKw'
+)">
+MATS WIEFFER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'ORKUN KÖKÇÜ - S22/23 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/JcQygIhB#aFfOYfnU886M9aP5SvV7XA',
+'img/orkun.jpg',
+''
+)">
+ORKUN KÖKÇÜ - S22/23 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'ORKUN KÖKÇÜ (REMAKE) - S22/23 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/xZpVjAbJ#WCcbEo8HW7G722e272z8Fw',
+'img/orkun.jpg',
+'WCcbEo8HW7G722e272z8Fw'
+)">
+ORKUN KÖKÇÜ (REMAKE) - S22/23 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FREDRIK AURSNES - S22/23 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/QVY33YAa#KgSywrDetYpt8Tfkg-fK8Q',
+'img/fredrik.jpg',
+''
+)">
+FREDRIK AURSNES - S22/23 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FEYENOORD CELEBRATIONS PACK - S22/23 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/oBIBhRJJ#mBKGYje0HAZIPmiaHD7B9A',
+'img/feyenoord.jpg',
+'mBKGYje0HAZIPmiaHD7B9A'
+)">
+FEYENOORD CELEBRATIONS PACK - S22/23 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'DAVID HANCKO - S22/23 (MINI) (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/HdVmUKCR#LtdWo41-22a9gKP_kaEHKQ',
+'img/david.jpg',
+'LtdWo41-22a9gKP_kaEHKQ'
+)">
+DAVID HANCKO - S22/23 (MINI) (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUIS SINISTERRA - S21/22 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/sUxxEDjb#CeruDubEHAzeVhHoT1HkSQ',
+'img/luis.jpg',
+''
+)">
+LUIS SINISTERRA - S21/22 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'CYRIEL DESSERS - S21/22 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/3Bd1EDwB#Ww24h_jFaxK8zQG1nGsM_A',
+'img/cyriel.jpg',
+'Ww24h_jFaxK8zQG1nGsM_A'
+)">
+CYRIEL DESSERS - S21/22 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/yJVHATIK#fUbziIPHnu7_y1KT3lBVWg',
+'img/feyenoord.jpg',
+'fUbziIPHnu7_y1KT3lBVWg'
+)">
+FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY
+</div>
 
         </div>
+
+    </div>
+
+</div> <!-- ✅ FEYENOORD PAGE DICHT -->
+
+
+<!-- DETAIL PAGE (BELANGRIJK: NIET IN FEYENOORD!) -->
+<div class="page" id="detail">
+
+    <div class="detail-wrapper">
+
+        <!-- LEFT IMAGE -->
+        <div class="detail-left">
+            <img id="detail-img" src="" />
+        </div>
+
+        <!-- RIGHT INFO -->
+        <div class="detail-right">
+
+            <div class="detail-title" id="detail-title"></div>
+
+            <div class="detail-box">
+                <a id="detail-link" href="#" target="_blank">
+                    OPEN MEGA LINK
+                </a>
+
+                <div id="detail-password" class="detail-password"></div>
+            </div>
+
+            <button onclick="go('feyenoord')" class="back-btn">
+                ← BACK
+            </button>
+
+        </div>
+
     </div>
 </div>
+            
 <!-- SOCIALS -->
 <div class="page" id="socials">
     <div class="bg-title">SOCIALS</div>
@@ -1083,8 +1471,27 @@ feySearch.addEventListener("keydown", (e) => {
         }
     }
 });
-    
-</script>
+
+    function openPack(title, link, img, password) {
+
+    // titel
+    document.getElementById("detail-title").innerText = title;
+
+    // mega link
+    document.getElementById("detail-link").href = link;
+
+    // afbeelding
+    document.getElementById("detail-img").src = img;
+
+    // password
+    const passBox = document.getElementById("detail-password");
+    passBox.innerText = password ? "PASSWORD: " + password : "";
+
+    // page switch
+    go("detail");
+}
+
+    </script>
 
 </body>
 </html>
