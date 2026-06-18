@@ -604,14 +604,19 @@
     100% { text-shadow: 0 0 10px red; }
 }
 
-        .fey-title {
-    transition: 0.3s ease;
+.fey-title {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.35);
+    text-shadow: 0 0 25px rgba(255,0,0,0.6);
+    transition: 0.25s ease;
 }
 
 .fey-title:hover {
-    transform: scale(1.02);
-    letter-spacing: 7px;
-    text-shadow: 0 0 30px red;
+    transform: scale(1.03);
+    letter-spacing: 8px;
+    text-shadow: 0 0 40px red;
 }
     </style>
 
@@ -866,7 +871,7 @@ function draw() {
 draw();
 
 /* ===== HOME FILTERS ===== */
-    const homePacks = document.querySelectorAll(".pack");
+    const homePacks = document.querySelectorAll("#home .pack");
 const filters = document.querySelectorAll(".filter");
 
 filters.forEach(btn => {
@@ -888,6 +893,8 @@ filters.forEach(btn => {
     });
 });
 
+     document.querySelector('.filter[data-type="all"]').click();
+
 /* ===== FEYENOORD FILTERS ===== */
 const feySearch = document.getElementById("feySearch");
 const feyPage = document.getElementById("feyenoord");
@@ -896,12 +903,13 @@ const items = feyPage.querySelectorAll(".pack-item");
 feySearch.addEventListener("input", () => {
     const value = feySearch.value.toLowerCase();
 
-    items.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        item.style.display = text.includes(value) ? "block" : "none";
-    });
+  items.forEach(item => {
+    const match = item.textContent.toLowerCase().includes(value);
+    item.style.opacity = match ? "1" : "0.2";
+    item.style.transform = match ? "scale(1)" : "scale(0.98)";
+    item.style.transition = "0.2s ease";
 });
-homePacks.forEach(p => p.classList.add("show"));
+});
     
 </script>
 
