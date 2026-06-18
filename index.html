@@ -696,57 +696,97 @@
     transform: scale(1.08);
 }
 
-        .detail-wrapper{
-    display:flex;
-    gap:40px;
-    padding:120px 60px;
-    align-items:center;
+/* ===== DETAIL PAGE NEW DESIGN ===== */
+#detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.detail-left img{
-    width:350px;
-    border-radius:15px;
-    box-shadow:0 0 20px red;
+.detail-card {
+    width: 520px;
+    height: 520px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.65);
+    border: 1px solid rgba(255,0,0,0.35);
+    box-shadow: 0 0 25px rgba(255,0,0,0.25);
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    transform: scale(0.92);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(.2,.9,.2,1);
 }
 
-.detail-right{
-    flex:1;
+.page.active#detail .detail-card {
+    transform: scale(1);
+    opacity: 1;
 }
 
-.detail-title{
-    font-size:32px;
-    font-weight:900;
-    margin-bottom:20px;
-    letter-spacing:2px;
+.detail-image {
+    width: 100%;
+    height: 55%;
+    object-fit: cover;
+    border-bottom: 2px solid red;
 }
 
-.detail-box{
-    border:1px solid red;
-    padding:20px;
-    border-radius:12px;
-    background:rgba(0,0,0,0.5);
+.detail-content {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.detail-box a{
-    display:block;
-    font-size:18px;
-    color:red;
-    font-weight:900;
-    margin-bottom:10px;
+.detail-title {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 10px red;
 }
 
-.detail-password{
-    color:#aaa;
-    font-size:14px;
+.detail-link {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 10px;
+    color: red;
+    font-weight: 900;
+    text-decoration: none;
+    transition: 0.2s;
 }
 
-.back-btn{
-    margin-top:20px;
-    padding:10px 18px;
-    background:black;
-    border:1px solid red;
-    color:white;
-    cursor:pointer;
+.detail-link:hover {
+    background: red;
+    color: black;
+    box-shadow: 0 0 15px red;
+}
+
+.detail-password {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.back-btn {
+    margin-top: auto;
+    padding: 10px;
+    border: 1px solid rgba(255,0,0,0.4);
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    border: 1px solid red;
+    box-shadow: 0 0 12px red;
 }
     </style>
 
@@ -1238,25 +1278,19 @@ FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY
 <!-- DETAIL PAGE (BELANGRIJK: NIET IN FEYENOORD!) -->
 <div class="page" id="detail">
 
-    <div class="detail-wrapper">
+    <div class="detail-card">
 
-        <!-- LEFT IMAGE -->
-        <div class="detail-left">
-            <img id="detail-img" src="" />
-        </div>
+        <img id="detail-img" class="detail-image" src="">
 
-        <!-- RIGHT INFO -->
-        <div class="detail-right">
+        <div class="detail-content">
 
             <div class="detail-title" id="detail-title"></div>
 
-            <div class="detail-box">
-                <a id="detail-link" href="#" target="_blank">
-                    OPEN MEGA LINK
-                </a>
+            <a id="detail-link" class="detail-link" href="#" target="_blank">
+                OPEN MEGA LINK
+            </a>
 
-                <div id="detail-password" class="detail-password"></div>
-            </div>
+            <div id="detail-password" class="detail-password"></div>
 
             <button onclick="go('feyenoord')" class="back-btn">
                 ← BACK
@@ -1265,6 +1299,7 @@ FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY
         </div>
 
     </div>
+
 </div>
             
 <!-- SOCIALS -->
@@ -1336,11 +1371,21 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-    document.querySelectorAll(".page").forEach(p =>
-        p.classList.remove("active")
-    );
+    const pages = document.querySelectorAll(".page");
 
-    document.getElementById(page).classList.add("active");
+    pages.forEach(p => {
+        p.classList.remove("active");
+        p.style.transform = "translateY(20px) scale(0.98)";
+        p.style.opacity = "0";
+    });
+
+    const target = document.getElementById(page);
+
+    setTimeout(() => {
+        target.classList.add("active");
+        target.style.transform = "translateY(0px) scale(1)";
+        target.style.opacity = "1";
+    }, 80);
 
     document.querySelectorAll(".menu a").forEach(a =>
         a.classList.remove("active")
