@@ -618,6 +618,49 @@
     letter-spacing: 8px;
     text-shadow: 0 0 40px red;
 }
+
+        .search-wrapper {
+    position: relative;
+}
+
+.search-suggestion-box {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+
+    margin-top: 6px;
+
+    background: rgba(0,0,0,0.85);
+    border: 1px solid rgba(255,0,0,0.3);
+    border-radius: 10px;
+
+    overflow: hidden;
+    display: none;
+    z-index: 999;
+}
+
+.search-suggestion-item {
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 1px solid rgba(255,0,0,0.15);
+}
+
+.search-suggestion-item:hover {
+    background: rgba(255,0,0,0.15);
+    color: red;
+}
+
+.search-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.highlight {
+    color: red;
+    font-weight: 900;
+}
     </style>
 
     
@@ -694,11 +737,13 @@
     <div class="pack-sidebar">
 
         <!-- SEARCH -->
-        <div class="search-wrapper small">
-            <div class="icon-left">🔍</div>
-            <input type="text" id="feySearch" placeholder="Search scenepacks...">
-        </div>
+       <div class="search-wrapper small">
+    <div class="icon-left">🔍</div>
+    <input type="text" id="feySearch" placeholder="Search scenepacks...">
 
+    <!-- 👇 PRO SUGGESTIONS DROPDOWN (ONDER INPUT) -->
+    <div class="search-suggestion-box" id="feySuggestBox"></div>
+</div>
         <div class="divider"></div>
 
         <!-- TITLE SECTION -->
@@ -898,17 +943,48 @@ filters.forEach(btn => {
 /* ===== FEYENOORD FILTERS ===== */
 const feySearch = document.getElementById("feySearch");
 const feyPage = document.getElementById("feyenoord");
-const items = feyPage.querySelectorAll(".pack-item");
+const items = Array.from(feyPage.querySelectorAll(".pack-item"));
+const suggestBox = document.getElementById("feySuggestBox");
 
-feySearch.addEventListener("input", () => {
-    const value = feySearch.value.toLowerCase();
+function updateFilter(value) {
+    items.forEach(item => {
+        const match = item.textContent.toLowerCase().includes(value.toLowerCase());
+        item.style.opacity = match ? "1" : "0.2";
+        item.style.transform = match ? "scale(1)" : "scale(0.98)";
+    });
+}
 
-  items.forEach(item => {
-    const match = item.textContent.toLowerCase().includes(value);
-    item.style.opacity = match ? "1" : "0.2";
-    item.style.transform = match ? "scale(1)" : "scale(0.98)";
-    item.style.transition = "0.2s ease";
+function updateSuggestion(value) {
+    if (!value) {
+        suggestBox.style.display = "none";
+        return;
+    }
+
+    const match = items
+        .map(i => i.textContent)
+        .find(name => name.toLowerCase().includes(value.toLowerCase()));
+
+    if (match) {
+        suggestBox.innerHTML = `<div class="search-suggestion-item">bedoelde je: <b>${match}</b></div>`;
+        suggestBox.style.display = "block";
+    } else {
+        suggestBox.innerHTML = `<div class="search-suggestion-item">geen resultaten</div>`;
+        suggestBox.style.display = "block";
+    }
+}
+
+feySearch.addEventListener("input", (e) => {
+    const value = e.target.value;
+
+    updateFilter(value);
+    updateSuggestion(value);
 });
+
+// klik buiten sluiten
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-wrapper")) {
+        suggestBox.style.display = "none";
+    }
 });
     
 </script>
