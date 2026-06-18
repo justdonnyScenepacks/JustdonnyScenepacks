@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Justdonny Scenepacks</title>
@@ -23,35 +23,27 @@
     z-index: 0;
 }
 
- .topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+        .topbar {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 18px 25px;
+            position: relative;
+            z-index: 10;
+        }
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
 
-    padding: 12px 25px;
-    z-index: 9999;
-    box-sizing: border-box;
-}
- .logo {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-.menu {
-    position: absolute;
-    left: calc(50% - 40px);
-    transform: translateX(-50%);
-
-    display: flex;
-    gap: 25px;
-    font-size: 12px;
-    letter-spacing: 2px;
-}
+        .menu {
+            display: flex;
+            gap: 25px;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
 
         .menu a {
             color: white;
@@ -70,11 +62,11 @@
             opacity: 1;
         }
 
-       .socials {
-    justify-self: end;
-    display: flex;
-    gap: 12px;
-}
+        .socials {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
 
         .socials img {
             width: 22px;
@@ -100,7 +92,8 @@
             font-weight: 900;
             color: #b44cff;
         }
-.page {
+
+   .page {
     position: absolute;
     width: 100%;
     top: 0;
@@ -108,22 +101,19 @@
     padding-top: 120px;
 
     opacity: 0;
-    transform: translateY(40px);
-
+    transform: translateY(40px) scale(1.01);
     pointer-events: none;
 
-    transition: 0.5s ease;
+    transition: 0.6s ease;
 
-    z-index: 1;
+    z-index: 2; /* 🔥 belangrijk */
 }
 
 .page.active {
     opacity: 1;
-    transform: translateY(0);
-
+    transform: translateY(0px) scale(1);
     pointer-events: auto;
-
-    z-index: 20;
+    z-index: 1;
 }
 
         .bg-title {
@@ -325,27 +315,6 @@
     will-change: transform;
 }
         
-.pack-sidebar {
-    position: absolute;
-    right: 40px;
-    top: 100px;
-
-    width: 520px;
-    height: calc(100vh - 140px); /* 🔥 full screen fix */
-
-    background: rgba(0,0,0,0.55);
-    border: 1px solid rgba(255,0,0,0.25);
-    border-radius: 14px;
-
-    padding: 15px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    overflow: hidden;
-}
-
         .pack-grid {
     overflow-y: auto;
     padding-right: 6px;
@@ -417,19 +386,17 @@
 /* PACK GRID (NETFLIX STYLE) */
 .pack-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-
     flex: 1;
-    overflow-y: auto;
 
+    overflow-y: auto;
     padding-right: 6px;
-    max-height: 100%;
 }
 
 /* CARD */
 .grid-item {
-    aspect-ratio: 1 / 1;
+    height: 180px;
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
@@ -440,9 +407,10 @@
     border: 1px solid rgba(255,0,0,0.25);
     background: rgba(255,255,255,0.05);
 
-    transition: all 0.3s ease;
+    /* smooth animatie */
+    transition: all 0.45s ease;
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
 }
 
 .grid-item:hover {
@@ -451,42 +419,36 @@
     transform: scale(1.04);
 }
 
+/* IMAGE */
 .grid-item img {
     width: 100%;
-    height: 80%;
+    height: 75%;
     object-fit: cover;
-    display: block;
 }
 
+/* NAME BAR */
 .grid-item .name {
-    height: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     font-size: 11px;
+    text-align: center;
+    padding: 6px;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 900;
-
     background: rgba(0,0,0,0.55);
     color: white;
 }
-        
-/* 🔥 BELANGRIJK: HIDE zonder layout breuk */
+
+/* HIDE ANIMATION */
 .grid-item.hide {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translateY(25px) scale(0.95);
     pointer-events: none;
-    visibility: hidden;
 }
 
+/* SHOW STATE (belangrijk voor JS) */
 .grid-item.show {
     opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-    visibility: visible;
-    position: relative;
+    transform: translateY(0) scale(1);
 }
 
 /* PAGINATION */
@@ -508,38 +470,6 @@
 .pagination span:hover {
     border: 1px solid red;
     color: red;
-}
-
-        .pagination-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 10px;
-    font-size: 12px;
-}
-
-.pagination-bar button {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,0,0,0.3);
-    color: white;
-    padding: 6px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.pagination-bar button:hover {
-    border: 1px solid red;
-    transform: scale(1.05);
-}
-
-.pagination-bar button:active {
-    transform: scale(0.95);
-}
-
-#pageInfo {
-    opacity: 0.8;
 }
 
         /* REQUEST REMOVED */
@@ -578,26 +508,69 @@
             color: #aaa;
         }
 
-        #socials,
-#about {
+        .about-box {
+            width: 600px;
+            margin: auto;
+            border: 1px solid red;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .pack-sidebar {
+    position: absolute;
+    right: 40px;
+    top: 100px;
+
+    width: 750px; /* 🔥 breder gemaakt */
+    height: calc(100vh - 140px);
+
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,0,0,0.25);
+    border-radius: 14px;
+
+    padding: 20px;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 140px;
+    gap: 12px;
 }
 
-    .about-box {
-    width: 600px;
-    max-width: 90%;
-    margin-top: 20px;
-    border: 1px solid red;
-    padding: 20px;
-    border-radius: 10px;
-    line-height: 1.6;
-    background: rgba(0,0,0,0.4);
+/* LIST */
+.pack-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 0;
+    padding-right: 6px;
 }
-          
+
+/* ITEM TEXT */
+.pack-item {
+    padding: 10px 5px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: white;
+    opacity: 0.85;
+}
+
+.pack-item:hover {
+    color: red;
+    cursor: pointer;
+}
+
+/* RED LINE */
+.redline {
+    height: 1px;
+    background: red;
+    box-shadow: 0 0 6px red;
+    opacity: 0.7;
+    margin: 2px 0;
+}
     </style>
+
+    
 </head>
 
 <body>
@@ -605,9 +578,7 @@
 <canvas id="bg"></canvas>
 
 <div class="topbar">
- <div>
-    <img src="logo.png" class="logo" onclick="go('homeFromLogo')">
-</div>
+    <div><img src="logo.png" class="logo"></div>
 
     <div class="menu">
         <a onclick="go('home')" id="nav-home">Home</a>
@@ -663,97 +634,56 @@
 </div> <!-- home -->
 
   <!-- FEYENOORD PAGE -->
+<!-- FEYENOORD PAGE -->
 <div class="page" id="feyenoord">
 
     <!-- LEFT LOGO -->
     <img src="feyenoord-logo.png" class="team-logo">
 
-    <!-- RIGHT PANEL -->
+    <!-- RIGHT PANEL (SIMPEL) -->
     <div class="pack-sidebar">
 
-        <!-- SEASONS -->
- <div class="seasons">
-    <div class="season all active" data-season="ALL">ALL</div>
-    <div class="season" data-season="26/27">26/27</div>
-    <div class="season" data-season="25/26">25/26</div>
-    <div class="season" data-season="24/25">24/25</div>
-    <div class="season" data-season="23/24">23/24</div>
-    <div class="season" data-season="22/23">22/23</div>
-    <div class="season" data-season="21/22">21/22</div>
-</div>
+        <!-- SEARCH -->
+        <div class="search-wrapper small">
+            <div class="icon-left">🔍</div>
+            <input type="text" id="feySearch" placeholder="Search scenepacks...">
+        </div>
 
         <div class="divider"></div>
 
-        <!-- SEARCH -->
-       <div class="sidebar-search">
+        <!-- LIST -->
+        <div class="pack-list">
 
-    <div class="search-wrapper small">
-        <div class="icon-left">🔍</div>
+            <div class="pack-item">Luis Sinisterra - S21/22 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-        <input 
-            type="text" 
-            id="searchInput"
-            placeholder="Search scenepacks..."
-        >
-    </div>
+            <div class="pack-item">Orkun Kökçü - S22/23 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-    <div class="search-suggestion" id="suggestion" style="display:none;"></div>
+            <div class="pack-item">Luis Sinisterra - S21/22 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-</div>
-        <!-- GRID -->
- <div class="pack-grid">
+            <div class="pack-item">Fredrik Aursnes - S22/23 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-  <div class="grid-item" data-season="21/22">
-    <img src="1.jpg">
-    <div class="name">Luis Sinisterra</div>
-</div>
+            <div class="pack-item">Quilindschy Hartman - S23/24 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-<div class="grid-item" data-season="22/23">
-    <img src="2.jpg">
-    <div class="name">Lutsharel Geertruida</div>
-</div>
+            <div class="pack-item">Quinten Timber - S23/24 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-<div class="grid-item" data-season="22/23">
-    <img src="3.jpg">
-    <div class="name">David Hancko</div>
-</div>
+            <div class="pack-item">Gjivai Zechiël - S23/24 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-<div class="grid-item" data-season="23/24">
-    <img src="4.jpg">
-    <div class="name">Orkun Kökçü</div>
-</div>
+            <div class="pack-item">Timo Wellenreuther - S23/24 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-<div class="grid-item" data-season="23/24">
-    <img src="5.jpg">
-    <div class="name">Fredrik Aursnes</div>
-</div>
+            <div class="pack-item">Lutsharel Geertruida - S23/24 (1080p HD) - Justdonny</div>
+            <div class="redline"></div>
 
-<div class="grid-item" data-season="23/24">
-    <img src="6.jpg">
-    <div class="name">Quilindschy Hartman</div>
-</div>
+            <div class="pack-item">David Hancko - S23/24 (1080p HD) - Justdonny</div>
 
-<div class="grid-item" data-season="23/24">
-    <img src="7.jpg">
-    <div class="name">Quinten Timber</div>
-</div>
-
-<div class="grid-item" data-season="23/24">
-    <img src="8.jpg">
-    <div class="name">Gjivai Zechiël</div>
-</div>
-
-<div class="grid-item" data-season="23/24">
-    <img src="9.jpg">
-    <div class="name">Timo Wellenreuther</div>
-</div>
-        <!-- PAGINATION -->
-    <div class="pagination-bar">
-    <button id="prevBtn">Previous</button>
-    <span id="pageInfo">Page 1</span>
-    <button id="nextBtn">Next</button>
-</div>
-
+        </div>
     </div>
 </div>
 
@@ -826,43 +756,18 @@ And this is just the beginning.
 
 <script>
 function go(page) {
-    const pages = document.querySelectorAll(".page");
+    document.querySelectorAll(".page").forEach(p =>
+        p.classList.remove("active")
+    );
 
-    // 🔥 fade out alles eerst
-    pages.forEach(p => {
-        p.style.opacity = "0";
-        p.style.transform = "translateY(40px)";
-        p.style.pointerEvents = "none";
-    });
+    document.getElementById(page).classList.add("active");
 
-    setTimeout(() => {
-        pages.forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".menu a").forEach(a =>
+        a.classList.remove("active")
+    );
 
-        let target = page;
-
-        // 🔥 speciale logo home switch
-        if (page === "homeFromLogo") {
-            target = "home";
-        }
-
-        const activePage = document.getElementById(target);
-
-        if (activePage) {
-            activePage.classList.add("active");
-            activePage.style.opacity = "1";
-            activePage.style.transform = "translateY(0)";
-            activePage.style.pointerEvents = "auto";
-        }
-
-        // menu highlight fix
-        document.querySelectorAll(".menu a").forEach(a =>
-            a.classList.remove("active")
-        );
-
-        const nav = document.getElementById("nav-" + target);
-        if (nav) nav.classList.add("active");
-
-    }, 200);
+    const nav = document.getElementById("nav-" + page);
+    if (nav) nav.classList.add("active");
 }
 
 /* ===== CANVAS ===== */
@@ -924,8 +829,8 @@ function draw() {
 draw();
 
 /* ===== HOME FILTERS ===== */
+    const homePacks = document.querySelectorAll(".pack");
 const filters = document.querySelectorAll(".filter");
-const homePacks = document.querySelectorAll(".pack");
 
 filters.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -947,138 +852,18 @@ filters.forEach(btn => {
 });
 
 /* ===== FEYENOORD FILTERS ===== */
-const searchInput = document.getElementById("searchInput");
-const suggestion = document.getElementById("suggestion");
-const gridItems = document.querySelectorAll(".grid-item");
-const seasons = document.querySelectorAll(".season");
+const feySearch = document.getElementById("feySearch");
+const items = document.querySelectorAll(".pack-item");
 
-let currentSeason = "ALL";
+feySearch.addEventListener("input", () => {
+    const value = feySearch.value.toLowerCase();
 
-seasons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        seasons.forEach(s => s.classList.remove("active"));
-        btn.classList.add("active");
-
-        currentSeason = btn.dataset.season;
-        applyFilters();
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(value) ? "block" : "none";
     });
 });
-
-searchInput.addEventListener("input", applyFilters);
-
-function applyFilters() {
-    const value = searchInput.value.toLowerCase().trim();
-    let filtered = [];
-
-    gridItems.forEach(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        const itemSeason = item.dataset.season;
-
-        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
-        const matchSearch = name.includes(value);
-
-        const match = matchSeason && matchSearch;
-
-        if (match) filtered.push(item);
-    });
-
-    currentPage = 1; // 🔥 belangrijk: reset page bij filter
-    updatePagination(filtered);
-
-    let firstMatch = filtered[0]?.querySelector(".name").textContent;
-
-    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
-        suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
-    } else {
-        suggestion.style.display = "none";
-    }
-}
-
-/* INIT */
-gridItems.forEach(item => item.classList.add("show"));
 homePacks.forEach(p => p.classList.add("show"));
-
-let currentPage = 1;
-const itemsPerPage = 6;
-
-const pageInfo = document.getElementById("pageInfo");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-function updatePagination(filteredItems) {
-    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-
-    if (totalPages === 0) {
-        pageInfo.textContent = "Page 0 / 0";
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
-        return;
-    }
-
-    if (currentPage > totalPages) currentPage = totalPages;
-    if (currentPage < 1) currentPage = 1;
-
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    gridItems.forEach(item => {
-        item.classList.add("hide");
-        item.classList.remove("show");
-    });
-
-    filteredItems.forEach((item, index) => {
-        if (index >= start && index < end) {
-            item.classList.remove("hide");
-            item.classList.add("show");
-        }
-    });
-
-    pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
-
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages;
-}
-
-function applyFilters() {
-    const value = searchInput.value.toLowerCase().trim();
-
-    let filtered = [];
-
-    gridItems.forEach(item => {
-        const name = item.querySelector(".name").textContent.toLowerCase();
-        const itemSeason = item.dataset.season;
-
-        const matchSeason = currentSeason === "ALL" || itemSeason === currentSeason;
-        const matchSearch = name.includes(value);
-
-        if (matchSeason && matchSearch) {
-            filtered.push(item);
-        }
-    });
-
-    currentPage = 1;
-    updatePagination(filtered);
-
-    let firstMatch = filtered[0]?.querySelector(".name").textContent;
-
-    if (value && firstMatch && firstMatch.toLowerCase() !== value) {
-        suggestion.style.display = "block";
-        suggestion.textContent = "Bedoelde je: " + firstMatch + " ?";
-    } else {
-        suggestion.style.display = "none";
-    }
-}
-
-prevBtn.addEventListener("click", () => {
-    currentPage--;
-    applyFilters();
-});
-
-nextBtn.addEventListener("click", () => {
-    currentPage++;
-    applyFilters();
-});
     
 </script>
 
