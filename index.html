@@ -4,15 +4,17 @@
     <title>Justdonny Scenepacks</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: black;
-            color: white;
-            overflow: hidden;
-        }
+       body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: black;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 
      canvas {
     position: fixed;
@@ -574,23 +576,86 @@
     border-bottom: none;
 }
 
-        .fey-header {
+   .fey-header {
     text-align: center;
     padding: 10px 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
 .fey-title {
-    font-size: 38px;
-    font-weight: 900;
-    letter-spacing: 6px;
-    color: white;
-    opacity: 0.35;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    letter-spacing: 3px;
+    text-transform: uppercase;
 
-    text-shadow: 0 0 20px red;
+    color: transparent;
+    background: linear-gradient(90deg, #ffffff, #ff2a2a, #ffffff);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
 
-    animation: feyGlow 3s ease-in-out infinite;
+    text-align: center;
+    display: inline-block;
+
+    position: relative;
+
+    filter: drop-shadow(0 0 12px rgba(255,0,0,0.35));
+
+    animation: feyMove 5s ease-in-out infinite;
+
+    transition: transform 0.25s ease, letter-spacing 0.25s ease;
 }
 
+/* underline glow bar */
+.fey-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(34px, 5vw, 58px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+    color: transparent;
+    background: linear-gradient(90deg, #fff, #ff2a2a, #fff);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+
+    text-align: center;
+    display: inline-block;
+
+    position: relative;
+
+    filter: drop-shadow(0 0 12px rgba(255,0,0,0.4));
+
+    animation: feyMove 4s ease-in-out infinite;
+
+    transition: transform 0.25s ease, letter-spacing 0.25s ease;
+}
+
+.fey-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: red;
+    box-shadow: 0 0 12px red;
+    opacity: 0.7;
+}
+
+.fey-title:hover {
+    transform: scale(1.07);
+    letter-spacing: 6px;
+}
+
+@keyframes feyMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 .fey-desc {
     margin-top: 10px;
     font-size: 12px;
@@ -660,6 +725,28 @@
 .highlight {
     color: red;
     font-weight: 900;
+}
+
+/* ===== CUSTOM SCROLLBAR (PRO) ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff0000, #7a0000);
+    border-radius: 10px;
+    box-shadow: 0 0 12px red;
+    transition: 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: red;
+    box-shadow: 0 0 18px red;
 }
     </style>
 
@@ -993,16 +1080,45 @@ function updateSuggestion(value) {
         return;
     }
 
-    const match = items
-        .map(i => i.textContent)
-        .find(name => name.toLowerCase().includes(value.toLowerCase()));
+    const matchItem = items.find(i =>
+        i.textContent.toLowerCase().includes(value.toLowerCase())
+    );
 
-    if (match) {
-        suggestBox.innerHTML = `<div class="search-suggestion-item">bedoelde je: <b>${match}</b></div>`;
+    // 🔥 alleen tonen als er een match is EN input niet exact klopt
+    const exactMatch = items.some(i =>
+        i.textContent.toLowerCase() === value.toLowerCase()
+    );
+
+    if (matchItem && !exactMatch) {
+        const text = matchItem.textContent;
+
+        suggestBox.innerHTML = `
+            <div class="search-suggestion-item" id="suggestClick">
+                bedoelde je: <b>${text}</b>
+            </div>
+        `;
         suggestBox.style.display = "block";
+
+        document.getElementById("suggestClick").onclick = () => {
+          matchItem.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "nearest"
+});
+
+matchItem.style.transform = "scale(1.05)";
+matchItem.style.transition = "0.25s ease";
+matchItem.style.boxShadow = "0 0 25px red";
+
+            matchItem.style.boxShadow = "0 0 15px red";
+
+            setTimeout(() => {
+                matchItem.style.boxShadow = "none";
+            }, 1500);
+        };
+
     } else {
-        suggestBox.innerHTML = `<div class="search-suggestion-item">geen resultaten</div>`;
-        suggestBox.style.display = "block";
+        suggestBox.style.display = "none";
     }
 }
 
