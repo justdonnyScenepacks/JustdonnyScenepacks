@@ -555,20 +555,20 @@
     letter-spacing: 2px;
     font-weight: 900;
     text-transform: uppercase;
-
     color: white;
     opacity: 0.85;
-
     border-bottom: 1px solid rgba(255, 0, 0, 0.25);
-
-    transition: 0.2s ease;
+    transition: 0.15s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pack-item:hover {
     color: red;
-    cursor: pointer;
     opacity: 1;
     text-shadow: 0 0 8px red;
+    transform: none; /* 🔥 BELANGRIJK */
 }
 
 /* BELANGRIJK: laatste item geen lijn */
@@ -727,6 +727,12 @@
     font-weight: 900;
 }
 
+        .highlighted {
+    box-shadow: 0 0 25px red;
+    background: rgba(255,0,0,0.08);
+    transform: none !important;
+}
+
 /* ===== CUSTOM SCROLLBAR (PRO) ===== */
 ::-webkit-scrollbar {
     width: 10px;
@@ -747,6 +753,9 @@
 ::-webkit-scrollbar-thumb:hover {
     background: red;
     box-shadow: 0 0 18px red;
+}
+        html, body {
+    overflow-x: hidden;
 }
     </style>
 
@@ -1075,50 +1084,44 @@ function updateFilter(value) {
 }
 
 function updateSuggestion(value) {
-    if (!value) {
-        suggestBox.style.display = "none";
+    const box = suggestBox;
+
+    if (!value || value.length < 3) {
+        box.style.display = "none";
         return;
     }
 
+    value = value.toLowerCase();
+
     const matchItem = items.find(i =>
-        i.textContent.toLowerCase().includes(value.toLowerCase())
+        i.textContent.toLowerCase().includes(value)
     );
 
-    // 🔥 alleen tonen als er een match is EN input niet exact klopt
     const exactMatch = items.some(i =>
-        i.textContent.toLowerCase() === value.toLowerCase()
+        i.textContent.toLowerCase().trim() === value.trim()
     );
 
+    // alleen tonen als er een match is en geen exacte match
     if (matchItem && !exactMatch) {
-        const text = matchItem.textContent;
 
-        suggestBox.innerHTML = `
-            <div class="search-suggestion-item" id="suggestClick">
-                bedoelde je: <b>${text}</b>
+        box.innerHTML = `
+            <div class="search-suggestion-item">
+                bedoelde je: <b>${matchItem.textContent}</b>
             </div>
         `;
-        suggestBox.style.display = "block";
 
-        document.getElementById("suggestClick").onclick = () => {
-          matchItem.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-    inline: "nearest"
-});
+        box.style.display = "block";
 
-matchItem.style.transform = "scale(1.05)";
-matchItem.style.transition = "0.25s ease";
-matchItem.style.boxShadow = "0 0 25px red";
-
-            matchItem.style.boxShadow = "0 0 15px red";
-
-            setTimeout(() => {
-                matchItem.style.boxShadow = "none";
-            }, 1500);
+        box.onclick = () => {
+            matchItem.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+            box.style.display = "none";
         };
 
     } else {
-        suggestBox.style.display = "none";
+        box.style.display = "none";
     }
 }
 
