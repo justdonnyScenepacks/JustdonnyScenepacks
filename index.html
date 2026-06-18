@@ -7,14 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: black;
-            color: white;
-            overflow: hidden;
-            overflow-y: auto;
-        }
+       body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: black;
+    color: white;
+    overflow-x: hidden;   /* 🔥 DIT TOEVOEGEN */
+    overflow-y: auto;
+}
 
      canvas {
     position: fixed;
@@ -687,32 +687,7 @@
         .search-wrapper {
     position: relative;
 }
-
-.search-suggestion-box {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-
-    margin-top: 6px;
-
-    background: rgba(0,0,0,0.85);
-    border: 1px solid rgba(255,0,0,0.3);
-    border-radius: 10px;
-
-    overflow: hidden;
-    display: none;
-    z-index: 999;
-}
-
-.search-suggestion-item {
-    padding: 10px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.2s;
-    border-bottom: 1px solid rgba(255,0,0,0.15);
-}
-
+        
 .search-suggestion-item:hover {
     background: rgba(255,0,0,0.15);
     color: red;
@@ -829,7 +804,6 @@
     <input type="text" id="feySearch" placeholder="Search scenepacks...">
 
     <!-- 👇 PRO SUGGESTIONS DROPDOWN (ONDER INPUT) -->
-    <div class="search-suggestion-box" id="feySuggestBox"></div>
 </div>
         <div class="divider"></div>
 
@@ -1064,75 +1038,38 @@ filters.forEach(btn => {
 const feySearch = document.getElementById("feySearch");
 const feyPage = document.getElementById("feyenoord");
 const items = Array.from(feyPage.querySelectorAll(".pack-item"));
-const suggestBox = document.getElementById("feySuggestBox");
 
 function updateFilter(value) {
     items.forEach(item => {
         const match = item.textContent.toLowerCase().includes(value.toLowerCase());
-        item.style.opacity = match ? "1" : "0.2";
-        item.style.transform = match ? "scale(1)" : "scale(0.98)";
+
+        item.style.opacity = match ? "1" : "0.15";
+        item.style.display = match ? "block" : "none";
     });
 }
 
-function updateSuggestion(value) {
-    if (!value) {
-        suggestBox.style.display = "none";
-        return;
-    }
-
-    const matchItem = items.find(i =>
-        i.textContent.toLowerCase().includes(value.toLowerCase())
-    );
-
-    // 🔥 alleen tonen als er een match is EN input niet exact klopt
-    const exactMatch = items.some(i =>
-        i.textContent.toLowerCase() === value.toLowerCase()
-    );
-
-    if (matchItem && !exactMatch) {
-        const text = matchItem.textContent;
-
-        suggestBox.innerHTML = `
-            <div class="search-suggestion-item" id="suggestClick">
-                bedoelde je: <b>${text}</b>
-            </div>
-        `;
-        suggestBox.style.display = "block";
-
-        document.getElementById("suggestClick").onclick = () => {
-          matchItem.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-    inline: "nearest"
-});
-
-matchItem.style.transform = "scale(1.05)";
-matchItem.style.transition = "0.25s ease";
-matchItem.style.boxShadow = "0 0 25px red";
-
-            matchItem.style.boxShadow = "0 0 15px red";
-
-            setTimeout(() => {
-                matchItem.style.boxShadow = "none";
-            }, 1500);
-        };
-
-    } else {
-        suggestBox.style.display = "none";
-    }
-}
-
 feySearch.addEventListener("input", (e) => {
-    const value = e.target.value;
-
-    updateFilter(value);
-    updateSuggestion(value);
+    updateFilter(e.target.value);
 });
 
-// klik buiten sluiten
-document.addEventListener("click", (e) => {
-    if (!e.target.closest(".search-wrapper")) {
-        suggestBox.style.display = "none";
+feySearch.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+
+        // reset alles
+        items.forEach(item => {
+            item.style.display = "block";
+            item.style.opacity = "1";
+        });
+
+        // scroll naar eerste item (of eerste zichtbare)
+        const firstVisible = items.find(i => i.style.display !== "none");
+
+        if (firstVisible) {
+            firstVisible.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
     }
 });
     
