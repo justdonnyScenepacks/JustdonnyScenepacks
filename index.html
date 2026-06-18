@@ -7,14 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
     <style>
-       body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: black;
-    color: white;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: black;
+            color: white;
+            overflow: hidden;
+            overflow-y: auto;
+        }
 
      canvas {
     position: fixed;
@@ -520,13 +520,23 @@
             background: rgba(0,0,0,0.4);
         }
 
-        .fey-content {
-    width: 900px;
-    margin: 0 auto;
-    padding: 30px 20px;
+        .pack-sidebar {
+    position: absolute;
+    right: 40px;
+    top: 100px;
+
+    width: 750px; /* 🔥 breder gemaakt */
+    height: calc(100vh - 140px);
+
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,0,0,0.25);
+    border-radius: 14px;
+
+    padding: 20px;
+
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
 }
 
 /* LIST */
@@ -545,20 +555,20 @@
     letter-spacing: 2px;
     font-weight: 900;
     text-transform: uppercase;
+
     color: white;
     opacity: 0.85;
+
     border-bottom: 1px solid rgba(255, 0, 0, 0.25);
-    transition: 0.15s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+    transition: 0.2s ease;
 }
 
 .pack-item:hover {
     color: red;
+    cursor: pointer;
     opacity: 1;
     text-shadow: 0 0 8px red;
-    transform: none; /* 🔥 BELANGRIJK */
 }
 
 /* BELANGRIJK: laatste item geen lijn */
@@ -717,12 +727,6 @@
     font-weight: 900;
 }
 
-        .highlighted {
-    box-shadow: 0 0 25px red;
-    background: rgba(255,0,0,0.08);
-    transform: none !important;
-}
-
 /* ===== CUSTOM SCROLLBAR (PRO) ===== */
 ::-webkit-scrollbar {
     width: 10px;
@@ -743,9 +747,6 @@
 ::-webkit-scrollbar-thumb:hover {
     background: red;
     box-shadow: 0 0 18px red;
-}
-        html, body {
-    overflow-x: hidden;
 }
     </style>
 
@@ -802,7 +803,7 @@
 
 <div class="scenepacks">
 
- <div class="pack show" data-type="football" onclick="go('feyenoord')">
+  <div class="pack" data-type="football" onclick="go('feyenoord')">
         <img src="feyenoord.jpg">
         <div class="pack-line"></div>
         <div class="pack-name">FEYENOORD</div>
@@ -820,7 +821,7 @@
     <img src="feyenoord-logo.png" class="team-logo">
 
     <!-- RIGHT PANEL -->
-  <div class="fey-content">
+    <div class="pack-sidebar">
 
         <!-- SEARCH -->
        <div class="search-wrapper small">
@@ -1074,38 +1075,50 @@ function updateFilter(value) {
 }
 
 function updateSuggestion(value) {
-    const box = suggestBox;
-
-    if (!value || value.length < 3) {
-        box.style.display = "none";
+    if (!value) {
+        suggestBox.style.display = "none";
         return;
     }
 
-    value = value.toLowerCase();
-
     const matchItem = items.find(i =>
-        i.textContent.toLowerCase().includes(value)
+        i.textContent.toLowerCase().includes(value.toLowerCase())
     );
 
+    // 🔥 alleen tonen als er een match is EN input niet exact klopt
     const exactMatch = items.some(i =>
-        i.textContent.toLowerCase().trim() === value.trim()
+        i.textContent.toLowerCase() === value.toLowerCase()
     );
 
-    // alleen tonen als er een match is en geen exacte match
     if (matchItem && !exactMatch) {
+        const text = matchItem.textContent;
 
-        box.style.display = "block";
+        suggestBox.innerHTML = `
+            <div class="search-suggestion-item" id="suggestClick">
+                bedoelde je: <b>${text}</b>
+            </div>
+        `;
+        suggestBox.style.display = "block";
 
-        box.onclick = () => {
-            matchItem.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-            box.style.display = "none";
+        document.getElementById("suggestClick").onclick = () => {
+          matchItem.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "nearest"
+});
+
+matchItem.style.transform = "scale(1.05)";
+matchItem.style.transition = "0.25s ease";
+matchItem.style.boxShadow = "0 0 25px red";
+
+            matchItem.style.boxShadow = "0 0 15px red";
+
+            setTimeout(() => {
+                matchItem.style.boxShadow = "none";
+            }, 1500);
         };
 
     } else {
-        box.style.display = "none";
+        suggestBox.style.display = "none";
     }
 }
 
@@ -1127,3 +1140,5 @@ document.addEventListener("click", (e) => {
 
 </body>
 </html>
+
+is dig goed
