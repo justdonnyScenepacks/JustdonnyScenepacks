@@ -548,25 +548,70 @@
 
 /* ITEM TEXT */
 .pack-item {
-    padding: 10px 5px;
+    padding: 12px 8px;
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    font-weight: 900;
+    text-transform: uppercase;
+
     color: white;
     opacity: 0.85;
+
+    border-bottom: 1px solid rgba(255, 0, 0, 0.25);
+
+    transition: 0.2s ease;
 }
 
 .pack-item:hover {
     color: red;
     cursor: pointer;
+    opacity: 1;
+    text-shadow: 0 0 8px red;
 }
 
-/* RED LINE */
-.redline {
-    height: 1px;
-    background: red;
-    box-shadow: 0 0 6px red;
-    opacity: 0.7;
-    margin: 2px 0;
+/* BELANGRIJK: laatste item geen lijn */
+.pack-item:last-child {
+    border-bottom: none;
+}
+
+        .fey-header {
+    text-align: center;
+    padding: 10px 5px;
+}
+
+.fey-title {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: white;
+    opacity: 0.35;
+
+    text-shadow: 0 0 20px red;
+
+    animation: feyGlow 3s ease-in-out infinite;
+}
+
+.fey-desc {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+    opacity: 0.8;
+}
+@keyframes feyGlow {
+    0% { text-shadow: 0 0 10px red; }
+    50% { text-shadow: 0 0 25px red; }
+    100% { text-shadow: 0 0 10px red; }
+}
+
+        .fey-title {
+    transition: 0.3s ease;
+}
+
+.fey-title:hover {
+    transform: scale(1.02);
+    letter-spacing: 7px;
+    text-shadow: 0 0 30px red;
 }
     </style>
 
@@ -633,14 +678,14 @@
 </div> <!-- hero -->
 </div> <!-- home -->
 
-  <!-- FEYENOORD PAGE -->
+
 <!-- FEYENOORD PAGE -->
 <div class="page" id="feyenoord">
 
     <!-- LEFT LOGO -->
     <img src="feyenoord-logo.png" class="team-logo">
 
-    <!-- RIGHT PANEL (SIMPEL) -->
+    <!-- RIGHT PANEL -->
     <div class="pack-sidebar">
 
         <!-- SEARCH -->
@@ -651,42 +696,34 @@
 
         <div class="divider"></div>
 
+        <!-- TITLE SECTION -->
+        <div class="fey-header">
+            <div class="fey-title">FEYENOORD</div>
+            <div class="fey-desc">
+                Feyenoord Rotterdam is een Nederlandse profvoetbalclub uit Rotterdam, opgericht op 19 juli 1908, die uitkomt in de Eredivisie. 
+                De stadionclub wordt vaak betiteld als de club van het volk.
+                De thuisbasis is Stadion Feijenoord, dat in de volksmond De Kuip wordt genoemd.
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
         <!-- LIST -->
         <div class="pack-list">
 
-            <div class="pack-item">Luis Sinisterra - S21/22 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Orkun Kökçü - S22/23 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Luis Sinisterra - S21/22 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Fredrik Aursnes - S22/23 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Quilindschy Hartman - S23/24 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Quinten Timber - S23/24 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Gjivai Zechiël - S23/24 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Timo Wellenreuther - S23/24 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">Lutsharel Geertruida - S23/24 (1080p HD) - Justdonny</div>
-            <div class="redline"></div>
-
-            <div class="pack-item">David Hancko - S23/24 (1080p HD) - Justdonny</div>
+            <div class="pack-item">LUIS SINISTERRA - S21/22 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">ORKUN KÖKÇÜ - S22/23 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">FREDRIK AURSNES - S22/23 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">QUILINDSCHY HARTMAN - S23/24 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">QUINTEN TIMBER - S23/24 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">GJIVAI ZECHIËL - S23/24 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">TIMO WELLENREUTHER - S23/24 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">LUTSHAREL GEERTRUIDA - S23/24 (1080P HD) - JUSTDONNY</div>
+            <div class="pack-item">DAVID HANCKO - S23/24 (1080P HD) - JUSTDONNY</div>
 
         </div>
     </div>
 </div>
-
 <!-- SOCIALS -->
 <div class="page" id="socials">
     <div class="bg-title">SOCIALS</div>
@@ -853,7 +890,8 @@ filters.forEach(btn => {
 
 /* ===== FEYENOORD FILTERS ===== */
 const feySearch = document.getElementById("feySearch");
-const items = document.querySelectorAll(".pack-item");
+const feyPage = document.getElementById("feyenoord");
+const items = feyPage.querySelectorAll(".pack-item");
 
 feySearch.addEventListener("input", () => {
     const value = feySearch.value.toLowerCase();
