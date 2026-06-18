@@ -520,23 +520,13 @@
             background: rgba(0,0,0,0.4);
         }
 
-        .pack-sidebar {
-    position: absolute;
-    right: 40px;
-    top: 100px;
-
-    width: 750px; /* 🔥 breder gemaakt */
-    height: calc(100vh - 140px);
-
-    background: rgba(0,0,0,0.55);
-    border: 1px solid rgba(255,0,0,0.25);
-    border-radius: 14px;
-
-    padding: 20px;
-
+        .fey-content {
+    width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 /* LIST */
@@ -812,7 +802,7 @@
 
 <div class="scenepacks">
 
-  <div class="pack" data-type="football" onclick="go('feyenoord')">
+ <div class="pack show" data-type="football" onclick="go('feyenoord')">
         <img src="feyenoord.jpg">
         <div class="pack-line"></div>
         <div class="pack-name">FEYENOORD</div>
@@ -830,7 +820,7 @@
     <img src="feyenoord-logo.png" class="team-logo">
 
     <!-- RIGHT PANEL -->
-    <div class="pack-sidebar">
+  <div class="fey-content">
 
         <!-- SEARCH -->
        <div class="search-wrapper small">
@@ -1103,12 +1093,6 @@ function updateSuggestion(value) {
 
     // alleen tonen als er een match is en geen exacte match
     if (matchItem && !exactMatch) {
-
-        box.innerHTML = `
-            <div class="search-suggestion-item">
-                bedoelde je: <b>${matchItem.textContent}</b>
-            </div>
-        `;
 
         box.style.display = "block";
 
