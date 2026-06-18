@@ -1575,6 +1575,11 @@ feySearch.addEventListener("keydown", (e) => {
 
 function openPack(title, link, img, password, element) {
 
+    if (!element) {
+        console.log("No element passed");
+        return;
+    }
+
     const rect = element.getBoundingClientRect();
 
     const clone = element.cloneNode(true);
@@ -1589,10 +1594,6 @@ function openPack(title, link, img, password, element) {
     clone.style.transition = "all 0.6s cubic-bezier(.2,.9,.2,1)";
     clone.style.filter = "blur(2px)";
 
-    document.querySelectorAll(".pack").forEach(p => {
-        p.style.opacity = "0.2";
-    });
-
     setTimeout(() => {
         clone.style.left = "50%";
         clone.style.top = "50%";
@@ -1604,16 +1605,14 @@ function openPack(title, link, img, password, element) {
     setTimeout(() => {
         clone.remove();
 
-        document.querySelectorAll(".pack").forEach(p => {
-            p.style.opacity = "1";
-        });
-
         document.getElementById("detail-title").innerText = title;
         document.getElementById("detail-link").href = link;
         document.getElementById("detail-img").src = img;
 
         const passBox = document.getElementById("detail-password");
-        passBox.innerText = password ? "PASSWORD: " + password : "";
+        if (passBox) {
+            passBox.innerText = password ? "PASSWORD: " + password : "";
+        }
 
         go("detail");
 
