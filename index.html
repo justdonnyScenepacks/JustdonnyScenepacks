@@ -831,23 +831,56 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
 }
 
+/* IMAGE vult hele card */
 #home .pack img {
-    height: 75%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    display: block;
 }
 
+/* fade overlay onderaan */
+#home .pack::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0.95) 100%
+    );
+    pointer-events: none;
+}
+
+/* lijn + naam boven fade */
 #home .pack-line {
+    position: absolute;
+    bottom: 42px;
+    left: 10px;
+    right: 10px;
     height: 2px;
-    flex-shrink: 0;
+    background: red;
+    box-shadow: 0 0 8px red;
+    z-index: 2;
 }
 
 #home .pack-name {
-    height: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    z-index: 2;
+    font-size: 14px;
+    text-shadow: 0 0 8px red;
 }
     </style>
 
