@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Justdonny Scenepacks</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
+    <style>
+       body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: black;
+    color: white;
+    overflow-x: hidden;   /* 🔥 DIT TOEVOEGEN */
+    overflow-y: auto;
+}
+
+     canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+        .topbar {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 18px 25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .menu {
+            display: flex;
+            gap: 25px;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            color: red;
+        }
+
+        .menu a.active {
+            color: red;
+            opacity: 1;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .socials img {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .socials img:hover {
+            transform: scale(1.2);
+        }
+
+       a, a:visited {
+    color: red;
+    text-decoration: none;
+}
+        
+        .detail-link:visited {
+    color: red;
+}
+
+        a:hover {
+            color: #d08cff;
+        }
+
+        .social-title {
+            font-weight: 900;
+            color: #b44cff;
+        }
+
+   .page {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-top: 120px;
+
+    opacity: 0;
+    transform: translateY(40px) scale(1.01);
+    pointer-events: none;
+
+    transition: 0.6s ease;
+
+    z-index: 2; /* 🔥 belangrijk */
+}
+
+.page.active {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    pointer-events: auto;
+    z-index: 1;
+}
+
+        .bg-title {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: white;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .title {
+            font-size: 65px;
+            font-weight: 900;
+        }
+
+        .desc {
+            max-width: 650px;
+            margin: 15px auto;
+            color: #aaa;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 420px;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 14px 55px 14px 50px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,0,0,0.35);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            outline: none;
+            transition: 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        .search-wrapper:hover input {
+            border: 1px solid red;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+        }
+
+        .search-wrapper input:focus {
+            border: 1px solid red;
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.85);
+        }
+
+        .icon-left {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .filter {
+            border: 1px solid rgba(255,0,0,0.35);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filter:hover {
+            border: 1px solid red;
+            box-shadow: 0 0 10px red;
+            transform: scale(1.05);
+        }
+
+        .filter.active {
+    border: 1px solid red;
+    box-shadow: 0 0 12px red;
+    color: red;
+}
+
+        .scenepacks {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pack {
+    width: 220px;
+    height: 260px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,0,0,0.35);
+    box-shadow: 0 0 12px rgba(255,0,0,0.35);
+    cursor: pointer;
+
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+        .pack.hide {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+.pack:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px red;
+    border: 1px solid red;
+}
+
+.pack img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.pack-line {
+    height: 2px;
+    background: red;
+    margin: 6px 10px;
+    box-shadow: 0 0 8px red;
+}
+
+.pack-name {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px red;
+}
+
+        .pack.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.team-logo {
+    position: absolute;
+
+    left: 180px;
+    top: 85%;   /* 🔥 lager */
+
+    transform: none;  /* 🔥 BELANGRIJK: geen reset meer */
+
+    width: 340px;
+    height: auto;
+
+    filter:
+        drop-shadow(10px 18px 25px rgba(0,0,0,0.7))
+        contrast(1.2)
+        brightness(1.1)
+        saturate(1.2);
+
+    -webkit-mask-image: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.95) 0%,
+        rgba(255,255,255,0.4) 45%,
+        rgba(255,255,255,1) 70%,
+        rgba(255,255,255,0.6) 100%
+    );
+}
+
+        @keyframes floatLogo {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(1deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.team-logo {
+    animation: floatLogo 4s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* SEASONS */
+.seasons {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+
+    overflow-x: auto;
+    white-space: nowrap;
+
+    padding-bottom: 5px;
+}
+
+.seasons::-webkit-scrollbar {
+    display: none;
+}
+
+.season {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,0,0,0.3);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.season:hover {
+    border: 1px solid red;
+    box-shadow: 0 0 10px red;
+}
+
+.season.active {
+    color: red;
+    border: 1px solid red;
+    box-shadow: 0 0 12px red;
+    text-shadow: 0 0 8px red;
+}
+
+ .season.all.active {
+    background: rgba(255,0,0,0.08);
+    box-shadow: 0 0 8px red;
+    font-weight: 900;
+    border: 1px solid red;
+}
+
+/* DIVIDER */
+.divider {
+    height: 2px;
+    background: red;
+    box-shadow: 0 0 8px red;
+}
+
+/* SEARCH SMALL */
+.search-wrapper.small input {
+    padding: 10px 40px 10px 40px;
+    font-size: 12px;
+}
+
+/* SEARCH SUGGESTION */
+.search-suggestion {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 5px;
+}
+
+/* PACK GRID (NETFLIX STYLE) */
+.pack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    flex: 1;
+
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* CARD */
+.grid-item {
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid rgba(255,0,0,0.25);
+    background: rgba(255,255,255,0.05);
+
+    /* smooth animatie */
+    transition: all 0.45s ease;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.grid-item:hover {
+    border: 1px solid red;
+    box-shadow: 0 0 15px red;
+    transform: scale(1.04);
+}
+
+/* IMAGE */
+.grid-item img {
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+}
+
+/* NAME BAR */
+.grid-item .name {
+    font-size: 11px;
+    text-align: center;
+    padding: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 900;
+    background: rgba(0,0,0,0.55);
+    color: white;
+}
+
+/* HIDE ANIMATION */
+.grid-item.hide {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+    pointer-events: none;
+}
+
+/* SHOW STATE (belangrijk voor JS) */
+.grid-item.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.pagination span {
+    padding: 4px 8px;
+    border: 1px solid rgba(255,0,0,0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.pagination span:hover {
+    border: 1px solid red;
+    color: red;
+}
+
+        /* REQUEST REMOVED */
+
+        .social-card {
+            width: 420px;
+            margin: 12px auto;
+            padding: 14px;
+            border: 1px solid rgba(255,0,0,0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.25s;
+        }
+
+        .social-card:hover {
+            box-shadow: 0 0 18px red;
+            border: 1px solid red;
+            transform: translateY(-3px);
+        }
+
+        .social-card img {
+            width: 26px;
+            height: 26px;
+        }
+
+        .social-texts {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .social-desc {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .about-box {
+            width: 600px;
+            margin: auto;
+            border: 1px solid red;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .pack-sidebar {
+    position: absolute;
+    right: 40px;
+    top: 100px;
+
+    width: 750px; /* 🔥 breder gemaakt */
+    height: calc(100vh - 140px);
+
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,0,0,0.25);
+    border-radius: 14px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* LIST */
+.pack-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    gap: 0;
+    padding-right: 6px;
+}
+
+/* ITEM TEXT */
+.pack-item {
+    padding: 12px 8px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: 900;
+    text-transform: uppercase;
+
+    color: white;
+    opacity: 0.85;
+
+    border-bottom: 1px solid rgba(255, 0, 0, 0.25);
+
+    transition: 0.2s ease;
+}
+
+.pack-item:hover {
+    color: red;
+    cursor: pointer;
+    opacity: 1;
+    text-shadow: 0 0 8px red;
+}
+
+/* BELANGRIJK: laatste item geen lijn */
+.pack-item:last-child {
+    border-bottom: none;
+}
+
+   .fey-header {
+    text-align: center;
+    padding: 10px 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+        
+/* underline glow bar */
+.fey-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(34px, 5vw, 58px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+    color: transparent;
+    background: linear-gradient(90deg, #fff, #ff2a2a, #fff);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+
+    text-align: center;
+    display: inline-block;
+
+    position: relative;
+
+    filter: drop-shadow(0 0 12px rgba(255,0,0,0.4));
+
+    animation: feyMove 4s ease-in-out infinite;
+
+    transition: transform 0.25s ease, letter-spacing 0.25s ease;
+}
+
+.fey-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: red;
+    box-shadow: 0 0 12px red;
+    opacity: 0.7;
+}
+
+.fey-title:hover {
+    transform: scale(1.07);
+    letter-spacing: 6px;
+}
+
+@keyframes feyMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.fey-desc {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+    opacity: 0.8;
+}
+@keyframes feyGlow {
+    0% { text-shadow: 0 0 10px red; }
+    50% { text-shadow: 0 0 25px red; }
+    100% { text-shadow: 0 0 10px red; }
+}
+
+.fey-title:hover {
+    transform: scale(1.03);
+    letter-spacing: 8px;
+    text-shadow: 0 0 40px red;
+}
+
+        .search-wrapper {
+    position: relative;
+}
+        
+.search-suggestion-item:hover {
+    background: rgba(255,0,0,0.15);
+    color: red;
+}
+
+.search-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.highlight {
+    color: red;
+    font-weight: 900;
+}
+
+/* ===== CUSTOM SCROLLBAR (PRO) ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff0000, #7a0000);
+    border-radius: 10px;
+    box-shadow: 0 0 12px red;
+    transition: 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: red;
+    box-shadow: 0 0 18px red;
+}
+
+        .logo {
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.08);
+}
+
+/* ===== DETAIL PAGE NEW DESIGN ===== */
+#detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-card {
+    width: 720px;
+    height: 760px;
+    border-radius: 22px;
+
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,0,0,0.4);
+    box-shadow: 0 0 35px rgba(255,0,0,0.25);
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    transform: scale(0.92);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(.2,.9,.2,1);
+}
+
+.page.active#detail .detail-card {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.detail-image {
+    width: 100%;
+    height: 68%;
+    object-fit: cover;
+    object-position: center 20%;
+
+    background: black;
+    border-bottom: 1px solid rgba(255,0,0,0.25);
+}
+        .detail-image {
+    background: black;
+}
+
+.detail-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    flex: 1;
+}
+
+.detail-title {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+
+    color: white;
+    text-shadow: 0 0 12px red;
+}
+
+.detail-link {
+    display: block;
+    text-align: center;
+
+    padding: 16px;
+    border-radius: 14px;
+
+    border: 1px solid red;
+    background: rgba(255, 0, 0, 0.06);
+
+    color: red;
+    font-weight: 900;
+    letter-spacing: 2px;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+}
+
+.detail-link:hover {
+    background: rgba(255, 0, 0, 0.12);
+    transform: scale(1.03);
+    box-shadow: 0 0 18px rgba(255,0,0,0.35);
+}
+        
+.detail-password {
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.back-btn {
+    margin-top: auto;
+    padding: 12px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255,0,0,0.4);
+
+    background: transparent;
+    color: white;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    border: 1px solid red;
+    box-shadow: 0 0 14px red;
+}
+
+        #detail-link,
+#detail-link:visited {
+    color: red !important;
+}
+
+        .pack {
+    transition: transform 0.5s cubic-bezier(.2,.9,.2,1), opacity 0.3s ease;
+    will-change: transform;
+}
+
+ /* FORCE HOME PACK NORMAL */
+#home .pack {
+    width: 220px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* IMAGE vult hele card */
+#home .pack img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* fade overlay onderaan */
+#home .pack::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 55%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0.95) 100%
+    );
+    pointer-events: none;
+}
+
+/* lijn + naam boven fade */
+#home .pack-line {
+    position: absolute;
+    bottom: 42px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: red;
+    box-shadow: 0 0 8px red;
+    z-index: 2;
+}
+
+#home .pack-name {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    z-index: 2;
+    font-size: 14px;
+    text-shadow: 0 0 8px red;
+}
+    </style>
+
+    
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="topbar">
+ <div onclick="go('home')" style="cursor:pointer;">
+    <img src="logo.png" class="logo">
+</div>
+    
+    <div class="menu">
+        <a onclick="go('home')" id="nav-home">Home</a>
+        <a onclick="go('socials')" id="nav-socials">Socials</a>
+        <a onclick="go('about')" id="nav-about">About</a>
+    </div>
+
+    <div class="socials">
+        <a href="https://discord.gg/PddGAqZx"><img src="discord.png"></a>
+        <a href="https://www.tiktok.com/@justdonny._"><img src="tiktok.png"></a>
+        <a href="https://www.instagram.com/justdonny._"><img src="instagram.png"></a>
+        <a href="https://www.youtube.com/@Donny010"><img src="youtube.png"></a>
+        <a href="https://payhip.com/JustDonnyStore"><img src="payhip.png"></a>
+    </div>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="home">
+    <div class="bg-title">HOME</div>
+
+    <div class="hero">
+        <div class="title">JUSTDONNYSCENEPACKS</div>
+
+        <div class="desc">
+            A collection of high-quality Dutch scenepacks featuring films, TV series, football, and YouTube creators.
+        </div>
+
+        <div class="search-box">
+            <div class="search-wrapper">
+                <div class="icon-left">🔍</div>
+                <input type="text" placeholder="Search scenepacks...">
+            </div>
+        </div>
+
+    <div class="filters">
+    <div class="filter active" data-type="all">🌍 All</div>
+    <div class="filter" data-type="films">🎬 Films</div>
+    <div class="filter" data-type="series">📺 Series</div>
+    <div class="filter" data-type="youtube">▶ YouTube</div>
+    <div class="filter" data-type="football">⚽ Football</div>
+</div>
+
+<div class="scenepacks">
+
+  <div class="pack" data-type="football" onclick="go('feyenoord')">
+        <img src="feyenoord.jpg">
+        <div class="pack-line"></div>
+        <div class="pack-name">FEYENOORD</div>
+    </div>
+
+    </div> <!-- scenepacks -->
+</div> <!-- hero -->
+</div> <!-- home -->
+
+
+<!-- FEYENOORD PAGE -->
+<div class="page" id="feyenoord">
+
+    <!-- LEFT LOGO -->
+    <img src="feyenoord-logo.png" class="team-logo">
+
+    <!-- RIGHT PANEL -->
+    <div class="pack-sidebar">
+
+        <!-- SEARCH -->
+        <div class="search-wrapper small">
+            <div class="icon-left">🔍</div>
+            <input type="text" id="feySearch" placeholder="Search scenepacks...">
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- TITLE -->
+        <div class="fey-header">
+            <div class="fey-title">FEYENOORD</div>
+            <div class="fey-desc">
+               Feyenoord Rotterdam is een Nederlandse profvoetbalclub uit Rotterdam, opgericht op 19 juli 1908, die uitkomt in de Eredivisie. 
+                De stadionclub wordt vaak betiteld als de club van het volk. 
+                De thuisbasis is Stadion Feijenoord, dat in de volksmond De Kuip wordt genoemd.
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        
+              <!-- LIST -->
+        <div class="pack-list">
+
+<div class="pack-item"
+onclick="openPack(
+'LUCIANO VALENTE - S25/26 (1440P HD) - JUSTDONNY',
+'https://mega.nz/folder/bQlBWLba#jR08TKfD9AQbZExZnNxjoA',
+'img/luciano.jpg',
+''
+    , this
+)">
+LUCIANO VALENTE - S25/26 (1440P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUCIANO VALENTE HOT-BADASS CLIPS - S25/26 (1440P HD / 1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/DAsFiAaL#NJtnTkGxpKo_HcB-zA5-Kw',
+'img/luciano_hot.jpg',
+''
+     , this
+)">
+LUCIANO VALENTE HOT-BADASS CLIPS - S25/26 (1440P HD / 1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'AYASE UEDA - S24/25 + S25/26 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/GJkCmYSK#L88pBX2BhsOq1fx-gb1paA',
+'img/ueda.jpg',
+''
+     , this
+)">
+AYASE UEDA - S24/25 + S25/26 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'HWANG IN-BEOM - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/NUpSCBpI#zdc7y9s0K8Z3C3vXLHFRmQ',
+'img/hwang.jpg',
+''
+     , this
+)">
+HWANG IN-BEOM - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'ANIS HADJ-MOUSSA - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/IFwkzbJA#N5uCkO4TwnKhpNxTwLtg5Q',
+'img/anis.jpg',
+'N5uCkO4TwnKhpNxTwLtg5Q'
+     , this
+)">
+ANIS HADJ-MOUSSA - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'IGOR PAIXÃO - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/lUAHBAxR#oczDXIzmKsViKtOHAsS5Cw',
+'img/igor.jpg',
+'oczDXIzmKsViKtOHAsS5Cw'
+     , this
+)">
+IGOR PAIXÃO - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'DE KUIP - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/oVB2iDQZ#2dlwckltvSJagDzeDZmh_w',
+'img/de-kuip.jpg',
+'2dlwckltvSJagDzeDZmh_w'
+     , this
+)">
+DE KUIP - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'DAVID HANCKO - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/hQR02LoC#S3emyFsYMbC3Rjl0hvdEPA',
+'img/david.jpg',
+'S3emyFsYMbC3Rjl0hvdEPA'
+     , this
+)">
+DAVID HANCKO - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'JAKUB MODER - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/cMAyWQQI#nfdVDJfGRRYUAiOLaskMQw',
+'img/jakub.jpg',
+''
+     , this
+)">
+JAKUB MODER - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'GIVAIRO READ - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/iRNwkZDS#M_tx9w5GeGQe0HRuhAhG_Q',
+'img/givairo.jpg',
+'M_tx9w5GeGQe0HRuhAhG_Q'
+     , this
+)">
+GIVAIRO READ - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'HUGO BUENO - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/KZlQyK5C#cK06tc_vOuhOso5FNMwvAA',
+'img/hugo.jpg',
+''
+     , this
+)">
+HUGO BUENO - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'IBRAHIM OSMAN - S24/25 (1440P HD) - JUSTDONNY',
+'https://mega.nz/folder/GJMVyAZB#tyxxrUKeYsiheik0sEoEHA',
+'img/ibrahim.jpg',
+'tyxxrUKeYsiheik0sEoEHA'
+     , this
+)">
+IBRAHIM OSMAN - S24/25 (1440P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FEYENOORD CELEBRATIONS PACK - S24/25 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/BUoWTJ4Z#lSiMG_KJHQj8EBsYDb3PjQ',
+'img/feyenoord1.jpg',
+'lSiMG_KJHQj8EBsYDb3PjQ'
+     , this
+)">
+FEYENOORD CELEBRATIONS PACK - S24/25 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'QUINTEN TIMBER - S24/25 (1440P HD) - JUSTDONNY',
+'https://mega.nz/folder/3Q8yXazA#XeqOX3QNfe8TwSCp8uF4dw',
+'img/quinten.jpg',
+'XeqOX3QNfe8TwSCp8uF4dw'
+     , this
+)">
+QUINTEN TIMBER - S24/25 (1440P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'QUILINDSCHY HARTMAN - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/EABn1LZa#vcGjtgBB49odIey-FEEl1Q',
+'img/quilindschy.jpg',
+'vcGjtgBB49odIey-FEEl1Q'
+     , this
+)">
+QUILINDSCHY HARTMAN - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'QUINTEN TIMBER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/3Q8yXazA#XeqOX3QNfe8TwSCp8uF4dw',
+'img/quinten1.jpg',
+'XeqOX3QNfe8TwSCp8uF4dw'
+     , this
+)">
+QUINTEN TIMBER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'GJIVAI ZECHIËL - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/ScV2iIRD#UljI5WAViueiSN0VQFcKhg',
+'img/gjivai.jpg',
+'UljI5WAViueiSN0VQFcKhg'
+     , this
+)">
+GJIVAI ZECHIËL - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUTSHAREL GEERTRUIDA - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/4NYElY4b#y-gvyMN6paEOZtrn6gUW8Q',
+'img/lutsharel.jpg',
+'y-gvyMN6paEOZtrn6gUW8Q'
+     , this
+)">
+LUTSHAREL GEERTRUIDA - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'YANKUBA MINTEH - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/gIJQgBYC#W9KNKKXn91lzefVoUPJVWA',
+'img/yankuba.jpg',
+'W9KNKKXn91lzefVoUPJVWA'
+     , this
+)">
+YANKUBA MINTEH - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'THOMAS BEELEN - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/NFAy2SAT#4vlZKdxYCI-cRtshygOrwg',
+'img/thomas.jpg',
+'4vlZKdxYCI-cRtshygOrwg'
+     , this
+)">
+THOMAS BEELEN - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'GERNOT TRAUNER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/0FATDLgK',
+'img/gernot.jpg',
+' 3LDGTBJ7HC75KkRqY9LDvA'
+     , this
+)">
+GERNOT TRAUNER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'ANTONI MILAMBO - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/kUp2XITR#ndKQ35vK97mbfwEWbrIGoA',
+'img/antoni.jpg',
+'ndKQ35vK97mbfwEWbrIGoA'
+     , this
+)">
+ANTONI MILAMBO - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'JUSTIN BIJLOW ALL SAVES - S23/24 (720P HD) - JUSTDONNY',
+'https://mega.nz/folder/AMZziSxQ#F7q8IQvXu_gPRMpFWzqYrg',
+'img/justin.jpg',
+'F7q8IQvXu_gPRMpFWzqYrg'
+     , this
+)">
+JUSTIN BIJLOW ALL SAVES - S23/24 (720P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUKA IVANUSEC - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/xMZSjJoI#ZFoCTKwXZx7VhlivUGv5Zg',
+'img/luka.jpg',
+'ZFoCTKwXZx7VhlivUGv5Zg'
+     , this
+)">
+LUKA IVANUSEC - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'CALVIN STENGS - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/NRBUgI5L#1m6SG1pHof5unJHNl5Lbdw',
+'img/calvin.jpg',
+'1m6SG1pHof5unJHNl5Lbdw'
+     , this
+)">
+CALVIN STENGS - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'AYASE UEDA - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/AVxSHB4Y#e5rYIdJDKn9Q4YWT96iZag',
+'img/ayase1.jpg',
+''
+     , this
+)">
+AYASE UEDA - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'SANTIAGO GIMENEZ - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/1IRlQRyA#l3LWh_vAlENJmozsicHC3A',
+'img/santiago.jpg',
+'l3LWh_vAlENJmozsicHC3A'
+     , this
+)">
+SANTIAGO GIMENEZ - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'RAMIZ ZERROUKI - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/xU4CVIjK#lXfx4lU8iz24tWL2hK3WaA',
+'img/ramiz.jpg',
+'lXfx4lU8iz24tWL2hK3WaA'
+     , this
+)">
+RAMIZ ZERROUKI - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'MATS WIEFFER - S23/24 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/qZEQARZY#5vs1NHd6mb73yrpuQ3vYKw',
+'img/mats.jpg',
+'5vs1NHd6mb73yrpuQ3vYKw'
+     , this
+)">
+MATS WIEFFER - S23/24 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'ORKUN KÖKÇÜ (REMAKE) - S22/23 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/xZpVjAbJ#WCcbEo8HW7G722e272z8Fw',
+'img/orkun.jpg',
+'WCcbEo8HW7G722e272z8Fw'
+     , this
+)">
+ORKUN KÖKÇÜ (REMAKE) - S22/23 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FEYENOORD CELEBRATIONS PACK - S22/23 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/oBIBhRJJ#mBKGYje0HAZIPmiaHD7B9A',
+'img/feyenoord2.jpg',
+'mBKGYje0HAZIPmiaHD7B9A'
+     , this
+)">
+FEYENOORD CELEBRATIONS PACK - S22/23 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'DAVID HANCKO - S22/23 (MINI) (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/HdVmUKCR#LtdWo41-22a9gKP_kaEHKQ',
+'img/david1.jpg',
+'LtdWo41-22a9gKP_kaEHKQ'
+     , this
+)">
+DAVID HANCKO - S22/23 (MINI) (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'LUIS SINISTERRA - S21/22 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/sUxxEDjb#CeruDubEHAzeVhHoT1HkSQ',
+'img/luis.jpg',
+''
+     , this
+)">
+LUIS SINISTERRA - S21/22 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'CYRIEL DESSERS - S21/22 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/3Bd1EDwB#Ww24h_jFaxK8zQG1nGsM_A',
+'img/cyriel.jpg',
+'Ww24h_jFaxK8zQG1nGsM_A'
+     , this
+)">
+CYRIEL DESSERS - S21/22 (1080P HD) - JUSTDONNY
+</div>
+
+<div class="pack-item"
+onclick="openPack(
+'FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY',
+'https://mega.nz/folder/yJVHATIK#fUbziIPHnu7_y1KT3lBVWg',
+'img/feyenoord3.jpg',
+'fUbziIPHnu7_y1KT3lBVWg'
+     , this
+)">
+FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY
+</div>
+
+        </div>
+
+    </div>
+
+</div> <!-- ✅ FEYENOORD PAGE DICHT -->
+
+
+<!-- DETAIL PAGE (BELANGRIJK: NIET IN FEYENOORD!) -->
+<div class="page" id="detail">
+
+    <div class="detail-card">
+
+        <img id="detail-img" class="detail-image" src="">
+
+        <div class="detail-content">
+
+            <div class="detail-title" id="detail-title"></div>
+
+            <a id="detail-link" class="detail-link" href="#" target="_blank">
+                OPEN MEGA LINK
+            </a>
+
+            <div id="detail-password" class="detail-password"></div>
+
+            <button onclick="go('feyenoord')" class="back-btn">
+                ← BACK
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+            
+<!-- SOCIALS -->
+<div class="page" id="socials">
+    <div class="bg-title">SOCIALS</div>
+
+    <a class="social-card" href="https://discord.gg/PddGAqZx">
+        <img src="discord.png">
+        <div class="social-texts">
+            <div class="social-title">DISCORD</div>
+            <div class="social-desc">Join server</div>
+        </div>
+    </a>
+
+    <a class="social-card" href="https://www.tiktok.com/@justdonny._">
+        <img src="tiktok.png">
+        <div class="social-texts">
+            <div class="social-title">TIKTOK</div>
+            <div class="social-desc">Watch my edits</div>
+        </div>
+    </a>
+
+    <a class="social-card" href="https://www.instagram.com/justdonny._">
+        <img src="instagram.png">
+        <div class="social-texts">
+            <div class="social-title">INSTAGRAM</div>
+            <div class="social-desc">Scenepacks & clips</div>
+        </div>
+    </a>
+
+    <a class="social-card" href="https://www.youtube.com/@Donny010">
+        <img src="youtube.png">
+        <div class="social-texts">
+            <div class="social-title">YOUTUBE</div>
+            <div class="social-desc">Subscribe</div>
+        </div>
+    </a>
+
+    <a class="social-card" href="https://payhip.com/JustDonnyStore">
+        <img src="payhip.png">
+        <div class="social-texts">
+            <div class="social-title">PAYHIP</div>
+            <div class="social-desc">Buy presets</div>
+        </div>
+    </a>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="about">
+    <div class="bg-title">ABOUT</div>
+
+    <div class="about-box">
+        <h2>ABOUT ME</h2>
+        <p>
+I’m 18 years old, and I started editing when I was 16. What began as a simple interest quickly turned into a real passion that helped me grow in ways I never expected.
+
+Over the past two years, I’ve developed my skills in editing and expanded my journey by creating a Discord community, making YouTube videos, and producing After Effects tutorials. I also started creating scenepacks, which eventually led me to build my own website.
+
+My goal has always been to help others learn and improve in After Effects by sharing the knowledge and experience I’ve gained along the way. Everything I know today comes from constant practice, experimenting, and growing through editing.
+
+I never imagined I would reach 10K followers, but once I did, everything changed. It motivated me to push myself even further and create even better content than before.
+
+My journey started with editing football content, especially inspired by Feyenoord, and from there it all began.
+
+And this is just the beginning.
+        </p>
+    </div>
+</div>
+
+<script>
+function go(page) {
+    const pages = document.querySelectorAll(".page");
+
+    pages.forEach(p => {
+        p.classList.remove("active");
+        p.style.transform = "translateY(20px) scale(0.98)";
+        p.style.opacity = "0";
+    });
+
+    const target = document.getElementById(page);
+
+    setTimeout(() => {
+        target.classList.add("active");
+        target.style.transform = "translateY(0px) scale(1)";
+        target.style.opacity = "1";
+    }, 80);
+
+    document.querySelectorAll(".menu a").forEach(a =>
+        a.classList.remove("active")
+    );
+
+    const nav = document.getElementById("nav-" + page);
+    if (nav) nav.classList.add("active");
+}
+
+/* ===== CANVAS ===== */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let points = [];
+
+for (let i = 0; i < 30; i++) {
+    points.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = "rgba(255,0,0,0.25)";
+    ctx.shadowColor = "red";
+    ctx.shadowBlur = 10;
+
+    for (let i = 0; i < points.length; i++) {
+        let p1 = points[i];
+
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        if (p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
+
+        for (let j = i + 1; j < points.length; j++) {
+            let p2 = points[j];
+
+            let dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+            if (dist < 160) {
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+    window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+    
+draw();
+
+/* ===== HOME FILTERS ===== */
+    const homePacks = document.querySelectorAll("#home .pack");
+const filters = document.querySelectorAll(".filter");
+
+filters.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        filters.forEach(f => f.classList.remove("active"));
+        btn.classList.add("active");
+
+        const type = btn.dataset.type;
+
+        homePacks.forEach(pack => {
+            const packType = pack.dataset.type;
+
+            const match = type === "all" || packType === type;
+
+            pack.classList.toggle("show", match);
+            pack.classList.toggle("hide", !match);
+        });
+    });
+});
+
+     document.querySelector('.filter[data-type="all"]').click();
+
+/* ===== FEYENOORD FILTERS ===== */
+const feySearch = document.getElementById("feySearch");
+const feyPage = document.getElementById("feyenoord");
+const items = Array.from(feyPage.querySelectorAll(".pack-item"));
+
+function updateFilter(value) {
+    items.forEach(item => {
+        const match = item.textContent.toLowerCase().includes(value.toLowerCase());
+
+        item.style.opacity = match ? "1" : "0.15";
+        item.style.display = match ? "block" : "none";
+    });
+}
+
+feySearch.addEventListener("input", (e) => {
+    updateFilter(e.target.value);
+});
+
+feySearch.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+
+        // reset alles
+        items.forEach(item => {
+            item.style.display = "block";
+            item.style.opacity = "1";
+        });
+
+        // scroll naar eerste item (of eerste zichtbare)
+        const firstVisible = items.find(i => i.style.display !== "none");
+
+        if (firstVisible) {
+            firstVisible.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    }
+});
+
+function openPack(title, link, img, password, element) {
+
+    document.getElementById("detail-title").innerText = title;
+    document.getElementById("detail-link").href = link;
+    document.getElementById("detail-img").src = img;
+
+    const passBox = document.getElementById("detail-password");
+    passBox.innerText = password ? "PASSWORD: " + password : "";
+
+    go("detail");
+}
+
+    </script>
+
+</body>
+</html>
