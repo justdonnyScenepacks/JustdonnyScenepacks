@@ -766,15 +766,18 @@
     color: red;
     font-weight: 900;
     text-decoration: none;
-    transition: 0.2s;
+   transition: all 0.25s ease;
 }
 
 .detail-link:hover {
-    background: red;
-    color: black;
-    box-shadow: 0 0 15px red;
+    background: rgba(255, 0, 0, 0.06);
+    color: #ff2a2a;
+    box-shadow:
+        0 0 8px rgba(255, 0, 0, 0.5),
+        0 0 18px rgba(255, 0, 0, 0.25);
+    border-color: rgba(255, 0, 0, 0.8);
 }
-
+        
 .detail-password {
     text-align: center;
     font-size: 12px;
