@@ -1575,48 +1575,14 @@ feySearch.addEventListener("keydown", (e) => {
 
 function openPack(title, link, img, password, element) {
 
-    if (!element) {
-        console.log("No element passed");
-        return;
-    }
+    document.getElementById("detail-title").innerText = title;
+    document.getElementById("detail-link").href = link;
+    document.getElementById("detail-img").src = img;
 
-    const rect = element.getBoundingClientRect();
+    const passBox = document.getElementById("detail-password");
+    passBox.innerText = password ? "PASSWORD: " + password : "";
 
-    const clone = element.cloneNode(true);
-    document.body.appendChild(clone);
-
-    clone.style.position = "fixed";
-    clone.style.left = rect.left + "px";
-    clone.style.top = rect.top + "px";
-    clone.style.width = rect.width + "px";
-    clone.style.height = rect.height + "px";
-    clone.style.zIndex = 9999;
-    clone.style.transition = "all 0.6s cubic-bezier(.2,.9,.2,1)";
-    clone.style.filter = "blur(2px)";
-
-    setTimeout(() => {
-        clone.style.left = "50%";
-        clone.style.top = "50%";
-        clone.style.transform = "translate(-50%, -50%) scale(2.5)";
-        clone.style.opacity = "0";
-        clone.style.filter = "blur(10px)";
-    }, 50);
-
-    setTimeout(() => {
-        clone.remove();
-
-        document.getElementById("detail-title").innerText = title;
-        document.getElementById("detail-link").href = link;
-        document.getElementById("detail-img").src = img;
-
-        const passBox = document.getElementById("detail-password");
-        if (passBox) {
-            passBox.innerText = password ? "PASSWORD: " + password : "";
-        }
-
-        go("detail");
-
-    }, 600);
+    go("detail");
 }
 
     </script>
