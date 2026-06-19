@@ -824,9 +824,30 @@
     will-change: transform;
 }
 
-        #home .pack {
+ /* FORCE HOME PACK NORMAL */
+#home .pack {
     width: 220px;
     height: 260px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#home .pack img {
+    height: 75%;
+    object-fit: cover;
+}
+
+#home .pack-line {
+    height: 2px;
+    flex-shrink: 0;
+}
+
+#home .pack-name {
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
     </style>
 
