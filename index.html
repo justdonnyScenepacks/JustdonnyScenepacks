@@ -709,12 +709,13 @@
 }
 
 .detail-card {
-    width: 520px;
-    height: 520px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.65);
-    border: 1px solid rgba(255,0,0,0.35);
-    box-shadow: 0 0 25px rgba(255,0,0,0.25);
+    width: 720px;
+    height: 760px;
+    border-radius: 22px;
+
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,0,0,0.4);
+    box-shadow: 0 0 35px rgba(255,0,0,0.25);
 
     display: flex;
     flex-direction: column;
@@ -732,73 +733,85 @@
 
 .detail-image {
     width: 100%;
-    height: 55%;
+    height: 68%;
     object-fit: cover;
-    display: block;
-    border-bottom: 1px solid rgba(255,0,0,0.2);
+    object-position: center 20%;
+
+    background: black;
+    border-bottom: 1px solid rgba(255,0,0,0.25);
 }
         .detail-image {
     background: black;
 }
 
 .detail-content {
-    padding: 18px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+
+    flex: 1;
 }
 
 .detail-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 900;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: center;
+
     color: white;
-    text-shadow: 0 0 10px red;
+    text-shadow: 0 0 12px red;
 }
 
 .detail-link {
     display: block;
     text-align: center;
-    padding: 10px;
+
+    padding: 16px;
+    border-radius: 14px;
+
     border: 1px solid red;
-    border-radius: 10px;
+    background: rgba(255, 0, 0, 0.06);
+
     color: red;
     font-weight: 900;
+    letter-spacing: 2px;
+
     text-decoration: none;
-   transition: all 0.25s ease;
+
+    transition: all 0.25s ease;
 }
 
 .detail-link:hover {
-    background: rgba(255, 0, 0, 0.06);
-    color: #ff2a2a;
-    box-shadow:
-        0 0 8px rgba(255, 0, 0, 0.5),
-        0 0 18px rgba(255, 0, 0, 0.25);
-    border-color: rgba(255, 0, 0, 0.8);
+    background: rgba(255, 0, 0, 0.12);
+    transform: scale(1.03);
+    box-shadow: 0 0 18px rgba(255,0,0,0.35);
 }
         
 .detail-password {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     color: #aaa;
 }
 
 .back-btn {
     margin-top: auto;
-    padding: 10px;
+    padding: 12px;
+
+    border-radius: 12px;
     border: 1px solid rgba(255,0,0,0.4);
+
     background: transparent;
     color: white;
-    border-radius: 10px;
+
     cursor: pointer;
     transition: 0.2s;
 }
 
 .back-btn:hover {
     border: 1px solid red;
-    box-shadow: 0 0 12px red;
+    box-shadow: 0 0 14px red;
 }
 
         #detail-link,
