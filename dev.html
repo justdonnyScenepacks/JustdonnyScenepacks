@@ -291,14 +291,14 @@
 
 .team-logo {
     position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
 
-    left: 180px;
-    top: 85%;   /* 🔥 lager */
-
-    transform: none;  /* 🔥 BELANGRIJK: geen reset meer */
-
-    width: 340px;
+    width: 320px;
     height: auto;
+
+    z-index: 5;
 
     filter:
         drop-shadow(10px 18px 25px rgba(0,0,0,0.7))
@@ -306,19 +306,14 @@
         brightness(1.1)
         saturate(1.2);
 
-    -webkit-mask-image: linear-gradient(
-        135deg,
-        rgba(255,255,255,0.95) 0%,
-        rgba(255,255,255,0.4) 45%,
-        rgba(255,255,255,1) 70%,
-        rgba(255,255,255,0.6) 100%
-    );
+    animation: floatLogo 4s ease-in-out infinite;
+    will-change: transform;
 }
 
-        @keyframes floatLogo {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-8px) rotate(1deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+@keyframes floatLogo {
+    0% { transform: translateY(-50px) scale(1); }
+    50% { transform: translateY(-60px) scale(1.02); }
+    100% { transform: translateY(-50px) scale(1); }
 }
 
 .team-logo {
