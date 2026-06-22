@@ -226,8 +226,10 @@
     color: red;
 }
 
-        .scenepacks {
-    display: flex;
+.scenepacks {
+    display: grid;
+    grid-template-columns: repeat(5, 220px);
+    gap: 18px;
     justify-content: center;
     margin-top: 40px;
 }
@@ -937,6 +939,8 @@
     <div class="filter" data-type="football">⚽ Football</div>
 </div>
 
+         </div> <!-- scenepacks -->
+
 <div class="scenepacks">
 
   <div class="pack" data-type="football" onclick="go('feyenoord')">
@@ -945,7 +949,48 @@
         <div class="pack-name">FEYENOORD</div>
     </div>
 
-    </div> <!-- scenepacks -->
+    <div class="pack" data-type="football" onclick="go('psv')">
+    <img src="psv.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">PSV</div>
+</div>
+
+<div class="pack" data-type="football" onclick="go('ajax')">
+    <img src="aja.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">AJAX</div>
+</div>
+
+<div class="pack" data-type="football" onclick="go('utrecht')">
+    <img src="utr.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">FC UTRECHT</div>
+</div>
+
+<div class="pack" data-type="football" onclick="go('az')">
+    <img src="az.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">AZ</div>
+</div>
+
+<div class="pack" data-type="football" onclick="go('fortuna')">
+    <img src="for.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">FORTUNA</div>
+</div>
+
+<div class="pack" data-type="football" onclick="go('heerenveen')">
+    <img src="hee.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">HEERENVEEN</div>
+</div>
+
+<div class="pack" data-type="football" onclick="go('groningen')">
+    <img src="gro.jpg">
+    <div class="pack-line"></div>
+    <div class="pack-name">GRONINGEN</div>
+</div>
+
 </div> <!-- hero -->
 </div> <!-- home -->
 
