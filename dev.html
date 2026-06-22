@@ -226,12 +226,10 @@
     color: red;
 }
 
-.scenepacks {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
+        .scenepacks {
+    display: flex;
+    justify-content: center;
     margin-top: 40px;
-    padding: 0 40px;
 }
 
 .pack {
@@ -939,8 +937,6 @@
     <div class="filter" data-type="football">⚽ Football</div>
 </div>
 
-          </div> <!-- scenepacks -->
-
 <div class="scenepacks">
 
   <div class="pack" data-type="football" onclick="go('feyenoord')">
@@ -949,235 +945,9 @@
         <div class="pack-name">FEYENOORD</div>
     </div>
 
-    <div class="pack" data-type="football" onclick="go('psv')">
-    <img src="psv.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">PSV</div>
-</div>
-
-<div class="pack" data-type="football" onclick="go('ajax')">
-    <img src="aja.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">AJAX</div>
-</div>
-
-<div class="pack" data-type="football" onclick="go('utrecht')">
-    <img src="utr.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">FC UTRECHT</div>
-</div>
-
-<div class="pack" data-type="football" onclick="go('az')">
-    <img src="az.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">AZ</div>
-</div>
-
-<div class="pack" data-type="football" onclick="go('fortuna')">
-    <img src="for.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">FORTUNA</div>
-</div>
-
-<div class="pack" data-type="football" onclick="go('heerenveen')">
-    <img src="hee.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">HEERENVEEN</div>
-</div>
-
-<div class="pack" data-type="football" onclick="go('groningen')">
-    <img src="gro.jpg">
-    <div class="pack-line"></div>
-    <div class="pack-name">GRONINGEN</div>
-</div>
-
+    </div> <!-- scenepacks -->
 </div> <!-- hero -->
 </div> <!-- home -->
-
-    <div class="page" id="psv">
-
-    <img src="psvv.jpg" class="team-logo">
-
-    <div class="pack-sidebar">
-
-        <div class="search-wrapper small">
-            <div class="icon-left">🔍</div>
-            <input type="text" id="psvSearch" placeholder="Search scenepacks...">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="fey-header">
-            <div class="fey-title">PSV</div>
-          <div class="fey-desc">
-               PSV is een Nederlandse profvoetbalclub uit Eindhoven. 
-              Deze werd op 31 augustus 1913 opgericht onder de naam Philips Sport Vereniging als sportvereniging van Philips-medewerkers. 
-              Op 1 juli 1999 werd PSV NV opgericht en het betaalde voetbal hierin ondergebracht.
-            </div>
-
-        <div class="divider"></div>
-
-        <div class="pack-list">
-
-            <div class="pack-item"
-            onclick="openPack('PSV PACK','https://mega.nz/example','img/psv.jpg','',this)">
-            PSV PACK
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-    <div class="page" id="ajax">
-
-    <img src="ajax.jpg" class="team-logo">
-
-    <div class="pack-sidebar">
-
-        <div class="search-wrapper small">
-            <div class="icon-left">🔍</div>
-            <input type="text" id="ajaxSearch" placeholder="Search scenepacks...">
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="fey-header">
-            <div class="fey-title">AJAX</div>
-         <div class="fey-desc">
-                Amsterdamsche Football Club Ajax, kortweg AFC Ajax of gewoon Ajax, is een Nederlandse profvoetbalclub uit Amsterdam. 
-             De club is opgericht op 18 maart 1900 en is een van de drie traditionele topclubs in Nederland. 
-             Sinds de oprichting van de Eredivisie speelt Ajax onafgebroken in deze hoogste divisie.
-            </div>
-
-        <div class="divider"></div>
-
-        <div class="pack-list">
-
-            <div class="pack-item"
-            onclick="openPack('AJAX PACK','https://mega.nz/example','img/ajax.jpg','',this)">
-            AJAX PACK
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-    <div class="page" id="utrecht">
-    <img src="utrc.jpg" class="team-logo">
-
-    <div class="pack-sidebar">
-        <div class="search-wrapper small">
-            <input type="text" id="utrechtSearch" placeholder="Search scenepacks...">
-        </div>
-
-        <div class="fey-header">
-            <div class="fey-title">UTRECHT</div>
-           <div class="fey-desc">
-               FC Utrecht is een Nederlandse betaaldvoetbalclub, die uitkomt in de Eredivisie. 
-               Thuisbasis van de club, die in 1970 werd opgericht uit een fusie tussen Elinkwijk, DOS en Velox. 
-               Deze clubs staan nog altijd in de kraag van de shirts. Deze samenstelling is gaan spelen in Stadion Galgenwaard.
-            </div>
-
-        <div class="pack-list">
-            <div class="pack-item"
-            onclick="openPack('UTRECHT PACK','link','img/utr.jpg','',this)">
-            UTRECHT PACK
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="page" id="az">
-    <img src="azxx.png" class="team-logo">
-
-    <div class="pack-sidebar">
-        <div class="search-wrapper small">
-            <input type="text" id="azSearch" placeholder="Search scenepacks...">
-        </div>
-
-        <div class="fey-header">
-            <div class="fey-title">AZ</div>
-        <div class="fey-desc">
-               AZ is een Nederlandse profvoetbalclub uit Alkmaar en de Zaanstreek en speelt sinds augustus 2006 zijn thuiswedstrijden in het AFAS Stadion te Alkmaar. 
-            AZ, een afkorting voor Alkmaar Zaanstreek-combinatie, ontstond in 1967 als AZ’67 uit een fusie tussen Alkmaar '54 en FC Zaanstreek.
-            </div>
-
-        <div class="pack-list">
-            <div class="pack-item"
-            onclick="openPack('AZ PACK','link','img/az.jpg','',this)">
-            AZ PACK
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="page" id="fortuna">
-    <img src="fort.jpg" class="team-logo">
-
-    <div class="pack-sidebar">
-        <input type="text" id="fortunaSearch">
-
-        <div class="fey-header">
-            <div class="fey-title">FORTUNA</div>
-       <div class="fey-desc">
-               Fortuna Sittard is een Nederlandse betaaldvoetbalclub uit de gemeente Sittard-Geleen die op 1 juli 1968 na een fusie werd opgericht.
-           Vanaf het seizoen 2018/19 speelt de club in de Eredivisie, nadat een tweede plaats in de Eerste divisie 2017/18 genoeg was voor promotie.
-            </div>
-
-        <div class="pack-list">
-            <div class="pack-item"
-            onclick="openPack('FORTUNA PACK','link','img/for.jpg','',this)">
-            FORTUNA PACK
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="page" id="heerenveen">
-    <img src="heee.jpg" class="team-logo">
-
-    <div class="pack-sidebar">
-        <input type="text" id="heerenveenSearch">
-
-        <div class="fey-header">
-            <div class="fey-title">HEERENVEEN</div>
-      <div class="fey-desc">
-              Sportclub Heerenveen, kortweg sc Heerenveen, is een Nederlandse profclub uit Heerenveen, 
-          die uitkomt in de Eredivisie van zowel de mannen- als vrouwencompetitie.
-            </div>
-
-        <div class="pack-list">
-            <div class="pack-item"
-            onclick="openPack('HEERENVEEN PACK','link','img/hee.jpg','',this)">
-            HEERENVEEN PACK
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="page" id="groningen">
-    <img src="gron.jpg" class="team-logo">
-
-    <div class="pack-sidebar">
-        <input type="text" id="groningenSearch">
-
-        <div class="fey-header">
-            <div class="fey-title">GRONINGEN</div>
-        <div class="fey-desc">
-               FC Groningen is een voetbalclub uit de stad Groningen. 
-            De FC werd opgericht op 16 juni 1971 en kwam voort uit de Groninger Voetbal en Atletiek Vereniging.
-            </div>
-
-        <div class="pack-list">
-            <div class="pack-item"
-            onclick="openPack('GRONINGEN PACK','link','img/gro.jpg','',this)">
-            GRONINGEN PACK
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <!-- FEYENOORD PAGE -->
