@@ -291,9 +291,11 @@
 
 .team-logo {
     position: absolute;
+
     left: 180px;
-    top: 85%;
-    transform: none;
+    top: 85%;   /* 🔥 lager */
+
+    transform: none;  /* 🔥 BELANGRIJK: geen reset meer */
 
     width: 340px;
     height: auto;
@@ -311,10 +313,6 @@
         rgba(255,255,255,1) 70%,
         rgba(255,255,255,0.6) 100%
     );
-
-    animation: floatLogo 4s ease-in-out infinite;
-    will-change: transform;
-}
 
 @keyframes floatLogo {
     0% { transform: translateY(-50px) scale(1); }
