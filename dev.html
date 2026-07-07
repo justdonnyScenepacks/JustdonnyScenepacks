@@ -1543,21 +1543,32 @@ And this is just the beginning.
 </div>
 
 <script>
-    const teams = {
+const teams = {
 
     psv: {
         name: "PSV",
-        logo: "psv-logo.png",
-        description: "PSV is een Nederlandse profvoetbalclub uit Eindhoven.
-            Deze werd op 31 augustus 1913 opgericht onder de naam Philips Sport Vereniging als sportvereniging van Philips-medewerkers.
-        Op 1 juli 1999 werd PSV NV opgericht en het betaalde voetbal hierin ondergebracht.",
+        logo: "psvv.png",
 
-        packs: []
+        description: `
+PSV is een Nederlandse profvoetbalclub uit Eindhoven.
+
+Deze werd op 31 augustus 1913 opgericht onder de naam Philips Sport Vereniging als sportvereniging van Philips-medewerkers.
+
+Op 1 juli 1999 werd PSV NV opgericht en het betaalde voetbal hierin ondergebracht.
+`,
+
+       packs: [
+{
+title:"Ivan Perišić - S24/25 (1080P HD) - JUSTDONNY",
+link:"https://mega.nz/folder/UEhwVD7B",
+img:"img/ivan.jpg",
+password:"q43p-qP6_inXIwe9zcAkMw"
+}
+]
 
     }
 
 };
-
 
 function openTeam(team){
 
@@ -1567,7 +1578,33 @@ function openTeam(team){
     document.getElementById("team-name").innerText = data.name;
     document.getElementById("team-description").innerText = data.description;
 
-    document.getElementById("team-packs").innerHTML = "";
+
+    const list = document.getElementById("team-packs");
+
+    list.innerHTML = "";
+
+
+    data.packs.forEach(pack => {
+
+        list.innerHTML += `
+
+        <div class="pack-item"
+        onclick="openPack(
+        '${pack.title}',
+        '${pack.link}',
+        '${pack.img}',
+        '${pack.password}',
+        this
+        )">
+
+        ${pack.title}
+
+        </div>
+
+        `;
+
+    });
+
 
     go("team");
 }
