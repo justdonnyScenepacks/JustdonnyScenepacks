@@ -949,7 +949,7 @@
         <div class="pack-name">FEYENOORD</div>
     </div>
 
-    <div class="pack" data-type="football" onclick="go('psv')">
+    <div class="pack" data-type="football" onclick="openTeam('psv')">
     <img src="psv.jpg">
     <div class="pack-line"></div>
     <div class="pack-name">PSV</div>
@@ -1418,7 +1418,36 @@ FEYENOORD CELEBRATIONS PACK - S21/22 (1080P HD) - JUSTDONNY
 
 </div> <!-- ✅ FEYENOORD PAGE DICHT -->
 
+<!-- TEAM PAGE -->
+<div class="page" id="team">
 
+    <img id="team-logo" class="team-logo">
+
+    <div class="pack-sidebar">
+
+        <div class="search-wrapper small">
+            <div class="icon-left">🔍</div>
+            <input type="text" placeholder="Search scenepacks...">
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="fey-header">
+
+            <div class="fey-title" id="team-name"></div>
+
+            <div class="fey-desc" id="team-description"></div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="pack-list" id="team-packs"></div>
+
+    </div>
+
+</div>
+    
 <!-- DETAIL PAGE (BELANGRIJK: NIET IN FEYENOORD!) -->
 <div class="page" id="detail">
 
@@ -1514,6 +1543,35 @@ And this is just the beginning.
 </div>
 
 <script>
+    const teams = {
+
+    psv: {
+        name: "PSV",
+        logo: "psv-logo.png",
+        description: "PSV is een Nederlandse profvoetbalclub uit Eindhoven.
+            Deze werd op 31 augustus 1913 opgericht onder de naam Philips Sport Vereniging als sportvereniging van Philips-medewerkers.
+        Op 1 juli 1999 werd PSV NV opgericht en het betaalde voetbal hierin ondergebracht.",
+
+        packs: []
+
+    }
+
+};
+
+
+function openTeam(team){
+
+    const data = teams[team];
+
+    document.getElementById("team-logo").src = data.logo;
+    document.getElementById("team-name").innerText = data.name;
+    document.getElementById("team-description").innerText = data.description;
+
+    document.getElementById("team-packs").innerHTML = "";
+
+    go("team");
+}
+    
 function go(page) {
     const pages = document.querySelectorAll(".page");
 
