@@ -1,3 +1,5 @@
+console.log("PACKS LOADED");
+
 const scenepacks = [
     {
         name: "TEST PLAYER",
