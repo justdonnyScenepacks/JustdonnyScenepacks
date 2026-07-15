@@ -750,8 +750,7 @@ filters.forEach(btn => {
 
             const packTypes = pack.dataset.type.split(",");
 
-            const match = packTypes.includes(type);
-
+const match = type === "all" || packTypes.includes(type);
             pack.classList.toggle("show", match);
             pack.classList.toggle("hide", !match);
 
