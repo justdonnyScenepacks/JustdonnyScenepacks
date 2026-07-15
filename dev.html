@@ -96,6 +96,60 @@
             color: #b44cff;
         }
 
+        /* ===== SOCIAL CARDS ===== */
+
+.social-card {
+    width: 350px;
+    height: 80px;
+
+    margin: 15px auto;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 15px 20px;
+
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,0,0,0.35);
+    border-radius: 15px;
+
+    color: white;
+    text-decoration: none;
+
+    transition: 0.3s ease;
+
+    box-shadow: 0 0 10px rgba(255,0,0,0.2);
+}
+
+.social-card img {
+    width: 45px;
+    height: 45px;
+}
+
+.social-card:hover {
+    transform: scale(1.05);
+    border-color: red;
+    box-shadow: 0 0 20px red;
+}
+
+.social-texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: red;
+    letter-spacing: 2px;
+}
+
+.social-desc {
+    font-size: 13px;
+    color: #aaa;
+}
+
    .page {
     position: absolute;
     width: 100%;
