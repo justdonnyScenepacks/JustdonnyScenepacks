@@ -277,65 +277,124 @@
     color: red;
 }
 
+/* ===== NEW SCENEPACK SYSTEM ===== */
+
 .scenepacks {
     display: grid;
     grid-template-columns: repeat(5, 220px);
-    gap: 18px;
+    gap: 25px;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 45px;
 }
+
 
 .pack {
     width: 220px;
-    height: 260px;
-    border-radius: 18px;
+    height: 330px;
+
+    position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255,0,0,0.35);
-    box-shadow: 0 0 12px rgba(255,0,0,0.35);
+
+    border-radius: 20px;
     cursor: pointer;
 
+    border: 1px solid rgba(255,0,0,0.25);
+    background: black;
+
     opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transform: translateY(60px) scale(0.95);
+
+    transition:
+        opacity .6s ease,
+        transform .6s cubic-bezier(.2,.8,.2,1),
+        box-shadow .3s ease;
 }
 
-        .pack.hide {
-    opacity: 0;
-    transform: scale(0.9);
-    pointer-events: none;
+
+.pack.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
+
 
 .pack:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 18px red;
-    border: 1px solid red;
+    transform: translateY(-10px) scale(1.04);
+    border-color:red;
+    box-shadow:
+    0 0 25px rgba(255,0,0,.7);
 }
+
 
 .pack img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
+
+
+/* bottom fade */
+.pack::after {
+
+    content:"";
+
+    position:absolute;
+    bottom:0;
+    left:0;
+
+    width:100%;
+    height:45%;
+
+    background:
+    linear-gradient(
+        transparent,
+        rgba(0,0,0,.95)
+    );
+}
+
+
+/* naam */
+.pack-name {
+
+    position:absolute;
+
+    bottom:20px;
+    left:0;
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:15px;
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    z-index:2;
+
+    text-shadow:
+    0 0 10px red;
+}
+
+
+/* rode lijn */
 
 .pack-line {
-    height: 2px;
-    background: red;
-    margin: 6px 10px;
-    box-shadow: 0 0 8px red;
-}
 
-.pack-name {
-    text-align: center;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-shadow: 0 0 8px red;
-}
+    position:absolute;
 
-        .pack.show {
-    opacity: 1;
-    transform: scale(1);
+    bottom:48px;
+
+    left:20px;
+    right:20px;
+
+    height:2px;
+
+    background:red;
+
+    box-shadow:
+    0 0 10px red;
+
+    z-index:2;
 }
 
 /* ===== CUSTOM SCROLLBAR (PRO) ===== */
@@ -560,6 +619,8 @@ And this is just the beginning.
     </div>
 </div>
 
+    <script src="packs.js"></script>
+
 <script>
     
 function go(page) {
@@ -645,11 +706,39 @@ function draw() {
     
 draw();
 
+
+/* ===== CREATE SCENEPACK CARDS ===== */
+
+const container = document.getElementById("pack-container");
+
+scenepacks.forEach((pack, index) => {
+
+    const card = document.createElement("div");
+
+    card.className = "pack show";
+
+    card.dataset.type = pack.type.join(",");
+
+    card.innerHTML = `
+        <img src="${pack.image}">
+        <div class="pack-line"></div>
+        <div class="pack-name">${pack.name}</div>
+    `;
+
+    card.style.transitionDelay = `${index * 0.1}s`;
+
+    container.appendChild(card);
+
+});
+
+
 /* ===== HOME FILTERS ===== */
-    const homePacks = document.querySelectorAll("#home .pack");
+
+const homePacks = document.querySelectorAll("#home .pack");
 const filters = document.querySelectorAll(".filter");
 
 filters.forEach(btn => {
+
     btn.addEventListener("click", () => {
 
         filters.forEach(f => f.classList.remove("active"));
@@ -658,20 +747,25 @@ filters.forEach(btn => {
         const type = btn.dataset.type;
 
         homePacks.forEach(pack => {
-            const packType = pack.dataset.type;
 
-            const match = type === "all" || packType === type;
+            const packTypes = pack.dataset.type.split(",");
+
+            const match = packTypes.includes(type);
 
             pack.classList.toggle("show", match);
             pack.classList.toggle("hide", !match);
+
         });
+
     });
+
 });
 
-     document.querySelector('.filter[data-type="all"]').click();
+document.querySelector('.filter[data-type="all"]').click();
 
     
     </script>
+    
 
 </body>
 </html>
