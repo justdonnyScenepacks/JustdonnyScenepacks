@@ -4,7 +4,7 @@ const club = params.get("club");
 
 
 document.getElementById("club-title").innerHTML =
-club + " SCENEPACKS";
+club.toUpperCase() + " SCENEPACKS";
 
 
 const container = document.getElementById("pack-container");
@@ -27,8 +27,10 @@ card.innerHTML=`
 
 <img src="${pack.image}">
 
+<div class="pack-line"></div>
+
 <div class="pack-name">
-${pack.name}
+${pack.name.toUpperCase()}
 </div>
 
 `;
