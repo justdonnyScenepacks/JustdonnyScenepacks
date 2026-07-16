@@ -1,4 +1,4 @@
-console.log("PACKS LOADED");
+console.log("SCENEPACKS.JS LOADED");
 
 const scenepacks = [
 
