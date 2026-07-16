@@ -13,7 +13,7 @@ document.getElementById("club-title").innerHTML =
 const container = document.getElementById("pack-container");
 
 
-const packs = scenepacks.filter(pack =>
+const packs = window.scenepacks.filter(pack =>
     pack.club === club
 );
 
