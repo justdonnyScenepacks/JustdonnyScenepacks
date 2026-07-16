@@ -484,28 +484,35 @@
 #home .pack-name {
 
     position: absolute;
-    bottom: 10px;
-    left: 0;
+    bottom: 12px;
+    left: 5px;
 
-    width: 100%;
+    width: calc(100% - 10px);
 
     text-align: center;
 
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    font-weight: 400;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(18px, 2vw, 28px);
 
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 
     color: white;
 
     z-index: 2;
 
+    line-height: 1;
+
     text-shadow:
     0 0 5px black,
     0 0 15px red;
 }
+
+        #home .pack-name.long-name {
+    font-size: 21px;
+    letter-spacing: 1px;
+}
+        
     </style>
 
     
@@ -737,7 +744,9 @@ scenepacks.forEach((pack, index) => {
     card.innerHTML = `
         <img src="${pack.image}">
         <div class="pack-line"></div>
-        <div class="pack-name">${pack.name}</div>
+        <div class="pack-name ${pack.name.length > 12 ? "long-name" : ""}">
+${pack.name}
+</div>
     `;
 
     card.style.transitionDelay = `${index * 0.1}s`;
