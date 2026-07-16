@@ -743,9 +743,12 @@ scenepacks.forEach((pack, index) => {
     card.innerHTML = `
         <img src="${pack.image}">
         <div class="pack-line"></div>
-       <div class="pack-name">${pack.name}</div>
-</div>
+        <div class="pack-name">${pack.name}</div>
     `;
+
+    card.onclick = () => {
+        window.location.href = `pack.html?club=${pack.name}`;
+    };
 
     card.style.transitionDelay = `${index * 0.1}s`;
 
