@@ -1,9 +1,39 @@
 console.log("PACKS LOADED");
 
 const scenepacks = [
-    {
-        name: "TEST PLAYER",
-        image: "logo.png",
-        type: ["football"]
-    }
+{
+    name: "Ajax",
+    image: "aja.jpg",
+    type: ["football"]
+},
+{
+    name: "Feyenoord",
+    image: "feyenoord.jpg",
+    type: ["football"]
+},
+{
+    name: "Fortuna Sittard",
+    image: "for.jpg",
+    type: ["football"]
+},
+{
+    name: "FC Groningen",
+    image: "geo.jpg",
+    type: ["football"]
+},
+{
+    name: "Heerenveen",
+    image: "hee.jpg",
+    type: ["football"]
+},
+{
+    name: "PSV",
+    image: "psv.jpg",
+    type: ["football"]
+},
+{
+    name: "FC Utrecht",
+    image: "utr.jpg",
+    type: ["football"]
+}
 ];
