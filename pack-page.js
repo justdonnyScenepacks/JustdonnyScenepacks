@@ -11,7 +11,7 @@ const container = document.getElementById("pack-container");
 
 
 const packs = scenepacks.filter(pack =>
-    pack.name === club
+    pack.club === club
 );
 
 
