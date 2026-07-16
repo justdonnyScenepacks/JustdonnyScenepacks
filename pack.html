@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>JustDonny Scenepacks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin:0;
+    background:black;
+    color:white;
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+}
+
+
+/* HEADER */
+
+.topbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 40px;
+}
+
+
+.logo {
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+
+/* TITLE */
+
+.hero {
+    text-align:center;
+    margin-top:40px;
+}
+
+
+.title {
+    font-family:'Anton', sans-serif;
+    font-size:70px;
+    letter-spacing:4px;
+}
+
+
+.desc {
+    color:#aaa;
+    margin-top:10px;
+}
+
+
+/* SEARCH */
+
+.search {
+    margin:40px auto;
+    width:400px;
+}
+
+
+.search input {
+
+    width:100%;
+    padding:15px;
+
+    background:#111;
+
+    border:1px solid rgba(255,0,0,.5);
+
+    border-radius:10px;
+
+    color:white;
+
+    outline:none;
+}
+
+
+/* PACKS */
+
+.scenepacks {
+
+    display:grid;
+
+    grid-template-columns:repeat(5,220px);
+
+    gap:25px;
+
+    justify-content:center;
+
+}
+
+
+.pack {
+
+    height:330px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    cursor:pointer;
+
+    border:1px solid rgba(255,0,0,.3);
+
+}
+
+
+.pack img {
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+.pack-name {
+
+    position:absolute;
+
+    bottom:15px;
+
+    width:100%;
+
+    text-align:center;
+
+    font-family:'Anton',sans-serif;
+
+    font-size:25px;
+
+    text-shadow:0 0 15px red;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="topbar">
+
+<img src="logo.png" class="logo" onclick="history.back()">
+
+</div>
+
+
+<div class="hero">
+
+<div class="title" id="club-title">
+SCENEPACKS
+</div>
+
+
+<div class="desc">
+Download high quality scenepacks
+</div>
+
+
+<div class="search">
+
+<input id="search" placeholder="Search scenepacks...">
+
+</div>
+
+
+</div>
+
+
+<div class="scenepacks" id="pack-container">
+
+
+</div>
+
+
+
+<script src="packs.js"></script>
+<script src="pack-page.js"></script>
+
+
+</body>
+</html>
