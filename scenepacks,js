@@ -263,13 +263,4 @@ const scenepacks = [
 
 ];
 
-{
-    club: "Feyenoord",
-    name: "Yankuba Minteh 23/24",
-    image: "img/yankuba.jpg",
-    download: ""
-}
-
-];
-
 console.log(scenepacks);
