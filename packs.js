@@ -18,7 +18,7 @@ const scenepacks = [
 },
 {
     name: "FC Groningen",
-    image: "geo.jpg",
+    image: "gro.jpg",
     type: ["football"]
 },
 {
