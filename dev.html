@@ -492,7 +492,7 @@
     text-align: center;
 
     font-family: 'Anton', sans-serif;
-    font-size: clamp(18px, 2vw, 28px);
+    font-size: 24px;
 
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -503,14 +503,13 @@
 
     line-height: 1;
 
+    white-space: nowrap;
+
+    transform: scaleX(0.85);
+
     text-shadow:
     0 0 5px black,
     0 0 15px red;
-}
-
-        #home .pack-name.long-name {
-    font-size: 21px;
-    letter-spacing: 1px;
 }
         
     </style>
@@ -744,8 +743,7 @@ scenepacks.forEach((pack, index) => {
     card.innerHTML = `
         <img src="${pack.image}">
         <div class="pack-line"></div>
-        <div class="pack-name ${pack.name.length > 12 ? "long-name" : ""}">
-${pack.name}
+       <div class="pack-name">${pack.name}</div>
 </div>
     `;
 
